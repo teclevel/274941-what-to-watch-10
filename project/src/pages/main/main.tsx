@@ -2,7 +2,17 @@ import FilmsCard from '../../components/films-card/films-card';
 
 const NUMBER_FILMS = 20;
 
-function Main(): JSX.Element {
+type MainProps = {
+  filmPromo: {
+    title: string,
+    genre: string,
+    release: number
+  }
+}
+
+function Main({ filmPromo }: MainProps): JSX.Element {
+  const { title, genre, release } = filmPromo;
+
   const films: JSX.Element[] = [];
 
   for (let i = 0; i < NUMBER_FILMS; i++) {
@@ -46,10 +56,10 @@ function Main(): JSX.Element {
             </div>
 
             <div className="film-card__desc">
-              <h2 className="film-card__title">The Grand Budapest Hotel</h2>
+              <h2 className="film-card__title">{title}</h2>
               <p className="film-card__meta">
-                <span className="film-card__genre">Drama</span>
-                <span className="film-card__year">2014</span>
+                <span className="film-card__genre">{genre}</span>
+                <span className="film-card__year">{release}</span>
               </p>
 
               <div className="film-card__buttons">
