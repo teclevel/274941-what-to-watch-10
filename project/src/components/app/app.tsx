@@ -1,9 +1,9 @@
 // import Main from '../../pages/main/main';
-// import SignIn from '../../pages/sign-in/sign-in';
+import SignIn from '../../pages/sign-in/sign-in';
 // import MyList from '../../pages/my-list/my-list';
 // import FilmPage from '../../pages/film-page/film-page';
 // import AddReview from '../../pages/add-review/add-review';
-import Player from '../../pages/player/player';
+// import Player from '../../pages/player/player';
 
 type AppProps = {
   filmPromo: {
@@ -16,11 +16,11 @@ type AppProps = {
 function App({ filmPromo }: AppProps): JSX.Element {
   return (
     // <Main filmPromo={filmPromo} />
-    // <SignIn/>
+    <SignIn/>
     // <MyList/>
     // <FilmPage/>
     // <AddReview />
-    <Player />
+    // <Player />
   );
 }
 
