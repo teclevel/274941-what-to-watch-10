@@ -1,4 +1,5 @@
-import Main from '../../pages/main/main';
+// import Main from '../../pages/main/main';
+import SignIn from '../../pages/sign-in/sign-in';
 
 type AppProps = {
   filmPromo: {
@@ -10,7 +11,8 @@ type AppProps = {
 
 function App({ filmPromo }: AppProps): JSX.Element {
   return (
-    <Main filmPromo={filmPromo} />
+    // <Main filmPromo={filmPromo} />
+    <SignIn/>
   );
 }
 
