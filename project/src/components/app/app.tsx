@@ -1,5 +1,7 @@
 // import Main from '../../pages/main/main';
-import SignIn from '../../pages/sign-in/sign-in';
+// import SignIn from '../../pages/sign-in/sign-in';
+
+import MyList from '../../pages/my-list/my-list';
 
 type AppProps = {
   filmPromo: {
@@ -12,7 +14,8 @@ type AppProps = {
 function App({ filmPromo }: AppProps): JSX.Element {
   return (
     // <Main filmPromo={filmPromo} />
-    <SignIn/>
+    // <SignIn/>
+    <MyList/>
   );
 }
 
