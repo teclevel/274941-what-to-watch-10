@@ -1,11 +1,11 @@
-import FilmsCard from "../../components/films-card/films-card";
+import FilmsCard from '../../components/films-card/films-card';
 
-const SIMILAR_FILMS_COUNT = 4;
+const SIMILAR_FILMS_MAX = 4;
 
 function FilmPage(): JSX.Element {
   const similarFilms = [];
 
-  for (let i = 0; i < SIMILAR_FILMS_COUNT; i++) {
+  for (let i = 0; i < SIMILAR_FILMS_MAX; i++) {
     similarFilms.push(<FilmsCard />);
   }
 
