@@ -2,7 +2,8 @@
 // import SignIn from '../../pages/sign-in/sign-in';
 // import MyList from '../../pages/my-list/my-list';
 // import FilmPage from '../../pages/film-page/film-page';
-import AddReview from '../../pages/add-review/add-review';
+// import AddReview from '../../pages/add-review/add-review';
+import Player from '../../pages/player/player';
 
 type AppProps = {
   filmPromo: {
@@ -18,7 +19,8 @@ function App({ filmPromo }: AppProps): JSX.Element {
     // <SignIn/>
     // <MyList/>
     // <FilmPage/>
-    <AddReview />
+    // <AddReview />
+    <Player />
   );
 }
 
