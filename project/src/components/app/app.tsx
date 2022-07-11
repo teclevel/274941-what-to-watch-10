@@ -10,12 +10,15 @@ type AppProps = {
     title: string,
     genre: string,
     release: number
-  }
+  },
+  genres: string[]
 }
 
-function App({ filmPromo }: AppProps): JSX.Element {
+function App({ filmPromo, genres }: AppProps): JSX.Element {
   return (
-    <Main filmPromo={filmPromo} />
+    <Main filmPromo={filmPromo}
+      genres={genres}
+    />
     // <SignIn/>
     // <MyList/>
     // <FilmPage/>

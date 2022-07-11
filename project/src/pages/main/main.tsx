@@ -4,15 +4,20 @@ import Logo from '../../components/logo/logo';
 
 const NUMBER_FILMS = 20;
 
+function getItemsMenuGenres(genres: string[]): string[] {
+  return ['All Genres', ...genres];
+}
+
 type MainProps = {
   filmPromo: {
     title: string,
     genre: string,
     release: number
-  }
+  },
+  genres: string[]
 }
 
-function Main({ filmPromo }: MainProps): JSX.Element {
+function Main({ filmPromo, genres }: MainProps): JSX.Element {
   const { title, genre, release } = filmPromo;
 
   const films: JSX.Element[] = [];
@@ -20,6 +25,8 @@ function Main({ filmPromo }: MainProps): JSX.Element {
   for (let i = 0; i < NUMBER_FILMS; i++) {
     films.push(<FilmsCard key={i} />);
   }
+
+  const menuGenres = getItemsMenuGenres(genres);
 
   return (
     <>
@@ -82,36 +89,13 @@ function Main({ filmPromo }: MainProps): JSX.Element {
           <h2 className="catalog__title visually-hidden">Catalog</h2>
 
           <ul className="catalog__genres-list">
-            <li className="catalog__genres-item catalog__genres-item--active">
-              <a href="/#" className="catalog__genres-link">All genres</a>
-            </li>
-            <li className="catalog__genres-item">
-              <a href="/#" className="catalog__genres-link">Comedies</a>
-            </li>
-            <li className="catalog__genres-item">
-              <a href="/#" className="catalog__genres-link">Crime</a>
-            </li>
-            <li className="catalog__genres-item">
-              <a href="/#" className="catalog__genres-link">Documentary</a>
-            </li>
-            <li className="catalog__genres-item">
-              <a href="/#" className="catalog__genres-link">Dramas</a>
-            </li>
-            <li className="catalog__genres-item">
-              <a href="/#" className="catalog__genres-link">Horror</a>
-            </li>
-            <li className="catalog__genres-item">
-              <a href="/#" className="catalog__genres-link">Kids & Family</a>
-            </li>
-            <li className="catalog__genres-item">
-              <a href="/#" className="catalog__genres-link">Romance</a>
-            </li>
-            <li className="catalog__genres-item">
-              <a href="/#" className="catalog__genres-link">Sci-Fi</a>
-            </li>
-            <li className="catalog__genres-item">
-              <a href="/#" className="catalog__genres-link">Thrillers</a>
-            </li>
+            {
+              menuGenres.map((el) => (
+                <li key={el} className="catalog__genres-item catalog__genres-item--active">
+                  <a href="/#" className="catalog__genres-link">{el}</a>
+                </li>
+              ))
+            }
           </ul>
 
           <div className="catalog__films-list">

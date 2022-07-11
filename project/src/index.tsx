@@ -12,8 +12,13 @@ const filmPromo = {
   release: 2014
 };
 
+const genres = ['Comedies', 'Documentary', 'Dramas', 'Horror', 'Kids & Family', 'Romance', 'Sci-Fi', 'Thrillers'];
+
+
 root.render(
   <React.StrictMode>
-    <App filmPromo={filmPromo} />
+    <App filmPromo={filmPromo}
+      genres={genres}
+    />
   </React.StrictMode>,
 );
