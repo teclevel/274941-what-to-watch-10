@@ -6,8 +6,19 @@ const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement,
 );
 
+const filmPromo = {
+  title: 'The Grand Budapest Hotel',
+  genre: 'Drama',
+  release: 2014
+};
+
+const genres = ['Comedies', 'Documentary', 'Dramas', 'Horror', 'Kids & Family', 'Romance', 'Sci-Fi', 'Thrillers'];
+
+
 root.render(
   <React.StrictMode>
-    <App />
+    <App filmPromo={filmPromo}
+      genres={genres}
+    />
   </React.StrictMode>,
 );
