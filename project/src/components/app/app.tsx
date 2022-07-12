@@ -5,8 +5,9 @@ import FilmPage from '../../pages/film-page/film-page';
 import AddReview from '../../pages/add-review/add-review';
 import Player from '../../pages/player/player';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
-import { AppRoute } from '../../const';
+import { AppRoute, AuthorizationStatus } from '../../const';
 import NotFoundPage from '../../pages/not-found-page/not-found-page';
+import PrivateRoute from '../private-route/private-route';
 
 type AppProps = {
   filmPromo: {
@@ -32,7 +33,12 @@ function App({ filmPromo, genres }: AppProps): JSX.Element {
 
         <Route path={AppRoute.AddReview} element={<AddReview />} />
 
-        <Route path={AppRoute.MyList} element={<MyList />} />
+        <Route path={AppRoute.MyList} element={
+          <PrivateRoute authorizationStatus={AuthorizationStatus.Auth}>
+            <MyList />
+          </PrivateRoute>
+        }
+        />
 
         <Route path={AppRoute.Player} element={<Player />} />
 
