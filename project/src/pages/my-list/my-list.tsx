@@ -1,15 +1,15 @@
-import FilmsCard from '../../components/films-card/films-card';
 import Footer from '../../components/footer/footer';
+import ListFilms from '../../components/list-films/list-films';
 import Logo from '../../components/logo/logo';
+import { Films } from '../../types/films';
 
-const MY_LIST_COUNT = 9;
+// const MY_LIST_COUNT = 9;
 
-function MyList(): JSX.Element {
-  const myFilms = [];
+type MyListProps = {
+  films: Films
+}
 
-  for (let i = 0; i < MY_LIST_COUNT; i++) {
-    myFilms.push(<FilmsCard />);
-  }
+function MyList({ films }: MyListProps): JSX.Element {
 
   return (
     <div className="user-page">
@@ -33,7 +33,7 @@ function MyList(): JSX.Element {
 
         <div className="catalog__films-list">
           {
-            myFilms.map((el) => el)
+            <ListFilms films={films} />
           }
         </div>
       </section>

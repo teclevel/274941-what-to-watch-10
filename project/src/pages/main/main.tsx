@@ -1,8 +1,10 @@
 import FilmsCard from '../../components/films-card/films-card';
 import Footer from '../../components/footer/footer';
+import ListFilms from '../../components/list-films/list-films';
 import Logo from '../../components/logo/logo';
+import { Films } from '../../types/films';
 
-const NUMBER_FILMS = 20;
+// const NUMBER_FILMS = 20;
 
 function getItemsMenuGenres(genres: string[]): string[] {
   return ['All Genres', ...genres];
@@ -15,17 +17,11 @@ type MainProps = {
     release: number
   },
   genres: string[]
+  films: Films
 }
 
-function Main({ filmPromo, genres }: MainProps): JSX.Element {
+function Main({ filmPromo, genres, films }: MainProps): JSX.Element {
   const { title, genre, release } = filmPromo;
-
-  const films: JSX.Element[] = [];
-
-  for (let i = 0; i < NUMBER_FILMS; i++) {
-    films.push(<FilmsCard key={i} />);
-  }
-
   const menuGenres = getItemsMenuGenres(genres);
 
   return (
@@ -100,7 +96,7 @@ function Main({ filmPromo, genres }: MainProps): JSX.Element {
 
           <div className="catalog__films-list">
             {
-              films.map((el) => el)
+              <ListFilms films={films} />
             }
           </div>
 

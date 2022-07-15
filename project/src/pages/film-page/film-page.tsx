@@ -1,15 +1,16 @@
-import FilmsCard from '../../components/films-card/films-card';
 import Footer from '../../components/footer/footer';
+import ListFilms from '../../components/list-films/list-films';
 import Logo from '../../components/logo/logo';
+import { Films} from '../../types/films';
 
-const SIMILAR_FILMS_MAX = 4;
+// const SIMILAR_FILMS_MAX = 4;
 
-function FilmPage(): JSX.Element {
-  const similarFilms = [];
 
-  for (let i = 0; i < SIMILAR_FILMS_MAX; i++) {
-    similarFilms.push(<FilmsCard />);
-  }
+type FilmPageProps = {
+  films: Films
+}
+
+function FilmPage({ films }: FilmPageProps): JSX.Element {
 
   return (
     <>
@@ -112,7 +113,7 @@ function FilmPage(): JSX.Element {
 
           <div className="catalog__films-list">
             {
-              similarFilms.map((el) => el)
+              <ListFilms films={films} />
             }
           </div>
         </section>
