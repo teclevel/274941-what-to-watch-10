@@ -8,19 +8,15 @@ import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import { AppRoute, AuthorizationStatus } from '../../const';
 import NotFoundPage from '../../pages/not-found-page/not-found-page';
 import PrivateRoute from '../private-route/private-route';
-import { Films } from '../../types/films';
+import { Film, Films } from '../../types/films';
 
 type AppProps = {
-  filmPromo: {
-    title: string,
-    genre: string,
-    release: number
-  },
+  filmPromo: Film,
   films: Films,
-  genres: string[]
+  genres: string[],
 }
 
-function App({ filmPromo, genres, films }: AppProps): JSX.Element {
+function App({ filmPromo, films, genres }: AppProps): JSX.Element {
   return (
     <BrowserRouter>
       <Routes>
@@ -33,16 +29,21 @@ function App({ filmPromo, genres, films }: AppProps): JSX.Element {
 
         <Route path={AppRoute.Film} element={<FilmPage films={films} />} />
 
-        <Route path={AppRoute.AddReview} element={<AddReview />} />
+        <Route path={AppRoute.AddReview} element={
+          <PrivateRoute authorizationStatus={AuthorizationStatus.Auth}>
+            <AddReview films={films} />
+          </PrivateRoute>
+        }
+        />
 
         <Route path={AppRoute.MyList} element={
-          <PrivateRoute authorizationStatus={AuthorizationStatus.NoAuth}>
+          <PrivateRoute authorizationStatus={AuthorizationStatus.Auth}>
             <MyList films={films} />
           </PrivateRoute>
         }
         />
 
-        <Route path={AppRoute.Player} element={<Player />} />
+        <Route path={AppRoute.Player} element={<Player films={films} />} />
 
         <Route path={AppRoute.NotFound} element={<NotFoundPage />} />
 
