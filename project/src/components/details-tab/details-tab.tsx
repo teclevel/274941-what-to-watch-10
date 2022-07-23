@@ -1,5 +1,5 @@
 import { Fragment } from 'react';
-import { Film } from '../../types/films'
+import { Film } from '../../types/films';
 
 type DetailsTabProps = {
   film: Film;
