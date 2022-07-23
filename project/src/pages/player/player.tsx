@@ -1,6 +1,8 @@
 import { useParams } from 'react-router-dom';
 import { Films } from '../../types/films';
 
+const POSTER_DEFAULT = 'img/player-poster.jpg';
+
 type PlayerProps = {
   films: Films
 }
@@ -8,12 +10,11 @@ type PlayerProps = {
 function Player({ films }: PlayerProps): JSX.Element {
   const { id } = useParams();
   const [film] = films.filter((el) => el.id === Number(id));
-  const { videoLink, runTime } = film;
+  const { videoLink, runTime, } = film;
 
   return (
     <div className="player">
-      <video src={videoLink} className="player__video" poster="img/player-poster.jpg"></video>
-
+      <video src={videoLink} className="player__video" poster={POSTER_DEFAULT}></video>
       <button type="button" className="player__exit">Exit</button>
 
       <div className="player__controls">
@@ -32,6 +33,14 @@ function Player({ films }: PlayerProps): JSX.Element {
             </svg>
             <span>Play</span>
           </button>
+          {/* //Pause
+            <button type="button" class="player__play">
+              <svg viewBox="0 0 14 21" width="14" height="21">
+                <use xlink:href="#pause"></use>
+              </svg>
+              <span>Pause</span>
+            </button>
+            */}
           <div className="player__name">Transpotting</div>
 
           <button type="button" className="player__full-screen">
@@ -42,7 +51,7 @@ function Player({ films }: PlayerProps): JSX.Element {
           </button>
         </div>
       </div>
-    </div>
+    </div >
   );
 }
 
