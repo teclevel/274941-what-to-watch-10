@@ -36,7 +36,7 @@ export const films: Films = [
     scoresCount: 140,
     director: 'Wes Anderson2',
     starring: [
-      'Bill Murray', 'Bill Murray'
+      'Bill Murray', 'Bill Murray2'
     ],
     runTime: 90,
     genre: 'Comedy',
