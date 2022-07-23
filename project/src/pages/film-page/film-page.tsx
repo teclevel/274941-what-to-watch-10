@@ -241,12 +241,7 @@ function FilmPage({ films }: FilmPageProps): JSX.Element {
       <div className="page-content">
         <section className="catalog catalog--like-this">
           <h2 className="catalog__title">More like this</h2>
-
-          <div className="catalog__films-list">
-            {
-              <ListFilms films={films} />
-            }
-          </div>
+          <ListFilms films={films} />
         </section>
 
         <Footer />

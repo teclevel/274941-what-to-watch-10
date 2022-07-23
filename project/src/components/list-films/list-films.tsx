@@ -15,7 +15,7 @@ function ListFilms({ films }: ListFilmsProps): JSX.Element {
   console.log(filmId);
 
   return (
-    <>
+    <div className="catalog__films-list">
       {
         films.map((film) => (
           <FilmsCard key={film.id}
@@ -23,7 +23,7 @@ function ListFilms({ films }: ListFilmsProps): JSX.Element {
             film={film}
           />))
       }
-    </>
+    </div>
   );
 }
 
