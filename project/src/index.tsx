@@ -2,6 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom/client';
 import App from './components/app/app';
 import { films, promo } from './mocks/films';
+import { reviews } from './mocks/review';
 
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement,
@@ -16,6 +17,7 @@ root.render(
     <App filmPromo={promo}
       genres={genres}
       films={films}
+      reviews={reviews}
     />
   </React.StrictMode>,
 );

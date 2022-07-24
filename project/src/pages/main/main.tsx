@@ -88,11 +88,7 @@ function Main({ filmPromo, genres, films }: MainProps): JSX.Element {
             }
           </ul>
 
-          <div className="catalog__films-list">
-            {
-              <ListFilms films={films} />
-            }
-          </div>
+          <ListFilms films={films} />
 
           <div className="catalog__more">
             <button className="catalog__button" type="button">Show more</button>
