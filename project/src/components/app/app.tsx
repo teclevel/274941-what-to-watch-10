@@ -8,39 +8,44 @@ import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import { AppRoute, AuthorizationStatus } from '../../const';
 import NotFoundPage from '../../pages/not-found-page/not-found-page';
 import PrivateRoute from '../private-route/private-route';
+import { Film, Films } from '../../types/films';
+import { Reviews } from '../../types/reviews';
 
 type AppProps = {
-  filmPromo: {
-    title: string,
-    genre: string,
-    release: number
-  },
-  genres: string[]
+  filmPromo: Film,
+  films: Films,
+  genres: string[],
+  reviews: Reviews
 }
 
-function App({ filmPromo, genres }: AppProps): JSX.Element {
+function App({ filmPromo, films, genres, reviews}: AppProps): JSX.Element {
   return (
     <BrowserRouter>
       <Routes>
         <Route path={AppRoute.Main} element={
-          <Main filmPromo={filmPromo} genres={genres} />
+          <Main filmPromo={filmPromo} genres={genres} films={films} />
         }
         />
 
         <Route path={AppRoute.Login} element={<SignIn />} />
 
-        <Route path={AppRoute.Film} element={<FilmPage />} />
+        <Route path={AppRoute.Film} element={<FilmPage films={films} reviews={reviews}/>} />
 
-        <Route path={AppRoute.AddReview} element={<AddReview />} />
-
-        <Route path={AppRoute.MyList} element={
-          <PrivateRoute authorizationStatus={AuthorizationStatus.NoAuth}>
-            <MyList />
+        <Route path={AppRoute.AddReview} element={
+          <PrivateRoute authorizationStatus={AuthorizationStatus.Auth}>
+            <AddReview films={films} />
           </PrivateRoute>
         }
         />
 
-        <Route path={AppRoute.Player} element={<Player />} />
+        <Route path={AppRoute.MyList} element={
+          <PrivateRoute authorizationStatus={AuthorizationStatus.Auth}>
+            <MyList films={films} />
+          </PrivateRoute>
+        }
+        />
+
+        <Route path={AppRoute.Player} element={<Player films={films} />} />
 
         <Route path={AppRoute.NotFound} element={<NotFoundPage />} />
 

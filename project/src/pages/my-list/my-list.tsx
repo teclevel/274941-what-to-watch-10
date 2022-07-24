@@ -1,42 +1,31 @@
-import FilmsCard from '../../components/films-card/films-card';
 import Footer from '../../components/footer/footer';
+import ListFilms from '../../components/list-films/list-films';
 import Logo from '../../components/logo/logo';
+import SignOut from '../../components/sign-out/sign-out';
+import { Films } from '../../types/films';
 
-const MY_LIST_COUNT = 9;
 
-function MyList(): JSX.Element {
-  const myFilms = [];
+type MyListProps = {
+  films: Films
+}
 
-  for (let i = 0; i < MY_LIST_COUNT; i++) {
-    myFilms.push(<FilmsCard />);
-  }
+function MyList({ films }: MyListProps): JSX.Element {
+  const myListCount = (films.length);
 
   return (
     <div className="user-page">
       <header className="page-header user-page__head">
         <Logo />
-        <h1 className="page-title user-page__title">My list <span className="user-page__film-count">9</span></h1>
-        <ul className="user-block">
-          <li className="user-block__item">
-            <div className="user-block__avatar">
-              <img src="img/avatar.jpg" alt="User avatar" width="63" height="63" />
-            </div>
-          </li>
-          <li className="user-block__item">
-            <a href="/#" className="user-block__link">Sign out</a>
-          </li>
-        </ul>
+        <h1 className="page-title user-page__title">My list <span className="user-page__film-count">{myListCount}</span></h1>
+        <SignOut />
       </header>
 
       <section className="catalog">
         <h2 className="catalog__title visually-hidden">Catalog</h2>
 
-        <div className="catalog__films-list">
-          {
-            myFilms.map((el) => el)
-          }
-        </div>
-      </section>
+        <ListFilms films={films} />
+
+      </section >
 
       <Footer />
     </div>

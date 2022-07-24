@@ -1,7 +1,18 @@
-function Player(): JSX.Element {
+import { useParams } from 'react-router-dom';
+import { Films } from '../../types/films';
+
+type PlayerProps = {
+  films: Films
+}
+
+function Player({ films }: PlayerProps): JSX.Element {
+  const { id } = useParams();
+  const [film] = films.filter((el) => el.id === Number(id));
+  const { videoLink, runTime } = film;
+
   return (
     <div className="player">
-      <video src="#" className="player__video" poster="img/player-poster.jpg"></video>
+      <video src={videoLink} className="player__video" poster="img/player-poster.jpg"></video>
 
       <button type="button" className="player__exit">Exit</button>
 
@@ -11,7 +22,7 @@ function Player(): JSX.Element {
             <progress className="player__progress" value="30" max="100"></progress>
             <div className="player__toggler" style={{ left: '30%' }}>Toggler</div>
           </div>
-          <div className="player__time-value">1:30:29</div>
+          <div className="player__time-value">{runTime}</div>
         </div>
 
         <div className="player__controls-row">
@@ -31,7 +42,7 @@ function Player(): JSX.Element {
           </button>
         </div>
       </div>
-    </div >
+    </div>
   );
 }
 
