@@ -1,6 +1,7 @@
 import { useNavigate } from 'react-router-dom';
 import Footer from '../../components/footer/footer';
 import ListFilms from '../../components/list-films/list-films';
+import ListGenres from '../../components/list-genres/list-genres';
 import Logo from '../../components/logo/logo';
 import SignOut from '../../components/sign-out/sign-out';
 import { Film, Films } from '../../types/films';
@@ -78,15 +79,7 @@ function Main({ filmPromo, genres, films }: MainProps): JSX.Element {
         <section className="catalog">
           <h2 className="catalog__title visually-hidden">Catalog</h2>
 
-          <ul className="catalog__genres-list">
-            {
-              menuGenres.map((el) => (
-                <li key={el} className="catalog__genres-item catalog__genres-item--active">
-                  <a href="/#" className="catalog__genres-link">{el}</a>
-                </li>
-              ))
-            }
-          </ul>
+          <ListGenres genres={menuGenres} />
 
           <ListFilms films={films} />
 
