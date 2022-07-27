@@ -1,3 +1,5 @@
+import { Link } from 'react-router-dom';
+
 type ListGenresProps = {
   genres: string[]
 }
@@ -8,7 +10,7 @@ function ListGenres({ genres }: ListGenresProps): JSX.Element {
       {
         genres.map((el) => (
           <li key={el} className="catalog__genres-item catalog__genres-item--active">
-            <a href="/#" className="catalog__genres-link">{el}</a>
+            <Link to="#" className="catalog__genres-link">{el}</Link>
           </li>
         ))
       }
