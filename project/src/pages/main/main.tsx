@@ -4,13 +4,20 @@ import ListFilms from '../../components/list-films/list-films';
 import ListGenres from '../../components/list-genres/list-genres';
 import Logo from '../../components/logo/logo';
 import SignOut from '../../components/sign-out/sign-out';
+import { films } from '../../mocks/films';
+import { store } from '../../store';
 import { Film, Films } from '../../types/films';
 
 // const NUMBER_FILMS = 20;
 
-function getItemsMenuGenres(genres: string[]): string[] {
-  return ['All Genres', ...genres];
+function getListGenres(list:Films) {
+  const set = new Set();
+  list.forEach((el) => set.add(el.genre));
+  // console.log(['All Genres', ...Array.from(set)])
+  return ['All Genres', ...Array.from(set)];
 }
+
+const genres = getListGenres(films);
 
 type MainProps = {
   filmPromo: Film,
@@ -18,9 +25,8 @@ type MainProps = {
   films: Films
 }
 
-function Main({ filmPromo, genres, films }: MainProps): JSX.Element {
+function Main({ filmPromo, films }: MainProps): JSX.Element {
   const { id, backgroundImage, posterImage, name, genre, released } = filmPromo;
-  const menuGenres = getItemsMenuGenres(genres);
 
   const navigate = useNavigate();
   const onClickPlayHandler = () => navigate(`/player/${id.toString()}`);
@@ -79,7 +85,7 @@ function Main({ filmPromo, genres, films }: MainProps): JSX.Element {
         <section className="catalog">
           <h2 className="catalog__title visually-hidden">Catalog</h2>
 
-          <ListGenres genres={menuGenres} />
+          <ListGenres genres={genres} />
 
           <ListFilms films={films} />
 

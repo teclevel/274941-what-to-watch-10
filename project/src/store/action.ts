@@ -1,5 +1,6 @@
 import { createAction } from '@reduxjs/toolkit';
 
-const changeGenre = createAction('CHANGE_GENRE');
+const getGenre = createAction('GET_GENRES');
+const getListFilms = createAction('GET_LIST_FILMS');
 
-export {changeGenre};
+export {getGenre, getListFilms};

@@ -23,7 +23,7 @@ function App({ filmPromo, films, genres, reviews}: AppProps): JSX.Element {
     <BrowserRouter>
       <Routes>
         <Route path={AppRoute.Main} element={
-          <Main filmPromo={filmPromo} genres={genres} films={films} />
+          <Main filmPromo={filmPromo} films={films} />
         }
         />
 
