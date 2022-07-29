@@ -10,7 +10,7 @@ export const initialState = {
 export const reducer = createReducer(initialState, (builder) => {
   builder
     .addCase(getGenre, (state) => {
-      state.genre = 'New genre';
+      state.genre = '';
     })
     .addCase(getListFilms, (state) => {
       state.films = films;
