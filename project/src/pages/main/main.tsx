@@ -16,10 +16,9 @@ type MainProps = {
 
 function Main({ filmPromo, genres }: MainProps): JSX.Element {
   const { id, backgroundImage, posterImage, name, genre, released } = filmPromo;
+
   const films = useAppSelector((state) => state.films);
   const genreCurrent = useAppSelector((state) => state.genre);
-console.log(films);
-console.log(genreCurrent);
 
   function getListFiltered(list: Films, genreName: string): Films {
     return list.filter((film) => film.genre === genreName);

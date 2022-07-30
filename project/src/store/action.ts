@@ -1,6 +1,13 @@
 import { createAction } from '@reduxjs/toolkit';
 
-const getGenre = createAction('GET_GENRES');
-const getListFilms = createAction('GET_LIST_FILMS');
+const changeGenre = createAction('main/changeGenre', (value) => (
+  {
+    payload: value,
+  }
+));
 
-export {getGenre, getListFilms};
+const getListFilms = createAction('main/getListFilms');
+const filterOfGenre = createAction('main/filterOfGenre');
+const resetFilter = createAction('main/resetFilter');
+
+export { changeGenre, getListFilms, filterOfGenre, resetFilter };

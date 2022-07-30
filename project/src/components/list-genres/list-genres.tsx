@@ -1,7 +1,6 @@
-// import { useRef } from 'react';
 import { Link } from 'react-router-dom';
-import { useAppDispatch } from '../../hooks';
-import { getGenre } from '../../store/action';
+import { useAppDispatch, useAppSelector } from '../../hooks';
+import { changeGenre } from '../../store/action';
 
 type ListGenresProps = {
   genres: string[]
@@ -9,15 +8,18 @@ type ListGenresProps = {
 
 function ListGenres({ genres }: ListGenresProps): JSX.Element {
   const dispatch = useAppDispatch();
+  const genreCurrent = useAppSelector((state) => state.genre);
 
-  // const itemActive = 'catalog__genres-item--active';
+  const itemClass = 'catalog__genres-item';
+  const itemActiveClass = 'catalog__genres-item catalog__genres-item--active';
+
   return (
     <ul className="catalog__genres-list">
       {
         genres.map((el) => (
-          <li key={el} className="catalog__genres-item item"
-            // eslint-disable-next-line no-console
-            onClick={() => dispatch(getGenre)}
+          <li key={el}
+            className={el === genreCurrent ? itemActiveClass : itemClass}
+            onClick={() => dispatch(changeGenre(el))}
           >
             <Link to="#" className="catalog__genres-link">{el}</Link>
           </li>

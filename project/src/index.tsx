@@ -21,12 +21,14 @@ function getListGenres(list: Films) {
 const genres = getListGenres(films);
 
 root.render(
-  <Provider store={store}>
-    <App
-      filmPromo={promo}
-      genres={genres}
-      films={films}
-      reviews={reviews}
-    />
-  </Provider>,
+  <React.StrictMode>
+    <Provider store={store}>
+      <App
+        filmPromo={promo}
+        genres={genres}
+        films={films}
+        reviews={reviews}
+      />
+    </Provider>
+  </React.StrictMode>
 );
