@@ -11,20 +11,13 @@ import { Film, Films } from '../../types/films';
 
 type MainProps = {
   filmPromo: Film,
-  genres: string[]
+  films: Films
 }
 
-function Main({ filmPromo, genres }: MainProps): JSX.Element {
+function Main({ filmPromo, films }: MainProps): JSX.Element {
   const { id, backgroundImage, posterImage, name, genre, released } = filmPromo;
 
-  const films = useAppSelector((state) => state.films);
-  const genreCurrent = useAppSelector((state) => state.genre);
-
-  function getListFiltered(list: Films, genreName: string): Films {
-    return list.filter((film) => film.genre === genreName);
-  }
-
-  const filmsFiltered = getListFiltered(films, genreCurrent);
+  const filteredFilms = useAppSelector((state) => state.films);
 
   const navigate = useNavigate();
   const onClickPlayHandler = () => navigate(`/player/${id.toString()}`);
@@ -83,9 +76,9 @@ function Main({ filmPromo, genres }: MainProps): JSX.Element {
         <section className="catalog">
           <h2 className="catalog__title visually-hidden">Catalog</h2>
 
-          <ListGenres genres={genres} />
+          <ListGenres films={films} />
 
-          <ListFilms films={filmsFiltered} />
+          <ListFilms films={filteredFilms} />
 
           <div className="catalog__more">
             <button className="catalog__button" type="button">Show more</button>

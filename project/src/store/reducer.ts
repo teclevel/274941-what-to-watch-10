@@ -1,16 +1,16 @@
 import { createReducer } from '@reduxjs/toolkit';
 import { films } from '../mocks/films';
-import { changeGenre, filterOfGenre, getListFilms } from './action';
+import { changeGenre, filterOfGenre, resetFilter} from './action';
+import { Films } from '../types/films';
+import { ALL_GENRES } from '../const';
 
 
-// function getListFiltered(list: Films, genreName: string): Films {
-//   return list.filter((film) => film.genre === genreName);
-// }
-
-// const filmsFiltered = getListFiltered(films, genreCurrent);
+function getListFiltered(list: Films, genreName: string): Films {
+  return list.filter((film) => film.genre === genreName);
+}
 
 export const initialState = {
-  genre: 'All genres',
+  genre: ALL_GENRES,
   films: films
 };
 
@@ -19,11 +19,10 @@ export const reducer = createReducer(initialState, (builder) => {
     .addCase(changeGenre, (state, action) => {
       state.genre = action.payload;
     })
-    .addCase(getListFilms, (state) => {
+    .addCase(resetFilter, (state) => {
       state.films = films;
+    })
+    .addCase(filterOfGenre, (state) => {
+      state.films = getListFiltered(state.films, state.genre);
     });
-    // addCase(filterOfGenre, (state)=> {
-    //   state.films
-    // });
 });
-

@@ -6,8 +6,7 @@ const changeGenre = createAction('main/changeGenre', (value) => (
   }
 ));
 
-const getListFilms = createAction('main/getListFilms');
 const filterOfGenre = createAction('main/filterOfGenre');
 const resetFilter = createAction('main/resetFilter');
 
-export { changeGenre, getListFilms, filterOfGenre, resetFilter };
+export { changeGenre, filterOfGenre, resetFilter };
