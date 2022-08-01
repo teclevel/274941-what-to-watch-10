@@ -13,13 +13,10 @@ function getListGenres(list: Films) {
 }
 
 
-type ListGenresProps = {
-  films: Films;
-}
-
-function ListGenres({ films }: ListGenresProps): JSX.Element {
+function ListGenres(): JSX.Element {
   const dispatch = useAppDispatch();
   const genreCurrent = useAppSelector((state) => state.genre);
+  const films = useAppSelector((state) => state.films);
   const genres = getListGenres(films);
 
   const itemClass = 'catalog__genres-item';
@@ -34,10 +31,10 @@ function ListGenres({ films }: ListGenresProps): JSX.Element {
             onClick={
               el === ALL_GENRES ?
                 () => {
-                  dispatch(resetFilter());
+                  // dispatch(resetFilter());
                   dispatch(changeGenre(el));
                 } : () => {
-                  dispatch(resetFilter());
+                  // dispatch(resetFilter());
                   dispatch(changeGenre(el));
                   dispatch(filterOfGenre());
                 }

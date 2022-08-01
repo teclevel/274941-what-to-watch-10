@@ -5,16 +5,16 @@ import ListGenres from '../../components/list-genres/list-genres';
 import Logo from '../../components/logo/logo';
 import SignOut from '../../components/sign-out/sign-out';
 import { useAppSelector } from '../../hooks';
-import { Film, Films } from '../../types/films';
+import { Film/* , Films  */ } from '../../types/films';
 
 // const NUMBER_FILMS = 20;
 
 type MainProps = {
   filmPromo: Film,
-  films: Films
+  // films: Films
 }
 
-function Main({ filmPromo, films }: MainProps): JSX.Element {
+function Main({ filmPromo/* , films  */ }: MainProps): JSX.Element {
   const { id, backgroundImage, posterImage, name, genre, released } = filmPromo;
 
   const filteredFilms = useAppSelector((state) => state.films);
@@ -76,7 +76,7 @@ function Main({ filmPromo, films }: MainProps): JSX.Element {
         <section className="catalog">
           <h2 className="catalog__title visually-hidden">Catalog</h2>
 
-          <ListGenres films={films} />
+          <ListGenres /* films={films} */ />
 
           <ListFilms films={filteredFilms} />
 

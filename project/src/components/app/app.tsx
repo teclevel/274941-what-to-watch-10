@@ -5,11 +5,14 @@ import FilmPage from '../../pages/film-page/film-page';
 import AddReview from '../../pages/add-review/add-review';
 import Player from '../../pages/player/player';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
-import { AppRoute, AuthorizationStatus } from '../../const';
+import { AppRoute } from '../../const';
 import NotFoundPage from '../../pages/not-found-page/not-found-page';
 import PrivateRoute from '../private-route/private-route';
 import { Film, Films } from '../../types/films';
 import { Reviews } from '../../types/reviews';
+import { useAppSelector } from '../../hooks';
+import LoadingScreen from '../../pages/loading-screen/loading-screen';
+import { isCheckedAuth } from '../../main';
 
 type AppProps = {
   filmPromo: Film,
@@ -18,11 +21,18 @@ type AppProps = {
 }
 
 function App({ filmPromo, films, reviews }: AppProps): JSX.Element {
+  const { authorizationStatus, isDataLoaded } = useAppSelector((state) => state);
+
+  if (isCheckedAuth(authorizationStatus) || isDataLoaded) {
+    return (
+      <LoadingScreen />
+    );
+  }
   return (
     <BrowserRouter>
       <Routes>
         <Route path={AppRoute.Main} element={
-          <Main filmPromo={filmPromo} films={films} />
+          <Main filmPromo={filmPromo} /* films={films} */ />
         }
         />
 
@@ -31,14 +41,14 @@ function App({ filmPromo, films, reviews }: AppProps): JSX.Element {
         <Route path={AppRoute.Film} element={<FilmPage films={films} reviews={reviews} />} />
 
         <Route path={AppRoute.AddReview} element={
-          <PrivateRoute authorizationStatus={AuthorizationStatus.Auth}>
+          <PrivateRoute authorizationStatus={authorizationStatus}>
             <AddReview films={films} />
           </PrivateRoute>
         }
         />
 
         <Route path={AppRoute.MyList} element={
-          <PrivateRoute authorizationStatus={AuthorizationStatus.Auth}>
+          <PrivateRoute authorizationStatus={authorizationStatus}>
             <MyList films={films} />
           </PrivateRoute>
         }
