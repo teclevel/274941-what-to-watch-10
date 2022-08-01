@@ -14,22 +14,21 @@ import { Reviews } from '../../types/reviews';
 type AppProps = {
   filmPromo: Film,
   films: Films,
-  genres: string[],
   reviews: Reviews
 }
 
-function App({ filmPromo, films, genres, reviews}: AppProps): JSX.Element {
+function App({ filmPromo, films, reviews }: AppProps): JSX.Element {
   return (
     <BrowserRouter>
       <Routes>
         <Route path={AppRoute.Main} element={
-          <Main filmPromo={filmPromo} genres={genres} films={films} />
+          <Main filmPromo={filmPromo} films={films} />
         }
         />
 
         <Route path={AppRoute.Login} element={<SignIn />} />
 
-        <Route path={AppRoute.Film} element={<FilmPage films={films} reviews={reviews}/>} />
+        <Route path={AppRoute.Film} element={<FilmPage films={films} reviews={reviews} />} />
 
         <Route path={AppRoute.AddReview} element={
           <PrivateRoute authorizationStatus={AuthorizationStatus.Auth}>

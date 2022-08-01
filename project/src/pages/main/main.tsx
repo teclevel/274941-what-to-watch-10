@@ -1,25 +1,23 @@
 import { useNavigate } from 'react-router-dom';
 import Footer from '../../components/footer/footer';
 import ListFilms from '../../components/list-films/list-films';
+import ListGenres from '../../components/list-genres/list-genres';
 import Logo from '../../components/logo/logo';
 import SignOut from '../../components/sign-out/sign-out';
+import { useAppSelector } from '../../hooks';
 import { Film, Films } from '../../types/films';
 
 // const NUMBER_FILMS = 20;
 
-function getItemsMenuGenres(genres: string[]): string[] {
-  return ['All Genres', ...genres];
-}
-
 type MainProps = {
   filmPromo: Film,
-  genres: string[]
   films: Films
 }
 
-function Main({ filmPromo, genres, films }: MainProps): JSX.Element {
+function Main({ filmPromo, films }: MainProps): JSX.Element {
   const { id, backgroundImage, posterImage, name, genre, released } = filmPromo;
-  const menuGenres = getItemsMenuGenres(genres);
+
+  const filteredFilms = useAppSelector((state) => state.films);
 
   const navigate = useNavigate();
   const onClickPlayHandler = () => navigate(`/player/${id.toString()}`);
@@ -78,17 +76,9 @@ function Main({ filmPromo, genres, films }: MainProps): JSX.Element {
         <section className="catalog">
           <h2 className="catalog__title visually-hidden">Catalog</h2>
 
-          <ul className="catalog__genres-list">
-            {
-              menuGenres.map((el) => (
-                <li key={el} className="catalog__genres-item catalog__genres-item--active">
-                  <a href="/#" className="catalog__genres-link">{el}</a>
-                </li>
-              ))
-            }
-          </ul>
+          <ListGenres films={films} />
 
-          <ListFilms films={films} />
+          <ListFilms films={filteredFilms} />
 
           <div className="catalog__more">
             <button className="catalog__button" type="button">Show more</button>
