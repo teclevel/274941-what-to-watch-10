@@ -14,7 +14,7 @@ function Main(): JSX.Element {
 
   const { id, backgroundImage, posterImage, name, genre, released } = filmPromo;
 
-  const films = useAppSelector((state) => state.films);
+  const filteredFilms = useAppSelector((state) => state.filteredFilms);
 
   const navigate = useNavigate();
   const onClickPlayHandler = () => navigate(`/player/${id.toString()}`);
@@ -75,7 +75,7 @@ function Main(): JSX.Element {
 
           <ListGenres />
 
-          <ListFilms films={films} />
+          <ListFilms films={filteredFilms} />
 
           <div className="catalog__more">
             <button className="catalog__button" type="button">Show more</button>

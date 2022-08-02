@@ -10,7 +10,7 @@ const changeGenre = createAction('main/changeGenre', (value) => (
 ));
 
 const filterOfGenre = createAction('main/filterOfGenre');
-const resetFilter = createAction<Films>('main/resetFilter');
+const resetFilter = createAction('main/resetFilter');
 const loadFilms = createAction<Films>('data/loadFilms');
 const loadPromo = createAction<Film>('data/loadPromo');
 const requireAuthorization = createAction<AuthorizationStatus>('user/requireAuthorization');
