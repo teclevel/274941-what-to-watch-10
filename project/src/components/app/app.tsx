@@ -8,19 +8,11 @@ import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import { AppRoute } from '../../const';
 import NotFoundPage from '../../pages/not-found-page/not-found-page';
 import PrivateRoute from '../private-route/private-route';
-import { Film, Films } from '../../types/films';
-import { Reviews } from '../../types/reviews';
 import { useAppSelector } from '../../hooks';
 import LoadingScreen from '../../pages/loading-screen/loading-screen';
 import { isCheckedAuth } from '../../main';
 
-type AppProps = {
-  filmPromo: Film,
-  films: Films,
-  reviews: Reviews
-}
-
-function App({ filmPromo, films, reviews }: AppProps): JSX.Element {
+function App(): JSX.Element {
   const { authorizationStatus, isDataLoaded } = useAppSelector((state) => state);
 
   if (isCheckedAuth(authorizationStatus) || isDataLoaded) {
@@ -31,30 +23,27 @@ function App({ filmPromo, films, reviews }: AppProps): JSX.Element {
   return (
     <BrowserRouter>
       <Routes>
-        <Route path={AppRoute.Main} element={
-          <Main filmPromo={filmPromo} /* films={films} */ />
-        }
-        />
+        <Route path={AppRoute.Main} element={<Main />} />
 
         <Route path={AppRoute.Login} element={<SignIn />} />
 
-        <Route path={AppRoute.Film} element={<FilmPage films={films} reviews={reviews} />} />
+        <Route path={AppRoute.Film} element={<FilmPage />} />
 
         <Route path={AppRoute.AddReview} element={
           <PrivateRoute authorizationStatus={authorizationStatus}>
-            <AddReview films={films} />
+            <AddReview />
           </PrivateRoute>
         }
         />
 
         <Route path={AppRoute.MyList} element={
           <PrivateRoute authorizationStatus={authorizationStatus}>
-            <MyList films={films} />
+            <MyList />
           </PrivateRoute>
         }
         />
 
-        <Route path={AppRoute.Player} element={<Player films={films} />} />
+        <Route path={AppRoute.Player} element={<Player />} />
 
         <Route path={AppRoute.NotFound} element={<NotFoundPage />} />
 

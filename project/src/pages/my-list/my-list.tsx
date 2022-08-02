@@ -2,14 +2,11 @@ import Footer from '../../components/footer/footer';
 import ListFilms from '../../components/list-films/list-films';
 import Logo from '../../components/logo/logo';
 import SignOut from '../../components/sign-out/sign-out';
-import { Films } from '../../types/films';
+import { useAppSelector } from '../../hooks';
 
 
-type MyListProps = {
-  films: Films
-}
-
-function MyList({ films }: MyListProps): JSX.Element {
+function MyList(): JSX.Element {
+  const films = useAppSelector((state) => state.films);
   const myListCount = (films.length);
 
   return (

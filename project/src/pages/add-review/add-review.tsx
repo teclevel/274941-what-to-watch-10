@@ -2,13 +2,11 @@ import { Link, useParams } from 'react-router-dom';
 import Form from '../../components/form/form';
 import Logo from '../../components/logo/logo';
 import SignOut from '../../components/sign-out/sign-out';
-import { Films } from '../../types/films';
+import { useAppSelector } from '../../hooks';
 
-type AddReviewProps = {
-  films: Films,
-};
 
-function AddReview({ films }: AddReviewProps): JSX.Element {
+function AddReview(): JSX.Element {
+  const films = useAppSelector((state)=>state.films);
   const { id } = useParams();
   const [film] = films.filter((el) => el.id === Number(id));
   const { name, backgroundImage, posterImage } = film;

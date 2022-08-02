@@ -5,19 +5,16 @@ import ListGenres from '../../components/list-genres/list-genres';
 import Logo from '../../components/logo/logo';
 import SignOut from '../../components/sign-out/sign-out';
 import { useAppSelector } from '../../hooks';
-import { Film/* , Films  */ } from '../../types/films';
 
-// const NUMBER_FILMS = 20;
+// const NEXT_NUMBER_FILMS = 8;
 
-type MainProps = {
-  filmPromo: Film,
-  // films: Films
-}
 
-function Main({ filmPromo/* , films  */ }: MainProps): JSX.Element {
+function Main(): JSX.Element {
+  const filmPromo = useAppSelector((state) => state.promo);
+
   const { id, backgroundImage, posterImage, name, genre, released } = filmPromo;
 
-  const filteredFilms = useAppSelector((state) => state.films);
+  const films = useAppSelector((state) => state.films);
 
   const navigate = useNavigate();
   const onClickPlayHandler = () => navigate(`/player/${id.toString()}`);
@@ -76,9 +73,9 @@ function Main({ filmPromo/* , films  */ }: MainProps): JSX.Element {
         <section className="catalog">
           <h2 className="catalog__title visually-hidden">Catalog</h2>
 
-          <ListGenres /* films={films} */ />
+          <ListGenres />
 
-          <ListFilms films={filteredFilms} />
+          <ListFilms films={films} />
 
           <div className="catalog__more">
             <button className="catalog__button" type="button">Show more</button>

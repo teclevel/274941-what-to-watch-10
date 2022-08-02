@@ -6,19 +6,14 @@ import Logo from '../../components/logo/logo';
 import OverViewTab from '../../components/overveiw-tab/overveiw-tab';
 // import ReviewTab from '../../components/review-tab/review-tab';
 import SignOut from '../../components/sign-out/sign-out';
-import { Films } from '../../types/films';
-import { Reviews } from '../../types/reviews';
+import { useAppSelector } from '../../hooks';
 
 // const SIMILAR_FILMS_MAX = 4;
 const FILMS_CARD_COUNT = 9;
 
-type FilmPageProps = {
-  films: Films,
-  reviews: Reviews
-};
-
-function FilmPage({ films, reviews }: FilmPageProps): JSX.Element {
+function FilmPage(): JSX.Element {
   const { id } = useParams();
+  const films = useAppSelector((state) => state.films);
   const [film] = films.filter((el) => el.id === Number(id));
 
   const { backgroundImage, name, genre, released, posterImage } = film;

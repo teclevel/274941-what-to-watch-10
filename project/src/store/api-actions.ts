@@ -4,10 +4,10 @@ import { store } from '.';
 import { APIRoute, AuthorizationStatus, TIMEOUT_SHOW_ERROR } from '../const';
 import { dropToken, saveToken } from '../services/token';
 import { AuthData } from '../types/auth-data';
-import { Films } from '../types/films';
+import { Film, Films } from '../types/films';
 import { AppDispatch, State } from '../types/state';
 import { UserData } from '../types/user-data';
-import { loadFilms, requireAuthorization, setDataLoadedStatus, setError } from './action';
+import { loadFilms, loadPromo, requireAuthorization, setDataLoadedStatus, setError } from './action';
 
 
 export const clearErrorAction = createAsyncThunk(
@@ -31,6 +31,20 @@ export const fetchFilmsAction = createAsyncThunk<void, undefined, {
     dispatch(setDataLoadedStatus(true));
     dispatch(loadFilms(data));
     dispatch(setDataLoadedStatus(false));
+  },
+);
+
+export const fetchLoadPromoAction = createAsyncThunk<void, undefined, {
+  dispatch: AppDispatch,
+  state: State,
+  extra: AxiosInstance
+}>(
+  'data/fetchLoadPromo',
+  async (_arg, { dispatch, extra: api }) => {
+    const { data } = await api.get<Film>(APIRoute.Promo);
+    // dispatch(setDataLoadedStatus(true));
+    dispatch(loadPromo(data));
+    // dispatch(setDataLoadedStatus(false));
   },
 );
 

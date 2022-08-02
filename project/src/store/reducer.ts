@@ -1,7 +1,6 @@
 import { createReducer } from '@reduxjs/toolkit';
-// import { films } from '../mocks/films';
-import { changeGenre, filterOfGenre, loadFilms, requireAuthorization, setDataLoadedStatus, setError, /* resetFilter */ } from './action';
-import { Films } from '../types/films';
+import { changeGenre, filterOfGenre, loadFilms, loadPromo, requireAuthorization, setDataLoadedStatus, setError, /* resetFilter */ } from './action';
+import { Film, Films } from '../types/films';
 import { ALL_GENRES, AuthorizationStatus } from '../const';
 
 
@@ -12,6 +11,7 @@ function getListFiltered(list: Films, genreName: string): Films {
 type InitialState = {
   genre: string,
   films: Films,
+  promo: Film,
   authorizationStatus: AuthorizationStatus
   isDataLoaded: boolean,
   error: string | null,
@@ -20,6 +20,7 @@ type InitialState = {
 export const initialState: InitialState = {
   genre: ALL_GENRES,
   films: [],
+  promo: {} as Film,
   authorizationStatus: AuthorizationStatus.Unknown,
   isDataLoaded: false,
   error: null,
@@ -41,6 +42,9 @@ export const reducer = createReducer(initialState, (builder) => {
     })
     .addCase(loadFilms, (state, action) => {
       state.films = action.payload;
+    })
+    .addCase(loadPromo, (state, action) => {
+      state.promo = action.payload;
     })
     .addCase(requireAuthorization, (state, action) => {
       state.authorizationStatus = action.payload;
