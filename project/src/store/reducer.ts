@@ -11,7 +11,7 @@ function getListFiltered(list: Films, genreName: string): Films {
 type InitialState = {
   genre: string,
   films: Films,
-  filteredFilms:Films,
+  filteredFilms: Films,
   promo: Film,
   authorizationStatus: AuthorizationStatus
   isDataLoaded: boolean,
@@ -41,6 +41,7 @@ export const reducer = createReducer(initialState, (builder) => {
     })
     .addCase(loadFilms, (state, action) => {
       state.films = action.payload;
+      state.filteredFilms = action.payload;
     })
     .addCase(loadPromo, (state, action) => {
       state.promo = action.payload;

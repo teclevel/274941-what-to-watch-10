@@ -20,14 +20,14 @@ function ListGenres(): JSX.Element {
   const dispatch = useAppDispatch();
 
   const itemClass = 'catalog__genres-item';
-  const itemActiveClass = 'catalog__genres-item catalog__genres-item--active';
+  const itemActiveClass = 'catalog__genres-item--active';
 
   return (
     <ul className="catalog__genres-list">
       {
         genres.map((el) => (
           <li key={el}
-            className={el === genreCurrent ? itemActiveClass : itemClass}
+            className={el === genreCurrent ? `${itemClass} ${itemActiveClass}` : itemClass}
             onClick={
               el === ALL_GENRES ?
                 () => {

@@ -11,9 +11,7 @@ import { useAppSelector } from '../../hooks';
 
 function Main(): JSX.Element {
   const filmPromo = useAppSelector((state) => state.promo);
-
   const { id, backgroundImage, posterImage, name, genre, released } = filmPromo;
-
   const filteredFilms = useAppSelector((state) => state.filteredFilms);
 
   const navigate = useNavigate();
@@ -29,7 +27,7 @@ function Main(): JSX.Element {
         <h1 className="visually-hidden">WTW</h1>
 
         <header className="page-header film-card__head">
-          <Logo />{/* отключить переход по ссылке */}
+          <Logo />
           <SignOut />
         </header>
 
@@ -82,7 +80,7 @@ function Main(): JSX.Element {
           </div>
         </section>
 
-        <Footer />{/* отключить переход по ссылке */}
+        <Footer />
       </div>
     </>
   );
