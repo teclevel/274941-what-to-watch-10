@@ -1,17 +1,31 @@
 import { createReducer } from '@reduxjs/toolkit';
-import { films } from '../mocks/films';
-import { changeGenre, filterOfGenre, resetFilter} from './action';
-import { Films } from '../types/films';
-import { ALL_GENRES } from '../const';
+import { changeGenre, filterOfGenre, loadFilms, loadPromo, requireAuthorization, setDataLoadedStatus, setError, resetFilter } from './action';
+import { Film, Films } from '../types/films';
+import { ALL_GENRES, AuthorizationStatus } from '../const';
 
 
 function getListFiltered(list: Films, genreName: string): Films {
   return list.filter((film) => film.genre === genreName);
 }
 
-export const initialState = {
+type InitialState = {
+  genre: string,
+  films: Films,
+  filteredFilms: Films,
+  promo: Film,
+  authorizationStatus: AuthorizationStatus
+  isDataLoaded: boolean,
+  error: string | null,
+}
+
+export const initialState: InitialState = {
   genre: ALL_GENRES,
-  films: films
+  films: [],
+  filteredFilms: [],
+  promo: {} as Film,
+  authorizationStatus: AuthorizationStatus.Unknown,
+  isDataLoaded: false,
+  error: null,
 };
 
 export const reducer = createReducer(initialState, (builder) => {
@@ -20,9 +34,25 @@ export const reducer = createReducer(initialState, (builder) => {
       state.genre = action.payload;
     })
     .addCase(resetFilter, (state) => {
-      state.films = films;
+      state.filteredFilms = state.films;
     })
     .addCase(filterOfGenre, (state) => {
-      state.films = getListFiltered(state.films, state.genre);
+      state.filteredFilms = getListFiltered(state.filteredFilms, state.genre);
+    })
+    .addCase(loadFilms, (state, action) => {
+      state.films = action.payload;
+      state.filteredFilms = action.payload;
+    })
+    .addCase(loadPromo, (state, action) => {
+      state.promo = action.payload;
+    })
+    .addCase(requireAuthorization, (state, action) => {
+      state.authorizationStatus = action.payload;
+    })
+    .addCase(setDataLoadedStatus, (state, action) => {
+      state.isDataLoaded = action.payload;
+    })
+    .addCase(setError, (state, action) => {
+      state.error = action.payload;
     });
 });
