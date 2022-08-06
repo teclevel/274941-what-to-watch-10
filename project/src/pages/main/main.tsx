@@ -1,21 +1,28 @@
+// import { useEffect, useState } from 'react';
+import { FC } from 'react';
 import { useNavigate } from 'react-router-dom';
+import ButtonShowMore from '../../components/button-show-more/button-show-more';
 import Footer from '../../components/footer/footer';
 import ListFilms from '../../components/list-films/list-films';
 import ListGenres from '../../components/list-genres/list-genres';
 import Logo from '../../components/logo/logo';
 import SignOut from '../../components/sign-out/sign-out';
-import { useAppSelector } from '../../hooks';
-
-// const NEXT_NUMBER_FILMS = 8;
-
+import { useAppDispatch, useAppSelector } from '../../hooks';
 
 function Main(): JSX.Element {
   const filmPromo = useAppSelector((state) => state.promo);
   const { id, backgroundImage, posterImage, name, genre, released } = filmPromo;
-  const filteredFilms = useAppSelector((state) => state.filteredFilms);
+  const films = useAppSelector((state) => state.films);
 
+  const dispatch = useAppDispatch();
+  
   const navigate = useNavigate();
   const onClickPlayHandler = () => navigate(`/player/${id.toString()}`);
+
+  const showMoreButtonClickHandle = () => {
+    // dispatch(renderFilmsPerStep());
+  };
+
 
   return (
     <>
@@ -72,12 +79,12 @@ function Main(): JSX.Element {
           <h2 className="catalog__title visually-hidden">Catalog</h2>
 
           <ListGenres />
+          <ListFilms films={films} />
+          {
+            // films.length === filteredFilms.length ? '' :
+            <ButtonShowMore onClick={showMoreButtonClickHandle} />
+          }
 
-          <ListFilms films={filteredFilms} />
-
-          <div className="catalog__more">
-            <button className="catalog__button" type="button">Show more</button>
-          </div>
         </section>
 
         <Footer />

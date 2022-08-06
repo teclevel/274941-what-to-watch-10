@@ -13,7 +13,7 @@ const FILMS_CARD_COUNT = 9;
 
 function FilmPage(): JSX.Element {
   const { id } = useParams();
-  const films = useAppSelector((state) => state.films);
+  const films = useAppSelector((state) => state.rawFilms);
   const [film] = films.filter((el) => el.id === Number(id));
 
   const { backgroundImage, name, genre, released, posterImage } = film;

@@ -6,7 +6,7 @@ import { useAppSelector } from '../../hooks';
 
 
 function MyList(): JSX.Element {
-  const films = useAppSelector((state) => state.films);
+  const films = useAppSelector((state) => state.rawFilms);
   const myListCount = (films.length);
 
   return (

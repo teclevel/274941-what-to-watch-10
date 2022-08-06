@@ -1,27 +1,30 @@
-import { createReducer } from '@reduxjs/toolkit';
-import { changeGenre, filterOfGenre, loadFilms, loadPromo, requireAuthorization, setDataLoadedStatus, setError, resetFilter } from './action';
+import {
+  changeGenre, filterOfGenre as filterByGenre, loadFilms, loadPromo,
+  requireAuthorization, setDataLoadedStatus, setError,
+  resetFilter
+} from './action';
 import { Film, Films } from '../types/films';
+import { InitialState } from '../types/initialState';
+import { createReducer } from '@reduxjs/toolkit';
 import { ALL_GENRES, AuthorizationStatus } from '../const';
 
 
 function getListFiltered(list: Films, genreName: string): Films {
+  if (genreName === ALL_GENRES) {
+    return list;
+  }
   return list.filter((film) => film.genre === genreName);
 }
 
-type InitialState = {
-  genre: string,
-  films: Films,
-  filteredFilms: Films,
-  promo: Film,
-  authorizationStatus: AuthorizationStatus
-  isDataLoaded: boolean,
-  error: string | null,
-}
+const FILMS_PER_PAGE = 8;
+
 
 export const initialState: InitialState = {
-  genre: ALL_GENRES,
+  rawFilms: [],
   films: [],
-  filteredFilms: [],
+  filter: {
+    genre: ALL_GENRES,
+  },
   promo: {} as Film,
   authorizationStatus: AuthorizationStatus.Unknown,
   isDataLoaded: false,
@@ -31,17 +34,19 @@ export const initialState: InitialState = {
 export const reducer = createReducer(initialState, (builder) => {
   builder
     .addCase(changeGenre, (state, action) => {
-      state.genre = action.payload;
+      state.filter.genre = action.payload;
     })
     .addCase(resetFilter, (state) => {
-      state.filteredFilms = state.films;
+      state.filter = {
+        genre: ALL_GENRES,
+      };
     })
-    .addCase(filterOfGenre, (state) => {
-      state.filteredFilms = getListFiltered(state.filteredFilms, state.genre);
+    .addCase(filterByGenre, (state) => {
+      state.films = getListFiltered(state.rawFilms, state.filter.genre);
     })
     .addCase(loadFilms, (state, action) => {
+      state.rawFilms = action.payload;
       state.films = action.payload;
-      state.filteredFilms = action.payload;
     })
     .addCase(loadPromo, (state, action) => {
       state.promo = action.payload;

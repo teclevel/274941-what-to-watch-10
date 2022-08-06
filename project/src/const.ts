@@ -1,3 +1,17 @@
+export const ALL_GENRES = 'All genres';
+
+export const BACKEND_URL = 'https://10.react.pages.academy/wtw';
+export const REQUEST_TIMEOUT = 5000;
+
+export const AUTH_TOKEN_KEY_NAME = 'What-to-watch-token';
+export const TIMEOUT_SHOW_ERROR = 2000;
+
+export enum AuthorizationStatus {
+  Auth = 'AUTH',
+  NoAuth = 'NO_AUTH',
+  Unknown = 'UNKNOWN'
+}
+
 export enum AppRoute {
   Main = '/',
   Login = '/login',
@@ -6,12 +20,6 @@ export enum AppRoute {
   MyList = '/my-list',
   Player = '/player/:id',
   NotFound = '*'
-}
-
-export enum AuthorizationStatus {
-  Auth = 'AUTH',
-  NoAuth = 'NO_AUTH',
-  Unknown = 'UNKNOWN'
 }
 
 export enum APIRoute {
@@ -25,10 +33,3 @@ export enum APIRoute {
   Comments='/comments/filmId',
 }
 
-export const ALL_GENRES = 'All genres';
-
-export const BACKEND_URL = 'https://10.react.pages.academy/wtw';
-export const REQUEST_TIMEOUT = 5000;
-
-export const AUTH_TOKEN_KEY_NAME = 'What-to-watch-token';
-export const TIMEOUT_SHOW_ERROR = 2000;

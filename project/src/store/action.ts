@@ -3,7 +3,7 @@ import { AuthorizationStatus } from '../const';
 import { Film, Films } from '../types/films';
 
 
-const changeGenre = createAction('main/changeGenre', (value) => (
+const changeGenre = createAction('main/changeGenre', (value: string) => (
   {
     payload: value,
   }
