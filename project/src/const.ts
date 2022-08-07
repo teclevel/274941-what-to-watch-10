@@ -1,4 +1,5 @@
 export const ALL_GENRES = 'All genres';
+export const FILMS_PER_PAGE = 8;
 
 export const BACKEND_URL = 'https://10.react.pages.academy/wtw';
 export const REQUEST_TIMEOUT = 5000;

@@ -9,8 +9,10 @@ type Filter = {
 export type InitialState = {
   rawFilms: Films,
   films: Films,
+  renderedFilmsCount: number;
   filter: Filter;
-  promo: Film,
+  filteredFilms: Films,
+  promo: undefined | Film,
   authorizationStatus: AuthorizationStatus
   isDataLoaded: boolean,
   error: string | null,

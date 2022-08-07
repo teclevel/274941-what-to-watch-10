@@ -1,5 +1,3 @@
-// import { useEffect, useState } from 'react';
-import { FC } from 'react';
 import { useNavigate } from 'react-router-dom';
 import ButtonShowMore from '../../components/button-show-more/button-show-more';
 import Footer from '../../components/footer/footer';
@@ -8,20 +6,29 @@ import ListGenres from '../../components/list-genres/list-genres';
 import Logo from '../../components/logo/logo';
 import SignOut from '../../components/sign-out/sign-out';
 import { useAppDispatch, useAppSelector } from '../../hooks';
+import { filterByGenre, loadMoreFilms} from '../../store/action';
 
-function Main(): JSX.Element {
+function Main(): JSX.Element | null {
+
   const filmPromo = useAppSelector((state) => state.promo);
-  const { id, backgroundImage, posterImage, name, genre, released } = filmPromo;
   const films = useAppSelector((state) => state.films);
+  const { filteredFilms } = useAppSelector((state) => state);
+  const { id, backgroundImage, posterImage, name, genre, released } = filmPromo ?? {};
 
   const dispatch = useAppDispatch();
-  
+  //
   const navigate = useNavigate();
-  const onClickPlayHandler = () => navigate(`/player/${id.toString()}`);
+  const onClickPlayHandler = () => {
+    if (!id) { return; }
+    navigate(`/player/${id.toString()}`);
+  };
 
   const showMoreButtonClickHandle = () => {
-    // dispatch(renderFilmsPerStep());
+    dispatch(loadMoreFilms());
+    dispatch(filterByGenre());
   };
+
+  if (!filmPromo) { return null; }
 
 
   return (
@@ -37,6 +44,8 @@ function Main(): JSX.Element {
           <Logo />
           <SignOut />
         </header>
+
+        {/* {filmPromo && <FilmPromo film={filmPromo}} /> */}
 
         <div className="film-card__wrap">
           <div className="film-card__info">
@@ -81,8 +90,9 @@ function Main(): JSX.Element {
           <ListGenres />
           <ListFilms films={films} />
           {
-            // films.length === filteredFilms.length ? '' :
-            <ButtonShowMore onClick={showMoreButtonClickHandle} />
+            filteredFilms.length <= films.length
+              ? ''
+              : <ButtonShowMore onClick={showMoreButtonClickHandle} />
           }
 
         </section>
