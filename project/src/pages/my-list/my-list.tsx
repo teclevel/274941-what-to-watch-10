@@ -1,7 +1,7 @@
 import Footer from '../../components/footer/footer';
 import ListFilms from '../../components/list-films/list-films';
 import Logo from '../../components/logo/logo';
-import SignOut from '../../components/sign-out/sign-out';
+import LoginUser from '../../components/login-user/login-user';
 import { useAppSelector } from '../../hooks';
 
 
@@ -14,7 +14,7 @@ function MyList(): JSX.Element {
       <header className="page-header user-page__head">
         <Logo />
         <h1 className="page-title user-page__title">My list <span className="user-page__film-count">{myListCount}</span></h1>
-        <SignOut />
+        <LoginUser />
       </header>
 
       <section className="catalog">

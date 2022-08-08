@@ -4,13 +4,15 @@ import MyList from '../../pages/my-list/my-list';
 import FilmPage from '../../pages/film-page/film-page';
 import AddReview from '../../pages/add-review/add-review';
 import Player from '../../pages/player/player';
-import { BrowserRouter, Route, Routes } from 'react-router-dom';
+import { Route, Routes } from 'react-router-dom';
 import { AppRoute } from '../../const';
 import NotFoundPage from '../../pages/not-found-page/not-found-page';
 import PrivateRoute from '../private-route/private-route';
 import { useAppSelector } from '../../hooks';
 import LoadingScreen from '../../pages/loading-screen/loading-screen';
-import { isCheckedAuth } from '../../main';
+import { isCheckedAuth } from '../../utils';
+import HistoryRouter from '../history-route/histori-route';
+import browserHistory from '../../browser-history';
 
 function App(): JSX.Element {
   const { authorizationStatus, isDataLoaded } = useAppSelector((state) => state);
@@ -21,7 +23,7 @@ function App(): JSX.Element {
     );
   }
   return (
-    <BrowserRouter>
+    <HistoryRouter history={browserHistory}>
       <Routes>
         <Route path={AppRoute.Main} element={<Main />} />
 
@@ -48,7 +50,7 @@ function App(): JSX.Element {
         <Route path={AppRoute.NotFound} element={<NotFoundPage />} />
 
       </Routes >
-    </BrowserRouter >
+    </HistoryRouter >
   );
 }
 

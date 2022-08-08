@@ -5,9 +5,9 @@ import {
   loadMoreFilms,
 } from './action';
 import { Films} from '../types/films';
-import { InitialState } from '../types/initialState';
 import { createReducer } from '@reduxjs/toolkit';
 import { ALL_GENRES, AuthorizationStatus, FILMS_PER_PAGE } from '../const';
+import { InitialState } from '../types/initialState';
 
 
 function getListFiltered(list: Films, genreName: string): Films {

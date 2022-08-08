@@ -4,15 +4,15 @@ import Footer from '../../components/footer/footer';
 import ListFilms from '../../components/list-films/list-films';
 import ListGenres from '../../components/list-genres/list-genres';
 import Logo from '../../components/logo/logo';
-import SignOut from '../../components/sign-out/sign-out';
+import LoginUser from '../../components/login-user/login-user';
 import { useAppDispatch, useAppSelector } from '../../hooks';
-import { filterByGenre, loadMoreFilms} from '../../store/action';
+import { filterByGenre, loadMoreFilms } from '../../store/action';
 
 function Main(): JSX.Element | null {
 
   const filmPromo = useAppSelector((state) => state.promo);
   const films = useAppSelector((state) => state.films);
-  const { filteredFilms } = useAppSelector((state) => state);
+  const { filteredFilms} = useAppSelector((state) => state);
   const { id, backgroundImage, posterImage, name, genre, released } = filmPromo ?? {};
 
   const dispatch = useAppDispatch();
@@ -30,7 +30,6 @@ function Main(): JSX.Element | null {
 
   if (!filmPromo) { return null; }
 
-
   return (
     <>
       <section className="film-card">
@@ -42,10 +41,8 @@ function Main(): JSX.Element | null {
 
         <header className="page-header film-card__head">
           <Logo />
-          <SignOut />
+          <LoginUser />
         </header>
-
-        {/* {filmPromo && <FilmPromo film={filmPromo}} /> */}
 
         <div className="film-card__wrap">
           <div className="film-card__info">
@@ -86,7 +83,6 @@ function Main(): JSX.Element | null {
       <div className="page-content">
         <section className="catalog">
           <h2 className="catalog__title visually-hidden">Catalog</h2>
-
           <ListGenres />
           <ListFilms films={films} />
           {
@@ -94,7 +90,6 @@ function Main(): JSX.Element | null {
               ? ''
               : <ButtonShowMore onClick={showMoreButtonClickHandle} />
           }
-
         </section>
 
         <Footer />

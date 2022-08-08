@@ -1,13 +1,13 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import { AxiosInstance } from 'axios';
 import { store } from '.';
-import { APIRoute, AuthorizationStatus, TIMEOUT_SHOW_ERROR } from '../const';
+import { APIRoute, AppRoute, AuthorizationStatus, TIMEOUT_SHOW_ERROR } from '../const';
 import { dropToken, saveToken } from '../services/token';
 import { AuthData } from '../types/auth-data';
 import { Film, Films } from '../types/films';
 import { AppDispatch, State } from '../types/state';
 import { UserData } from '../types/user-data';
-import { loadFilms, loadPromo, requireAuthorization, setDataLoadedStatus, setError } from './action';
+import { loadFilms, loadPromo, redirectToRoute, requireAuthorization, setDataLoadedStatus, setError } from './action';
 
 
 export const clearErrorAction = createAsyncThunk(
@@ -20,7 +20,7 @@ export const clearErrorAction = createAsyncThunk(
   },
 );
 
-export const fetchFilmsAction = createAsyncThunk<void, undefined, {
+export const fetchLoadFilmsAction = createAsyncThunk<void, undefined, {
   dispatch: AppDispatch,
   state: State,
   extra: AxiosInstance
@@ -72,6 +72,7 @@ export const loginAction = createAsyncThunk<void, AuthData, {
     const { data: { token } } = await api.post<UserData>(APIRoute.Login, { email, password });
     saveToken(token);
     dispatch(requireAuthorization(AuthorizationStatus.Auth));
+    dispatch(redirectToRoute(AppRoute.Main));
   },
 );
 
