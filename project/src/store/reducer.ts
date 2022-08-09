@@ -1,57 +1,79 @@
+import {
+  changeGenre, filterByGenre, loadFilms, loadPromo,
+  requireAuthorization, setDataLoadedStatus, setError,
+  resetFilter,
+  loadMoreFilms,
+} from './action';
+import { Films} from '../types/films';
 import { createReducer } from '@reduxjs/toolkit';
-import { changeGenre, filterOfGenre, loadFilms, loadPromo, requireAuthorization, setDataLoadedStatus, setError, resetFilter } from './action';
-import { Film, Films } from '../types/films';
-import { ALL_GENRES, AuthorizationStatus } from '../const';
+import { ALL_GENRES, AuthorizationStatus, FILMS_PER_PAGE } from '../const';
+import { InitialState } from '../types/initialState';
 
 
 function getListFiltered(list: Films, genreName: string): Films {
+  if (genreName === ALL_GENRES) {
+    return list;
+  }
   return list.filter((film) => film.genre === genreName);
 }
 
-type InitialState = {
-  genre: string,
-  films: Films,
-  filteredFilms: Films,
-  promo: Film,
-  authorizationStatus: AuthorizationStatus
-  isDataLoaded: boolean,
-  error: string | null,
-}
-
 export const initialState: InitialState = {
-  genre: ALL_GENRES,
+  rawFilms: [],
   films: [],
   filteredFilms: [],
-  promo: {} as Film,
+  renderedFilmsCount: FILMS_PER_PAGE,
+  filter: {
+    genre: ALL_GENRES,
+  },
+  promo: undefined,
   authorizationStatus: AuthorizationStatus.Unknown,
   isDataLoaded: false,
   error: null,
 };
 
+
 export const reducer = createReducer(initialState, (builder) => {
   builder
-    .addCase(changeGenre, (state, action) => {
-      state.genre = action.payload;
-    })
-    .addCase(resetFilter, (state) => {
-      state.filteredFilms = state.films;
-    })
-    .addCase(filterOfGenre, (state) => {
-      state.filteredFilms = getListFiltered(state.filteredFilms, state.genre);
-    })
     .addCase(loadFilms, (state, action) => {
-      state.films = action.payload;
-      state.filteredFilms = action.payload;
+      state.rawFilms = action.payload;
+      state.films = getListFiltered(state.rawFilms, state.filter.genre).slice(0, state.renderedFilmsCount);
+      state.filteredFilms = getListFiltered(state.rawFilms, state.filter.genre);
     })
+
+    .addCase(loadMoreFilms, (state) => {
+      state.films = state.films.slice(0, state.renderedFilmsCount + FILMS_PER_PAGE);
+      state.renderedFilmsCount += FILMS_PER_PAGE;
+    })
+
+    .addCase(changeGenre, (state, action) => {
+      state.filter.genre = action.payload;
+    })
+
+    .addCase(resetFilter, (state) => {
+      state.filter = {
+        genre: ALL_GENRES,
+      };
+      state.renderedFilmsCount = FILMS_PER_PAGE;
+      state.films = getListFiltered(state.rawFilms, state.filter.genre).slice(0, state.renderedFilmsCount);
+    })
+
+    .addCase(filterByGenre, (state) => {
+      state.filteredFilms = getListFiltered(state.rawFilms, state.filter.genre);
+      state.films = getListFiltered(state.rawFilms, state.filter.genre).slice(0, state.renderedFilmsCount);
+    })
+
     .addCase(loadPromo, (state, action) => {
       state.promo = action.payload;
     })
+
     .addCase(requireAuthorization, (state, action) => {
       state.authorizationStatus = action.payload;
     })
+
     .addCase(setDataLoadedStatus, (state, action) => {
       state.isDataLoaded = action.payload;
     })
+
     .addCase(setError, (state, action) => {
       state.error = action.payload;
     });

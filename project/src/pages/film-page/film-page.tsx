@@ -5,7 +5,7 @@ import ListFilms from '../../components/list-films/list-films';
 import Logo from '../../components/logo/logo';
 import OverViewTab from '../../components/overveiw-tab/overveiw-tab';
 // import ReviewTab from '../../components/review-tab/review-tab';
-import SignOut from '../../components/sign-out/sign-out';
+import LoginUser from '../../components/login-user/login-user';
 import { useAppSelector } from '../../hooks';
 
 // const SIMILAR_FILMS_MAX = 4;
@@ -13,7 +13,7 @@ const FILMS_CARD_COUNT = 9;
 
 function FilmPage(): JSX.Element {
   const { id } = useParams();
-  const films = useAppSelector((state) => state.films);
+  const films = useAppSelector((state) => state.rawFilms);
   const [film] = films.filter((el) => el.id === Number(id));
 
   const { backgroundImage, name, genre, released, posterImage } = film;
@@ -34,7 +34,7 @@ function FilmPage(): JSX.Element {
 
           <header className="page-header film-card__head">
             <Logo />
-            <SignOut />
+            <LoginUser />
           </header>
 
           <div className="film-card__wrap">

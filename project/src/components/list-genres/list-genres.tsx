@@ -1,7 +1,7 @@
 import { Link } from 'react-router-dom';
 import { ALL_GENRES } from '../../const';
 import { useAppDispatch, useAppSelector } from '../../hooks';
-import { changeGenre, filterOfGenre, resetFilter } from '../../store/action';
+import { changeGenre, filterByGenre, resetFilter } from '../../store/action';
 import { Films } from '../../types/films';
 
 
@@ -14,8 +14,8 @@ function getListGenres(list: Films) {
 
 
 function ListGenres(): JSX.Element {
-  const genreCurrent = useAppSelector((state) => state.genre);
-  const films = useAppSelector((state) => state.films);
+  const genreCurrent = useAppSelector((state) => state.filter.genre);
+  const films = useAppSelector((state) => state.rawFilms);
   const genres = getListGenres(films);
   const dispatch = useAppDispatch();
 
@@ -28,17 +28,11 @@ function ListGenres(): JSX.Element {
         genres.map((el) => (
           <li key={el}
             className={el === genreCurrent ? `${itemClass} ${itemActiveClass}` : itemClass}
-            onClick={
-              el === ALL_GENRES ?
-                () => {
-                  dispatch(resetFilter());
-                  dispatch(changeGenre(el));
-                } : () => {
-                  dispatch(resetFilter());
-                  dispatch(changeGenre(el));
-                  dispatch(filterOfGenre());
-                }
-            }
+            onClick={() => {
+              dispatch(resetFilter());
+              dispatch(changeGenre(el));
+              dispatch(filterByGenre());
+            }}
           >
             <Link to="#" className="catalog__genres-link">{el}</Link>
           </li>

@@ -1,21 +1,34 @@
 import { useNavigate } from 'react-router-dom';
+import ButtonShowMore from '../../components/button-show-more/button-show-more';
 import Footer from '../../components/footer/footer';
 import ListFilms from '../../components/list-films/list-films';
 import ListGenres from '../../components/list-genres/list-genres';
 import Logo from '../../components/logo/logo';
-import SignOut from '../../components/sign-out/sign-out';
-import { useAppSelector } from '../../hooks';
+import LoginUser from '../../components/login-user/login-user';
+import { useAppDispatch, useAppSelector } from '../../hooks';
+import { filterByGenre, loadMoreFilms } from '../../store/action';
 
-// const NEXT_NUMBER_FILMS = 8;
+function Main(): JSX.Element | null {
 
-
-function Main(): JSX.Element {
   const filmPromo = useAppSelector((state) => state.promo);
-  const { id, backgroundImage, posterImage, name, genre, released } = filmPromo;
-  const filteredFilms = useAppSelector((state) => state.filteredFilms);
+  const films = useAppSelector((state) => state.films);
+  const { filteredFilms} = useAppSelector((state) => state);
+  const { id, backgroundImage, posterImage, name, genre, released } = filmPromo ?? {};
 
+  const dispatch = useAppDispatch();
+  //
   const navigate = useNavigate();
-  const onClickPlayHandler = () => navigate(`/player/${id.toString()}`);
+  const onClickPlayHandler = () => {
+    if (!id) { return; }
+    navigate(`/player/${id.toString()}`);
+  };
+
+  const showMoreButtonClickHandle = () => {
+    dispatch(loadMoreFilms());
+    dispatch(filterByGenre());
+  };
+
+  if (!filmPromo) { return null; }
 
   return (
     <>
@@ -28,7 +41,7 @@ function Main(): JSX.Element {
 
         <header className="page-header film-card__head">
           <Logo />
-          <SignOut />
+          <LoginUser />
         </header>
 
         <div className="film-card__wrap">
@@ -70,14 +83,13 @@ function Main(): JSX.Element {
       <div className="page-content">
         <section className="catalog">
           <h2 className="catalog__title visually-hidden">Catalog</h2>
-
           <ListGenres />
-
-          <ListFilms films={filteredFilms} />
-
-          <div className="catalog__more">
-            <button className="catalog__button" type="button">Show more</button>
-          </div>
+          <ListFilms films={films} />
+          {
+            filteredFilms.length <= films.length
+              ? ''
+              : <ButtonShowMore onClick={showMoreButtonClickHandle} />
+          }
         </section>
 
         <Footer />

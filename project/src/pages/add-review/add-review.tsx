@@ -1,12 +1,12 @@
 import { Link, useParams } from 'react-router-dom';
 import Form from '../../components/form/form';
 import Logo from '../../components/logo/logo';
-import SignOut from '../../components/sign-out/sign-out';
+import LoginUser from '../../components/login-user/login-user';
 import { useAppSelector } from '../../hooks';
 
 
 function AddReview(): JSX.Element {
-  const films = useAppSelector((state)=>state.films);
+  const films = useAppSelector((state)=>state.rawFilms);
   const { id } = useParams();
   const [film] = films.filter((el) => el.id === Number(id));
   const { name, backgroundImage, posterImage } = film;
@@ -32,7 +32,7 @@ function AddReview(): JSX.Element {
               </li>
             </ul>
           </nav>
-          <SignOut />
+          <LoginUser />
         </header>
 
         <div className="film-card__poster film-card__poster--small">

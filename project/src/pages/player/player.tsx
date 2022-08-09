@@ -4,7 +4,7 @@ import { useAppSelector } from '../../hooks';
 const POSTER_DEFAULT = 'img/player-poster.jpg';
 
 function Player(): JSX.Element {
-  const films = useAppSelector((state)=>state.films);
+  const films = useAppSelector((state)=>state.rawFilms);
   const { id } = useParams();
   const [film] = films.filter((el) => el.id === Number(id));
   const { videoLink, runTime, } = film;
