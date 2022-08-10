@@ -1,12 +1,11 @@
 import { Link, useNavigate, useParams } from 'react-router-dom';
-// import DetailsTab from '../../components/details-tab/details-tab';
 import Footer from '../../components/footer/footer';
 import ListFilms from '../../components/list-films/list-films';
-import Logo from '../../components/logo/logo';
-import OverViewTab from '../../components/overveiw-tab/overveiw-tab';
-// import ReviewTab from '../../components/review-tab/review-tab';
 import LoginUser from '../../components/login-user/login-user';
+import Logo from '../../components/logo/logo';
+import ListTabs from '../../components/tabs/list-tabs/list-tabs';
 import { useAppSelector } from '../../hooks';
+// import { ListTabs } from '../../components/tabs/list-tabs/list-tabs';
 
 // const SIMILAR_FILMS_MAX = 4;
 const FILMS_CARD_COUNT = 9;
@@ -16,7 +15,7 @@ function FilmPage(): JSX.Element {
   const films = useAppSelector((state) => state.rawFilms);
   const [film] = films.filter((el) => el.id === Number(id));
 
-  const { backgroundImage, name, genre, released, posterImage } = film;
+  const { name, genre, released, posterImage, backgroundImage} = film;
 
   const navigate = useNavigate();
 
@@ -71,25 +70,8 @@ function FilmPage(): JSX.Element {
               <img src={posterImage} alt={`${name} poster`} width="218" height="327" />
             </div>
 
-            <div className="film-card__desc">
-              <nav className="film-nav film-card__nav">
-                <ul className="film-nav__list">
-                  <li className="film-nav__item film-nav__item--active">
-                    <a href="/#" className="film-nav__link">Overview</a>
-                  </li>
-                  <li className="film-nav__item">
-                    <a href="/#" className="film-nav__link">Details</a>
-                  </li>
-                  <li className="film-nav__item">
-                    <a href="/#" className="film-nav__link">Reviews</a>
-                  </li>
-                </ul>
-              </nav>
-              <OverViewTab film={film} />
-              {/* <DetailsTab film={film} /> */}
-              {/* <ReviewTab reviews={reviews} /> */}
+            <ListTabs />
 
-            </div>
           </div>
         </div>
       </section>

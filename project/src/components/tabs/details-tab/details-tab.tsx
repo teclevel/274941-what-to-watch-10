@@ -1,5 +1,5 @@
 import { Fragment } from 'react';
-import { Film } from '../../types/films';
+import { Film } from '../../../types/films';
 
 type DetailsTabProps = {
   film: Film;
@@ -7,6 +7,7 @@ type DetailsTabProps = {
 
 function DetailsTab({ film }: DetailsTabProps): JSX.Element {
   const { director, starring, runTime, genre, released } = film;
+
   return (
     <div className="film-card__text film-card__row">
       <div className="film-card__text-col">

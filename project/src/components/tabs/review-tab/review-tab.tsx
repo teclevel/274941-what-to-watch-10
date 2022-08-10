@@ -1,5 +1,5 @@
 import { useParams } from 'react-router-dom';
-import { Reviews } from '../../types/reviews';
+import { Reviews } from '../../../types/reviews';
 
 type ReviewProps = {
   reviews: Reviews
