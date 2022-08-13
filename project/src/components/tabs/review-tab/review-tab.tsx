@@ -1,9 +1,12 @@
-import { useAppSelector } from '../../../hooks';
+import { Reviews } from '../../../types/reviews';
 import ReviewCol from '../review-col/review-col';
 
+type ReviewTabProps={
+  comments: Reviews;
+}
 
-function ReviewTab(): JSX.Element {
-  const comments = useAppSelector((state) => state.comments);
+function ReviewTab({comments}:ReviewTabProps): JSX.Element {
+
   const evenComments = comments.filter((comment, index) => index % 2 === 0);
   const oddComments = comments.filter((comment, index) => index % 2 !== 0);
 

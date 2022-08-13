@@ -2,15 +2,17 @@ import { BaseSyntheticEvent, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { TABS, Tab } from '../../../const';
 import { Film } from '../../../types/films';
+import { Reviews } from '../../../types/reviews';
 import DetailsTab from '../details-tab/details-tab';
 import OverviewTab from '../overveiw-tab/overveiw-tab';
 import ReviewTab from '../review-tab/review-tab';
 
 type TabsComponentProps = {
   film: Film;
+  comments: Reviews;
 }
 
-function ListTabs({film}: TabsComponentProps): JSX.Element {
+function ListTabs({ film, comments }: TabsComponentProps): JSX.Element {
   const [tabActive, setTabActive] = useState(Tab.OVERVIEW);
 
   const tabClass = 'film-nav__item';
@@ -37,9 +39,9 @@ function ListTabs({film}: TabsComponentProps): JSX.Element {
           }
         </ul>
       </nav>
-      {tabActive === Tab.OVERVIEW && <OverviewTab film={film}/>}
-      {tabActive === Tab.DETAILS && <DetailsTab film={film}/>}
-      {tabActive === Tab.REVIEWS && <ReviewTab/>}
+      {tabActive === Tab.OVERVIEW && <OverviewTab film={film} />}
+      {tabActive === Tab.DETAILS && <DetailsTab film={film} />}
+      {tabActive === Tab.REVIEWS && <ReviewTab comments={comments} />}
     </div >
   );
 }

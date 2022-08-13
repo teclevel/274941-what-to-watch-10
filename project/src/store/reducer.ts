@@ -3,8 +3,11 @@ import {
   requireAuthorization, setDataLoadedStatus, setError,
   resetFilter,
   loadMoreFilms,
+  loadComments,
+  loadFilm,
+  getIdFilm,
 } from './action';
-import { Films} from '../types/films';
+import { Films } from '../types/films';
 import { createReducer } from '@reduxjs/toolkit';
 import { ALL_GENRES, AuthorizationStatus, FILMS_PER_PAGE } from '../const';
 import { InitialState } from '../types/initialState';
@@ -20,6 +23,7 @@ function getListFiltered(list: Films, genreName: string): Films {
 export const initialState: InitialState = {
   rawFilms: [],
   films: [],
+  film: undefined,
   filteredFilms: [],
   renderedFilmsCount: FILMS_PER_PAGE,
   filter: {
@@ -29,6 +33,8 @@ export const initialState: InitialState = {
   authorizationStatus: AuthorizationStatus.Unknown,
   isDataLoaded: false,
   error: null,
+  comments: [],
+  currentFilmId: undefined,
 };
 
 
@@ -64,6 +70,18 @@ export const reducer = createReducer(initialState, (builder) => {
 
     .addCase(loadPromo, (state, action) => {
       state.promo = action.payload;
+    })
+
+    .addCase(getIdFilm, (state, action) => {
+      state.currentFilmId = action.payload;
+    })
+
+    .addCase(loadFilm, (state, action) => {
+      state.film = action.payload;
+    })
+
+    .addCase(loadComments, (state, action) => {
+      state.comments = action.payload;
     })
 
     .addCase(requireAuthorization, (state, action) => {

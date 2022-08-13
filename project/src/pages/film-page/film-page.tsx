@@ -4,18 +4,24 @@ import ListFilms from '../../components/list-films/list-films';
 import LoginUser from '../../components/login-user/login-user';
 import Logo from '../../components/logo/logo';
 import ListTabs from '../../components/tabs/list-tabs/list-tabs';
-import { useAppSelector } from '../../hooks';
-// import { ListTabs } from '../../components/tabs/list-tabs/list-tabs';
+import { useAppDispatch, useAppSelector } from '../../hooks';
+import { fetchLoadCommentsAction } from '../../store/api-actions';
 
 // const SIMILAR_FILMS_MAX = 4;
-const FILMS_CARD_COUNT = 9;
+const FILMS_CARD_COUNT = 4;
 
 function FilmPage(): JSX.Element {
   const { id } = useParams();
   const films = useAppSelector((state) => state.rawFilms);
+
+  const dispatch = useAppDispatch();
+  dispatch(fetchLoadCommentsAction(id));
+
+  const comments = useAppSelector((state) => state.comments);
+
   const [film] = films.filter((el) => el.id === Number(id));
 
-  const { name, genre, released, posterImage, backgroundImage} = film;
+  const { name, genre, released, posterImage, backgroundImage } = film;
 
   const navigate = useNavigate();
 
@@ -70,7 +76,7 @@ function FilmPage(): JSX.Element {
               <img src={posterImage} alt={`${name} poster`} width="218" height="327" />
             </div>
 
-            <ListTabs />
+            <ListTabs film={film} comments={comments} />
 
           </div>
         </div>
