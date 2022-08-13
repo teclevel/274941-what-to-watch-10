@@ -25,9 +25,6 @@ export enum AppRoute {
   Main = '/',
   Login = '/login',
   Film = '/films/:id',
-  OverView = '/films/:id/over-view',
-  Details = '/films/:id/details',
-  Review = '/films/:id/review',
   AddReview = '/films/:id/review',
   MyList = '/my-list',
   Player = '/player/:id',
@@ -42,6 +39,6 @@ export enum APIRoute {
   FilmSimilar = '/films/{filmId}/similar',
   Promo = '/promo',
   Favorite = '/favorite/FilmId/status',
-  Comments = '/comments/filmId',
+  Comments = '/comments/',
 }
 
