@@ -24,3 +24,24 @@ export const getLevelFilm = (level: number) => {
     return LevelFilm.AWESOME;
   }
 };
+
+
+export const convertMinutes = (timeMinutes: number) => {
+  let hours = Math.trunc(timeMinutes / 60).toString();
+  let minutes = (timeMinutes % 60).toString();
+  switch (hours) {
+    case '0': hours = '';
+      break;
+    default: hours = `${hours}h`;
+      break;
+  }
+
+  switch (minutes) {
+    case '0': minutes = '';
+      break;
+    default: minutes = `${minutes}m`;
+      break;
+  }
+
+  return `${hours} ${minutes}`;
+};

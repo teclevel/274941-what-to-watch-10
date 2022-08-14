@@ -1,5 +1,6 @@
 import { Fragment } from 'react';
 import { Film } from '../../../types/films';
+import { convertMinutes } from '../../../utils';
 
 type DetailsTabProps = {
   film: Film;
@@ -7,7 +8,6 @@ type DetailsTabProps = {
 
 function DetailsTab({ film }: DetailsTabProps): JSX.Element {
   const { director, starring, runTime, genre, released } = film;
-
   return (
     <div className="film-card__text film-card__row">
       <div className="film-card__text-col">
@@ -31,7 +31,7 @@ function DetailsTab({ film }: DetailsTabProps): JSX.Element {
       <div className="film-card__text-col">
         <p className="film-card__details-item">
           <strong className="film-card__details-name">Run Time</strong>
-          <span className="film-card__details-value">{runTime}</span>
+          <span className="film-card__details-value">{convertMinutes(runTime)}</span>
         </p>
         <p className="film-card__details-item">
           <strong className="film-card__details-name">Genre</strong>
