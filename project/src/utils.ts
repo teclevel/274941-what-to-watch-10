@@ -45,3 +45,15 @@ export const convertMinutes = (timeMinutes: number) => {
 
   return `${hours} ${minutes}`;
 };
+
+
+export const formatDate = (dateJson: string) => {
+  const dateStr = new Date(dateJson);
+
+  const formatter = new Intl.DateTimeFormat('en-US', {
+    month: 'long',
+    year: 'numeric',
+    day: 'numeric'
+  });
+  return formatter.format(dateStr);
+};
