@@ -42,3 +42,32 @@ export enum APIRoute {
   Comments = '/comments/',
 }
 
+export enum LevelFilm {
+  BAD = 'Bad',
+  NORMAL = 'Normal',
+  GOOD = 'Good',
+  VERY_GOOD = 'Very good',
+  AWESOME = 'Awesome',
+}
+
+export const LevelFilmRange = {
+  BAD: {
+    Max: 0,
+    MAX: 3
+  },
+  NORMAL: {
+    MIN: 3,
+    MAX: 5
+  },
+  GOOD: {
+    MIN: 5,
+    MAX: 8
+  },
+  VERY_GOOD: {
+    MIN: 8,
+    MAX: 10
+  },
+  AWESOME: {
+    MIN: 10
+  },
+};
