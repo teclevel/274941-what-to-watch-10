@@ -22,8 +22,6 @@ function FilmPage(): JSX.Element | null {
   useEffect(() => {
     dispatch(fetchLoadFilmAction(id));
     dispatch(fetchLoadSimilarFilmsAction(id));
-    // eslint-disable-next-line no-console
-    return () => { console.log('willUnmount'); };
   }, [dispatch, id]);
 
   if (!film) { return null; }
