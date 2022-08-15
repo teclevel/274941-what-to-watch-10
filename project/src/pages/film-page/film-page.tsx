@@ -1,3 +1,4 @@
+import { useEffect } from 'react';
 import { Link, useNavigate, useParams } from 'react-router-dom';
 import Footer from '../../components/footer/footer';
 import ListFilms from '../../components/list-films/list-films';
@@ -5,26 +6,27 @@ import LoginUser from '../../components/login-user/login-user';
 import Logo from '../../components/logo/logo';
 import ListTabs from '../../components/tabs/list-tabs/list-tabs';
 import { useAppDispatch, useAppSelector } from '../../hooks';
-import { fetchLoadCommentsAction } from '../../store/api-actions';
+import { fetchLoadFilmAction } from '../../store/api-actions';
 
 // const SIMILAR_FILMS_MAX = 4;
 const FILMS_CARD_COUNT = 4;
 
-function FilmPage(): JSX.Element {
+function FilmPage(): JSX.Element | null {
   const { id } = useParams();
   const films = useAppSelector((state) => state.rawFilms);
-
+  const navigate = useNavigate();
   const dispatch = useAppDispatch();
-  dispatch(fetchLoadCommentsAction(id));
 
-  const comments = useAppSelector((state) => state.comments);
+  useEffect(() => {
+    dispatch(fetchLoadFilmAction(id));
+    return () => { console.log('wilMount'); };
+  }, [dispatch, id]);
 
-  const [film] = films.filter((el) => el.id === Number(id));
+  const film = useAppSelector((state) => state.film);
+
+  if (!film) { return null; }
 
   const { name, genre, released, posterImage, backgroundImage } = film;
-
-  const navigate = useNavigate();
-
   const onClickHandler = () => navigate(`/player/${film.id}`);
 
   return (
@@ -76,7 +78,7 @@ function FilmPage(): JSX.Element {
               <img src={posterImage} alt={`${name} poster`} width="218" height="327" />
             </div>
 
-            <ListTabs film={film} comments={comments} />
+            <ListTabs film={film} />
 
           </div>
         </div>

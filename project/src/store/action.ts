@@ -22,4 +22,5 @@ export const setError = createAction<string | null>('main/setError');
 export const setDataLoadedStatus = createAction<boolean>('data/setDataLoadedStatus');
 export const loadMoreFilms = createAction('main/loadMoreFilms');
 export const redirectToRoute = createAction<AppRoute>('main/redirectToRoute');
-export const getIdFilm = createAction<string|undefined>('getIdFilm');
+
+

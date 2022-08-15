@@ -87,7 +87,7 @@ export const fetchLoadFilmAction = createAsyncThunk<void, string | undefined, {
   'data/fetchLoadComment',
   async (id, { dispatch, extra: api }) => {
 
-    const { data } = await api.get<Film>(`${APIRoute.Films}${id}`);
+    const { data } = await api.get<Film>(`${APIRoute.Film}${id}`);
     dispatch(loadFilm(data));
   },
 );

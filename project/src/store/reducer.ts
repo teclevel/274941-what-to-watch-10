@@ -34,7 +34,6 @@ export const initialState: InitialState = {
   isDataLoaded: false,
   error: null,
   comments: [],
-  currentFilmId: undefined,
 };
 
 
@@ -70,10 +69,6 @@ export const reducer = createReducer(initialState, (builder) => {
 
     .addCase(loadPromo, (state, action) => {
       state.promo = action.payload;
-    })
-
-    .addCase(getIdFilm, (state, action) => {
-      state.currentFilmId = action.payload;
     })
 
     .addCase(loadFilm, (state, action) => {

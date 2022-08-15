@@ -19,5 +19,4 @@ export type InitialState = {
   isDataLoaded: boolean,
   error: string | null,
   comments: Reviews,
-  currentFilmId: string | undefined,
 }
