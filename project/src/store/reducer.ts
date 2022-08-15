@@ -4,7 +4,8 @@ import {
   resetFilter,
   loadMoreFilms,
   loadComments,
-  loadFilm
+  loadFilm,
+  loadSimilarFilms
 } from './action';
 import { Films } from '../types/films';
 import { createReducer } from '@reduxjs/toolkit';
@@ -22,6 +23,7 @@ function getListFiltered(list: Films, genreName: string): Films {
 export const initialState: InitialState = {
   rawFilms: [],
   films: [],
+  similarFilms: [],
   film: undefined,
   filteredFilms: [],
   renderedFilmsCount: FILMS_PER_PAGE,
@@ -42,6 +44,10 @@ export const reducer = createReducer(initialState, (builder) => {
       state.rawFilms = action.payload;
       state.films = getListFiltered(state.rawFilms, state.filter.genre).slice(0, state.renderedFilmsCount);
       state.filteredFilms = getListFiltered(state.rawFilms, state.filter.genre);
+    })
+
+    .addCase(loadSimilarFilms, (state, action) => {
+      state.similarFilms = action.payload;
     })
 
     .addCase(loadMoreFilms, (state) => {

@@ -9,7 +9,7 @@ import { Reviews } from '../types/reviews';
 import { AppDispatch, State } from '../types/state';
 import { UserData } from '../types/user-data';
 import {
-  loadComments, loadFilm, loadFilms, loadPromo, redirectToRoute,
+  loadComments, loadFilm, loadFilms, loadPromo, loadSimilarFilms, redirectToRoute,
   requireAuthorization, setDataLoadedStatus, setError
 } from './action';
 
@@ -35,6 +35,18 @@ export const fetchLoadFilmsAction = createAsyncThunk<void, undefined, {
     dispatch(setDataLoadedStatus(true));
     dispatch(loadFilms(data));
     dispatch(setDataLoadedStatus(false));
+  },
+);
+
+export const fetchLoadSimilarFilmsAction = createAsyncThunk<void, string | undefined, {
+  dispatch: AppDispatch,
+  state: State,
+  extra: AxiosInstance
+}>(
+  'data/fetchSimilarFilms',
+  async (id, { dispatch, extra: api }) => {
+    const { data } = await api.get<Films>(`${APIRoute.Films}/${id}/similar`);
+    dispatch(loadSimilarFilms(data));
   },
 );
 

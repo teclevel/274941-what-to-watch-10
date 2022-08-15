@@ -13,6 +13,7 @@ export const changeGenre = createAction('main/changeGenre', (value: string) => (
 export const filterByGenre = createAction('main/filterByGenre');
 export const resetFilter = createAction('main/resetFilter');
 export const loadFilms = createAction<Films>('data/loadFilms');
+export const loadSimilarFilms = createAction<Films>('data/loadSimilarFilms');
 export const renderFilms = createAction('main/renderFilms');
 export const loadPromo = createAction<Film>('data/loadPromo');
 export const loadFilm = createAction<Film>('data/loadFilm');

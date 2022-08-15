@@ -6,24 +6,25 @@ import LoginUser from '../../components/login-user/login-user';
 import Logo from '../../components/logo/logo';
 import ListTabs from '../../components/tabs/list-tabs/list-tabs';
 import { useAppDispatch, useAppSelector } from '../../hooks';
-import { fetchLoadFilmAction } from '../../store/api-actions';
+import { fetchLoadFilmAction, fetchLoadSimilarFilmsAction } from '../../store/api-actions';
 
-// const SIMILAR_FILMS_MAX = 4;
-const FILMS_CARD_COUNT = 4;
+const FILMS_MY_LIST_COUNT = 4;
+const SIMILAR_FILMS_COUNT = 4;
 
 function FilmPage(): JSX.Element | null {
   const { id } = useParams();
-  const films = useAppSelector((state) => state.rawFilms);
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
 
+  const similarFilms = useAppSelector((state) => state.similarFilms);
+  const film = useAppSelector((state) => state.film);
+
   useEffect(() => {
     dispatch(fetchLoadFilmAction(id));
+    dispatch(fetchLoadSimilarFilmsAction(id));
     // eslint-disable-next-line no-console
-    return () => { console.log('wilMount'); };
+    return () => { console.log('willUnmount'); };
   }, [dispatch, id]);
-
-  const film = useAppSelector((state) => state.film);
 
   if (!film) { return null; }
 
@@ -65,7 +66,7 @@ function FilmPage(): JSX.Element | null {
                     <use xlinkHref="#add"></use>
                   </svg>
                   <span>My list</span>
-                  <span className="film-card__count">{FILMS_CARD_COUNT}</span>
+                  <span className="film-card__count">{FILMS_MY_LIST_COUNT}</span>
                 </button>
                 <Link to={`/films/${id}/review`} className="btn film-card__button">Add review</Link>
               </div>
@@ -88,7 +89,7 @@ function FilmPage(): JSX.Element | null {
       <div className="page-content">
         <section className="catalog catalog--like-this">
           <h2 className="catalog__title">More like this</h2>
-          <ListFilms films={films} />
+          <ListFilms films={similarFilms.slice(0, SIMILAR_FILMS_COUNT)} />
         </section>
 
         <Footer />

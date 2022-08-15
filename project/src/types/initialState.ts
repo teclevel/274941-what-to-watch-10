@@ -10,6 +10,7 @@ type Filter = {
 export type InitialState = {
   rawFilms: Films,
   films: Films,
+  similarFilms: Films,
   film: undefined | Film,
   renderedFilmsCount: number;
   filter: Filter;
