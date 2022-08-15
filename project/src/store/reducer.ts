@@ -4,8 +4,7 @@ import {
   resetFilter,
   loadMoreFilms,
   loadComments,
-  loadFilm,
-  getIdFilm,
+  loadFilm
 } from './action';
 import { Films } from '../types/films';
 import { createReducer } from '@reduxjs/toolkit';

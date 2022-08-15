@@ -19,6 +19,7 @@ function FilmPage(): JSX.Element | null {
 
   useEffect(() => {
     dispatch(fetchLoadFilmAction(id));
+    // eslint-disable-next-line no-console
     return () => { console.log('wilMount'); };
   }, [dispatch, id]);
 

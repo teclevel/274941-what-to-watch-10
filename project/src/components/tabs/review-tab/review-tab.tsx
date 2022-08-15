@@ -10,6 +10,7 @@ function ReviewTab(): JSX.Element {
 
   useEffect(() => {
     dispatch(fetchLoadCommentsAction(id));
+    // eslint-disable-next-line no-console
     return () => { console.log('willUnmount'); };
   }, [dispatch, id]);
 

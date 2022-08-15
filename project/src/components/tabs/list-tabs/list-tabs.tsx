@@ -2,7 +2,6 @@ import { BaseSyntheticEvent, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { TABS, Tab } from '../../../const';
 import { Film } from '../../../types/films';
-import { Reviews } from '../../../types/reviews';
 import DetailsTab from '../details-tab/details-tab';
 import OverviewTab from '../overveiw-tab/overveiw-tab';
 import ReviewTab from '../review-tab/review-tab';
