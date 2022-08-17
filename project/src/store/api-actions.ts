@@ -10,7 +10,7 @@ import { AppDispatch, State } from '../types/state';
 import { UserData } from '../types/user-data';
 import {
   loadComments, loadFilm, loadFilms, loadPromo, loadSimilarFilms, redirectToRoute,
-  requireAuthorization, setDataLoadedStatus, setError
+  requireAuthorization, setCommentsLoadedStatus, setDataLoadedStatus, setError
 } from './action';
 
 
@@ -87,7 +87,9 @@ export const fetchLoadCommentsAction = createAsyncThunk<void, string | undefined
   async (id, { dispatch, extra: api }) => {
 
     const { data } = await api.get<Reviews>(`${APIRoute.Comments}${id}`);
+    dispatch(setCommentsLoadedStatus(true));
     dispatch(loadComments(data));
+    dispatch(setCommentsLoadedStatus(false));
   },
 );
 
@@ -96,7 +98,7 @@ export const fetchLoadFilmAction = createAsyncThunk<void, string | undefined, {
   state: State,
   extra: AxiosInstance
 }>(
-  'data/fetchLoadComment',
+  'data/fetchLoadFilm',
   async (id, { dispatch, extra: api }) => {
 
     const { data } = await api.get<Film>(`${APIRoute.Film}${id}`);

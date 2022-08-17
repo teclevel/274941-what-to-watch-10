@@ -18,6 +18,8 @@ export type InitialState = {
   promo: undefined | Film,
   authorizationStatus: AuthorizationStatus
   isDataLoaded: boolean,
+  isCommentsLoaded: boolean,
   error: string | null,
   comments: Reviews,
+  // currentId: undefined | string,
 }

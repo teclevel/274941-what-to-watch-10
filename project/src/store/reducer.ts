@@ -5,7 +5,8 @@ import {
   loadMoreFilms,
   loadComments,
   loadFilm,
-  loadSimilarFilms
+  loadSimilarFilms,
+  setCommentsLoadedStatus,
 } from './action';
 import { Films } from '../types/films';
 import { createReducer } from '@reduxjs/toolkit';
@@ -33,8 +34,10 @@ export const initialState: InitialState = {
   promo: undefined,
   authorizationStatus: AuthorizationStatus.Unknown,
   isDataLoaded: false,
+  isCommentsLoaded: false,
   error: null,
   comments: [],
+  // currentId: undefined,
 };
 
 
@@ -92,7 +95,15 @@ export const reducer = createReducer(initialState, (builder) => {
       state.isDataLoaded = action.payload;
     })
 
+    .addCase(setCommentsLoadedStatus, (state, action) => {
+      state.isCommentsLoaded = action.payload;
+    })
+
     .addCase(setError, (state, action) => {
       state.error = action.payload;
     });
+
+  // .addCase(getCurrentId, (state, action) => {
+  //   state.currentId = action.payload;
+  // });
 });

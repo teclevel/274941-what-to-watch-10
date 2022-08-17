@@ -1,21 +1,19 @@
-import { useEffect } from 'react';
-import { useParams } from 'react-router-dom';
-import { useAppDispatch, useAppSelector } from '../../../hooks';
-import { fetchLoadCommentsAction } from '../../../store/api-actions';
+import { useAppSelector } from '../../../hooks';
+import LoadingScreen from '../../../pages/loading-screen/loading-screen';
 import ReviewCol from '../review-col/review-col';
 
 function ReviewTab(): JSX.Element {
-  const { id } = useParams();
-  const dispatch = useAppDispatch();
 
-  useEffect(() => {
-    dispatch(fetchLoadCommentsAction(id));
-  }, [dispatch, id]);
+  const { isCommentsLoaded } = useAppSelector((state) => state);
 
   const reviews = useAppSelector((state) => state.comments);
 
   const evenComments = reviews.filter((comment, index) => index % 2 === 0);
   const oddComments = reviews.filter((comment, index) => index % 2 !== 0);
+
+  if (!isCommentsLoaded) {
+    return <LoadingScreen />;
+  }
 
   return (
     <div className="film-card__reviews film-card__row">

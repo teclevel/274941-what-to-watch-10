@@ -6,7 +6,7 @@ import LoginUser from '../../components/login-user/login-user';
 import Logo from '../../components/logo/logo';
 import ListTabs from '../../components/tabs/list-tabs/list-tabs';
 import { useAppDispatch, useAppSelector } from '../../hooks';
-import { fetchLoadFilmAction, fetchLoadSimilarFilmsAction } from '../../store/api-actions';
+import { fetchLoadCommentsAction, fetchLoadFilmAction, fetchLoadSimilarFilmsAction } from '../../store/api-actions';
 
 const FILMS_MY_LIST_COUNT = 4;
 const SIMILAR_FILMS_COUNT = 4;
@@ -20,6 +20,7 @@ function FilmPage(): JSX.Element | null {
   const film = useAppSelector((state) => state.film);
 
   useEffect(() => {
+    dispatch(fetchLoadCommentsAction(id));
     dispatch(fetchLoadFilmAction(id));
     dispatch(fetchLoadSimilarFilmsAction(id));
   }, [dispatch, id]);
