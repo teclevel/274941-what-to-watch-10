@@ -6,7 +6,10 @@ import LoginUser from '../../components/login-user/login-user';
 import Logo from '../../components/logo/logo';
 import ListTabs from '../../components/tabs/list-tabs/list-tabs';
 import { useAppDispatch, useAppSelector } from '../../hooks';
-import { fetchLoadCommentsAction, fetchLoadFilmAction, fetchLoadSimilarFilmsAction } from '../../store/api-actions';
+import {
+  fetchLoadCommentsAction, fetchLoadFilmAction, fetchLoadSimilarFilmsAction
+} from '../../store/api-actions';
+import LoadingScreen from '../loading-screen/loading-screen';
 
 const FILMS_MY_LIST_COUNT = 4;
 const SIMILAR_FILMS_COUNT = 4;
@@ -16,8 +19,7 @@ function FilmPage(): JSX.Element | null {
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
 
-  const similarFilms = useAppSelector((state) => state.similarFilms);
-  const film = useAppSelector((state) => state.film);
+  const { similarFilms, film, isFilmLoaded, isSimilarFilmsLoaded } = useAppSelector((state) => state);
 
   useEffect(() => {
     dispatch(fetchLoadCommentsAction(id));
@@ -29,6 +31,10 @@ function FilmPage(): JSX.Element | null {
 
   const { name, genre, released, posterImage, backgroundImage } = film;
   const onClickHandler = () => navigate(`/player/${film.id}`);
+
+  if (!isFilmLoaded) {
+    return <LoadingScreen />;
+  }
 
   return (
     <>
@@ -88,7 +94,11 @@ function FilmPage(): JSX.Element | null {
       <div className="page-content">
         <section className="catalog catalog--like-this">
           <h2 className="catalog__title">More like this</h2>
-          <ListFilms films={similarFilms.slice(0, SIMILAR_FILMS_COUNT)} />
+          {
+            isSimilarFilmsLoaded
+              ? <ListFilms films={similarFilms.slice(0, SIMILAR_FILMS_COUNT)} />
+              : <LoadingScreen />
+          }
         </section>
 
         <Footer />

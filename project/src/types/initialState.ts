@@ -16,10 +16,12 @@ export type InitialState = {
   filter: Filter;
   filteredFilms: Films,
   promo: undefined | Film,
-  authorizationStatus: AuthorizationStatus
+  authorizationStatus: AuthorizationStatus,
   isDataLoaded: boolean,
   isCommentsLoaded: boolean,
+  isFilmLoaded: boolean,
+  isSimilarFilmsLoaded: boolean,
+  isPromoLoaded: boolean,
   error: string | null,
   comments: Reviews,
-  // currentId: undefined | string,
 }

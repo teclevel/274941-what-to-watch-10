@@ -22,6 +22,9 @@ export const loadSimilarFilms = createAction<Films>('data/loadSimilarFilms');
 export const loadComments = createAction<Reviews>('data/loadComments');
 export const setDataLoadedStatus = createAction<boolean>('data/setDataLoadedStatus');
 export const setCommentsLoadedStatus = createAction<boolean>('data/setCommentsLoadedStatus');
+export const setFilmLoadedStatus = createAction<boolean>('data/setFilmLoadedStatus');
+export const setSimilarFilmsLoadedStatus = createAction<boolean>('data/setSimilarFilmsLoadedStatus');
+export const setPromoLoadedStatus = createAction<boolean>('data/setPromoLoadedStatus');
 
 export const requireAuthorization = createAction<AuthorizationStatus>('user/requireAuthorization');
 

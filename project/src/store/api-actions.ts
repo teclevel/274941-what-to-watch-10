@@ -10,7 +10,8 @@ import { AppDispatch, State } from '../types/state';
 import { UserData } from '../types/user-data';
 import {
   loadComments, loadFilm, loadFilms, loadPromo, loadSimilarFilms, redirectToRoute,
-  requireAuthorization, setCommentsLoadedStatus, setDataLoadedStatus, setError
+  requireAuthorization, setCommentsLoadedStatus, setDataLoadedStatus, setError,
+  setFilmLoadedStatus, setPromoLoadedStatus, setSimilarFilmsLoadedStatus
 } from './action';
 
 
@@ -31,10 +32,10 @@ export const fetchLoadFilmsAction = createAsyncThunk<void, undefined, {
 }>(
   'data/fetchFilms',
   async (_arg, { dispatch, extra: api }) => {
-    const { data } = await api.get<Films>(APIRoute.Films);
-    dispatch(setDataLoadedStatus(true));
-    dispatch(loadFilms(data));
     dispatch(setDataLoadedStatus(false));
+    const { data } = await api.get<Films>(APIRoute.Films);
+    dispatch(loadFilms(data));
+    dispatch(setDataLoadedStatus(true));
   },
 );
 
@@ -45,8 +46,10 @@ export const fetchLoadSimilarFilmsAction = createAsyncThunk<void, string | undef
 }>(
   'data/fetchSimilarFilms',
   async (id, { dispatch, extra: api }) => {
+    dispatch(setSimilarFilmsLoadedStatus(false));
     const { data } = await api.get<Films>(`${APIRoute.Films}/${id}/similar`);
     dispatch(loadSimilarFilms(data));
+    dispatch(setSimilarFilmsLoadedStatus(true));
   },
 );
 
@@ -57,8 +60,10 @@ export const fetchLoadPromoAction = createAsyncThunk<void, undefined, {
 }>(
   'data/fetchLoadPromo',
   async (_arg, { dispatch, extra: api }) => {
+    dispatch(setPromoLoadedStatus(false));
     const { data } = await api.get<Film>(APIRoute.Promo);
     dispatch(loadPromo(data));
+    dispatch(setPromoLoadedStatus(true));
   },
 );
 
@@ -86,10 +91,10 @@ export const fetchLoadCommentsAction = createAsyncThunk<void, string | undefined
   'data/fetchLoadComment',
   async (id, { dispatch, extra: api }) => {
 
-    dispatch(setCommentsLoadedStatus(true));
+    dispatch(setCommentsLoadedStatus(false));
     const { data } = await api.get<Reviews>(`${APIRoute.Comments}${id}`);
     dispatch(loadComments(data));
-    dispatch(setCommentsLoadedStatus(false));
+    dispatch(setCommentsLoadedStatus(true));
   },
 );
 
@@ -100,9 +105,10 @@ export const fetchLoadFilmAction = createAsyncThunk<void, string | undefined, {
 }>(
   'data/fetchLoadFilm',
   async (id, { dispatch, extra: api }) => {
-
+    dispatch(setFilmLoadedStatus(false));
     const { data } = await api.get<Film>(`${APIRoute.Film}${id}`);
     dispatch(loadFilm(data));
+    dispatch(setFilmLoadedStatus(true));
   },
 );
 

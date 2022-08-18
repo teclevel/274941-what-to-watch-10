@@ -4,14 +4,12 @@ import ReviewCol from '../review-col/review-col';
 
 function ReviewTab(): JSX.Element {
 
-  const { isCommentsLoaded } = useAppSelector((state) => state);
+  const { isDataLoaded, comments } = useAppSelector((state) => state);
 
-  const reviews = useAppSelector((state) => state.comments);
+  const evenComments = comments.filter((comment, index) => index % 2 === 0);
+  const oddComments = comments.filter((comment, index) => index % 2 !== 0);
 
-  const evenComments = reviews.filter((comment, index) => index % 2 === 0);
-  const oddComments = reviews.filter((comment, index) => index % 2 !== 0);
-
-  if (!isCommentsLoaded) {
+  if (!isDataLoaded) {
     return <LoadingScreen />;
   }
 

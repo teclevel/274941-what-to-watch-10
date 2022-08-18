@@ -8,13 +8,12 @@ import LoginUser from '../../components/login-user/login-user';
 import { useAppDispatch, useAppSelector } from '../../hooks';
 import { filterByGenre, loadMoreFilms, resetFilms, resetFilter } from '../../store/action';
 import { useEffect } from 'react';
+import LoadingScreen from '../loading-screen/loading-screen';
 
 function Main(): JSX.Element | null {
 
-  const filmPromo = useAppSelector((state) => state.promo);
-  const films = useAppSelector((state) => state.films);
-  const { filteredFilms } = useAppSelector((state) => state);
-  const { id, backgroundImage, posterImage, name, genre, released } = filmPromo ?? {};
+  const { promo, films, filteredFilms, isPromoLoaded } = useAppSelector((state) => state);
+  const { id, backgroundImage, posterImage, name, genre, released } = promo ?? {};
 
   const dispatch = useAppDispatch();
 
@@ -34,7 +33,11 @@ function Main(): JSX.Element | null {
     dispatch(filterByGenre());
   };
 
-  if (!filmPromo) { return null; }
+  if (!promo) { return null; }
+
+  if (!isPromoLoaded) {
+    return <LoadingScreen />;
+  }
 
   return (
     <>

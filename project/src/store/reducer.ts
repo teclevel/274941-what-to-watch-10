@@ -8,6 +8,9 @@ import {
   loadSimilarFilms,
   setCommentsLoadedStatus,
   resetFilms,
+  setFilmLoadedStatus,
+  setSimilarFilmsLoadedStatus,
+  setPromoLoadedStatus,
 } from './action';
 import { Films } from '../types/films';
 import { createReducer } from '@reduxjs/toolkit';
@@ -36,9 +39,11 @@ export const initialState: InitialState = {
   authorizationStatus: AuthorizationStatus.Unknown,
   isDataLoaded: false,
   isCommentsLoaded: false,
+  isFilmLoaded: false,
+  isSimilarFilmsLoaded: false,
+  isPromoLoaded: false,
   error: null,
   comments: [],
-  // currentId: undefined,
 };
 
 
@@ -103,6 +108,18 @@ export const reducer = createReducer(initialState, (builder) => {
 
     .addCase(setCommentsLoadedStatus, (state, action) => {
       state.isCommentsLoaded = action.payload;
+    })
+
+    .addCase(setFilmLoadedStatus, (state, action) => {
+      state.isFilmLoaded = action.payload;
+    })
+
+    .addCase(setPromoLoadedStatus, (state, action) => {
+      state.isPromoLoaded = action.payload;
+    })
+
+    .addCase(setSimilarFilmsLoadedStatus, (state, action) => {
+      state.isSimilarFilmsLoaded = action.payload;
     })
 
     .addCase(setError, (state, action) => {
