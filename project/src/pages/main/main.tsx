@@ -6,17 +6,23 @@ import ListGenres from '../../components/list-genres/list-genres';
 import Logo from '../../components/logo/logo';
 import LoginUser from '../../components/login-user/login-user';
 import { useAppDispatch, useAppSelector } from '../../hooks';
-import { filterByGenre, loadMoreFilms } from '../../store/action';
+import { filterByGenre, loadMoreFilms, resetFilms, resetFilter } from '../../store/action';
+import { useEffect } from 'react';
 
 function Main(): JSX.Element | null {
 
   const filmPromo = useAppSelector((state) => state.promo);
   const films = useAppSelector((state) => state.films);
-  const { filteredFilms} = useAppSelector((state) => state);
+  const { filteredFilms } = useAppSelector((state) => state);
   const { id, backgroundImage, posterImage, name, genre, released } = filmPromo ?? {};
 
   const dispatch = useAppDispatch();
-  //
+
+  useEffect(() => () => {
+    dispatch(resetFilter());
+    dispatch(resetFilms());
+  }, [dispatch]);
+
   const navigate = useNavigate();
   const onClickPlayHandler = () => {
     if (!id) { return; }

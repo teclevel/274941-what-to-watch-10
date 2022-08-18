@@ -86,8 +86,8 @@ export const fetchLoadCommentsAction = createAsyncThunk<void, string | undefined
   'data/fetchLoadComment',
   async (id, { dispatch, extra: api }) => {
 
-    const { data } = await api.get<Reviews>(`${APIRoute.Comments}${id}`);
     dispatch(setCommentsLoadedStatus(true));
+    const { data } = await api.get<Reviews>(`${APIRoute.Comments}${id}`);
     dispatch(loadComments(data));
     dispatch(setCommentsLoadedStatus(false));
   },

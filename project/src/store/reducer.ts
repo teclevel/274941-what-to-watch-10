@@ -7,6 +7,7 @@ import {
   loadFilm,
   loadSimilarFilms,
   setCommentsLoadedStatus,
+  resetFilms,
 } from './action';
 import { Films } from '../types/films';
 import { createReducer } from '@reduxjs/toolkit';
@@ -45,6 +46,11 @@ export const reducer = createReducer(initialState, (builder) => {
   builder
     .addCase(loadFilms, (state, action) => {
       state.rawFilms = action.payload;
+      state.films = getListFiltered(state.rawFilms, state.filter.genre).slice(0, state.renderedFilmsCount);
+      state.filteredFilms = getListFiltered(state.rawFilms, state.filter.genre);
+    })
+
+    .addCase(resetFilms,(state)=>{
       state.films = getListFiltered(state.rawFilms, state.filter.genre).slice(0, state.renderedFilmsCount);
       state.filteredFilms = getListFiltered(state.rawFilms, state.filter.genre);
     })
@@ -102,8 +108,4 @@ export const reducer = createReducer(initialState, (builder) => {
     .addCase(setError, (state, action) => {
       state.error = action.payload;
     });
-
-  // .addCase(getCurrentId, (state, action) => {
-  //   state.currentId = action.payload;
-  // });
 });
