@@ -27,7 +27,9 @@ function ListGenres(): JSX.Element {
       {
         genres.map((el) => (
           <li key={el}
-            className={el === genreCurrent ? `${itemClass} ${itemActiveClass}` : itemClass}
+            className={el === genreCurrent
+              ? `${itemClass} ${itemActiveClass}`
+              : itemClass}
             onClick={() => {
               dispatch(resetFilter());
               dispatch(changeGenre(el));

@@ -1,26 +1,40 @@
+import { useEffect } from 'react';
 import { Link, useNavigate, useParams } from 'react-router-dom';
-// import DetailsTab from '../../components/details-tab/details-tab';
 import Footer from '../../components/footer/footer';
 import ListFilms from '../../components/list-films/list-films';
-import Logo from '../../components/logo/logo';
-import OverViewTab from '../../components/overveiw-tab/overveiw-tab';
-// import ReviewTab from '../../components/review-tab/review-tab';
 import LoginUser from '../../components/login-user/login-user';
-import { useAppSelector } from '../../hooks';
+import Logo from '../../components/logo/logo';
+import ListTabs from '../../components/tabs/list-tabs/list-tabs';
+import { useAppDispatch, useAppSelector } from '../../hooks';
+import {
+  fetchLoadCommentsAction, fetchLoadFilmAction, fetchLoadSimilarFilmsAction
+} from '../../store/api-actions';
+import LoadingScreen from '../loading-screen/loading-screen';
 
-// const SIMILAR_FILMS_MAX = 4;
-const FILMS_CARD_COUNT = 9;
+const FILMS_MY_LIST_COUNT = 4;
+const SIMILAR_FILMS_COUNT = 4;
 
-function FilmPage(): JSX.Element {
+function FilmPage(): JSX.Element | null {
   const { id } = useParams();
-  const films = useAppSelector((state) => state.rawFilms);
-  const [film] = films.filter((el) => el.id === Number(id));
-
-  const { backgroundImage, name, genre, released, posterImage } = film;
-
   const navigate = useNavigate();
+  const dispatch = useAppDispatch();
 
+  const { similarFilms, film, isFilmLoaded, isSimilarFilmsLoaded } = useAppSelector((state) => state);
+
+  useEffect(() => {
+    dispatch(fetchLoadCommentsAction(id));
+    dispatch(fetchLoadFilmAction(id));
+    dispatch(fetchLoadSimilarFilmsAction(id));
+  }, [dispatch, id]);
+
+  if (!film) { return null; }
+
+  const { name, genre, released, posterImage, backgroundImage } = film;
   const onClickHandler = () => navigate(`/player/${film.id}`);
+
+  if (!isFilmLoaded) {
+    return <LoadingScreen />;
+  }
 
   return (
     <>
@@ -57,7 +71,7 @@ function FilmPage(): JSX.Element {
                     <use xlinkHref="#add"></use>
                   </svg>
                   <span>My list</span>
-                  <span className="film-card__count">{FILMS_CARD_COUNT}</span>
+                  <span className="film-card__count">{FILMS_MY_LIST_COUNT}</span>
                 </button>
                 <Link to={`/films/${id}/review`} className="btn film-card__button">Add review</Link>
               </div>
@@ -71,25 +85,8 @@ function FilmPage(): JSX.Element {
               <img src={posterImage} alt={`${name} poster`} width="218" height="327" />
             </div>
 
-            <div className="film-card__desc">
-              <nav className="film-nav film-card__nav">
-                <ul className="film-nav__list">
-                  <li className="film-nav__item film-nav__item--active">
-                    <a href="/#" className="film-nav__link">Overview</a>
-                  </li>
-                  <li className="film-nav__item">
-                    <a href="/#" className="film-nav__link">Details</a>
-                  </li>
-                  <li className="film-nav__item">
-                    <a href="/#" className="film-nav__link">Reviews</a>
-                  </li>
-                </ul>
-              </nav>
-              <OverViewTab film={film} />
-              {/* <DetailsTab film={film} /> */}
-              {/* <ReviewTab reviews={reviews} /> */}
+            <ListTabs film={film} />
 
-            </div>
           </div>
         </div>
       </section>
@@ -97,7 +94,11 @@ function FilmPage(): JSX.Element {
       <div className="page-content">
         <section className="catalog catalog--like-this">
           <h2 className="catalog__title">More like this</h2>
-          <ListFilms films={films} />
+          {
+            isSimilarFilmsLoaded
+              ? <ListFilms films={similarFilms.slice(0, SIMILAR_FILMS_COUNT)} />
+              : <LoadingScreen />
+          }
         </section>
 
         <Footer />
