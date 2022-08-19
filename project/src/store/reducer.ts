@@ -1,6 +1,6 @@
 import {
   changeGenre, filterByGenre, loadFilms, loadPromo,
-  requireAuthorization, setDataLoadedStatus, setError,
+  requireAuthorization, setDataLoadedStatus,
   resetFilter,
   loadMoreFilms,
   loadComments,
@@ -42,7 +42,6 @@ export const initialState: InitialState = {
   isFilmLoaded: false,
   isSimilarFilmsLoaded: false,
   isPromoLoaded: false,
-  error: null,
   comments: [],
 };
 
@@ -120,9 +119,5 @@ export const reducer = createReducer(initialState, (builder) => {
 
     .addCase(setSimilarFilmsLoadedStatus, (state, action) => {
       state.isSimilarFilmsLoaded = action.payload;
-    })
-
-    .addCase(setError, (state, action) => {
-      state.error = action.payload;
     });
 });
