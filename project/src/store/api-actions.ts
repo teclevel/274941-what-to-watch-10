@@ -4,12 +4,14 @@ import { APIRoute, AppRoute, AuthorizationStatus } from '../const';
 import { dropToken, saveToken } from '../services/token';
 import { AuthData } from '../types/auth-data';
 import { Film, Films } from '../types/films';
-import { Reviews } from '../types/reviews';
+import { Comment, Reviews } from '../types/reviews';
 import { AppDispatch, State } from '../types/state';
 import { UserData } from '../types/user-data';
 import {
-  loadComments, loadFilm, loadFilms, loadPromo, loadSimilarFilms, redirectToRoute,
-  requireAuthorization, setCommentsLoadedStatus, setDataLoadedStatus,
+  loadComments, loadFilm, loadFilms, loadPromo, loadSimilarFilms,
+  redirectToRoute,
+  requireAuthorization,
+  setCommentsLoadedStatus, setDataLoadedStatus,
   setFilmLoadedStatus, setPromoLoadedStatus, setSimilarFilmsLoadedStatus
 } from './action';
 
@@ -81,9 +83,20 @@ export const fetchLoadCommentsAction = createAsyncThunk<void, string | undefined
   async (id, { dispatch, extra: api }) => {
 
     dispatch(setCommentsLoadedStatus(false));
-    const { data } = await api.get<Reviews>(`${APIRoute.Comments}${id}`);
+    const { data } = await api.get<Reviews>(`${APIRoute.Comments}/${id}`);
     dispatch(loadComments(data));
     dispatch(setCommentsLoadedStatus(true));
+  },
+);
+
+export const fetchCommentSendAction = createAsyncThunk<void, Comment, {
+  dispatch: AppDispatch,
+  state: State,
+  extra: AxiosInstance
+}>(
+  'user/fetchSendComment',
+  async ({ id, comment, rating }, { dispatch, extra: api }) => {
+    await api.post<Comment>(`${APIRoute.Comments}/${id}`, { comment, rating });
   },
 );
 
@@ -95,7 +108,7 @@ export const fetchLoadFilmAction = createAsyncThunk<void, string | undefined, {
   'data/fetchLoadFilm',
   async (id, { dispatch, extra: api }) => {
     dispatch(setFilmLoadedStatus(false));
-    const { data } = await api.get<Film>(`${APIRoute.Film}${id}`);
+    const { data } = await api.get<Film>(`${APIRoute.Films}/${id}`);
     dispatch(loadFilm(data));
     dispatch(setFilmLoadedStatus(true));
   },

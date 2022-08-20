@@ -34,10 +34,9 @@ export enum APIRoute {
   Films = '/films',
   Login = '/login',
   Logout = '/logout',
-  Film = '/films/',
   Promo = '/promo',
   Favorite = '/favorite/FilmId/status',
-  Comments = '/comments/',
+  Comments = '/comments',
 }
 
 export enum LevelFilm {

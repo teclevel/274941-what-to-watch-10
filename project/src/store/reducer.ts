@@ -54,7 +54,7 @@ export const reducer = createReducer(initialState, (builder) => {
       state.filteredFilms = getListFiltered(state.rawFilms, state.filter.genre);
     })
 
-    .addCase(resetFilms,(state)=>{
+    .addCase(resetFilms, (state) => {
       state.films = getListFiltered(state.rawFilms, state.filter.genre).slice(0, state.renderedFilmsCount);
       state.filteredFilms = getListFiltered(state.rawFilms, state.filter.genre);
     })
@@ -73,9 +73,7 @@ export const reducer = createReducer(initialState, (builder) => {
     })
 
     .addCase(resetFilter, (state) => {
-      state.filter = {
-        genre: ALL_GENRES,
-      };
+      state.filter.genre = ALL_GENRES;
       state.renderedFilmsCount = FILMS_PER_PAGE;
       state.films = getListFiltered(state.rawFilms, state.filter.genre).slice(0, state.renderedFilmsCount);
     })

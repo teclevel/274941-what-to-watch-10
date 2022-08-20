@@ -1,16 +1,29 @@
 import { FormEvent, Fragment, useState, ChangeEvent } from 'react';
+import { useNavigate, useParams } from 'react-router-dom';
+import { APIRoute } from '../../const';
+import { useAppDispatch } from '../../hooks';
+import { fetchCommentSendAction } from '../../store/api-actions';
 
 const stars = [10, 9, 8, 7, 6, 5, 4, 3, 2, 1];
 
 function Form() {
-  const [formData, setFormData] = useState({
-    reviewText: '',
-    rating: ''
-  });
+  const { id } = useParams();
+  const navigate = useNavigate();
+  const dispatch = useAppDispatch();
+
+  const initialState = {
+    id: id,
+    comment: '',
+    rating: 0
+  };
+
+  const [formData, setFormData] = useState(initialState);
 
   const submitFormHandle = (evt: FormEvent<HTMLFormElement>) => {
     evt.preventDefault();
-    // console.log(formData);
+    dispatch(fetchCommentSendAction(formData));
+    navigate(`${APIRoute.Films}/${id}`);
+    setFormData(initialState);
   };
 
   const changeRatingHandle = ({ target }: ChangeEvent<HTMLInputElement>) => {
@@ -32,7 +45,6 @@ function Form() {
               <Fragment key={star}>
                 <input className="rating__input" id={`star-${star}`} type="radio" name="rating" value={star}
                   onChange={changeRatingHandle}
-                // checked={}
                 />
                 <label className="rating__label" htmlFor={`star-${star}`}>Rating {star}</label>
               </Fragment>
@@ -42,7 +54,7 @@ function Form() {
       </div>
 
       <div className="add-review__text">
-        <textarea className="add-review__textarea" name="reviewText" id="review-text" placeholder="Review text" value={formData.reviewText}
+        <textarea className="add-review__textarea" name="comment" id="review-text" placeholder="Review text" value={formData.comment}
           onChange={changeReviewHandle}
         >
         </textarea>
