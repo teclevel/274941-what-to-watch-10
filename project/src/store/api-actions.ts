@@ -81,7 +81,6 @@ export const fetchLoadCommentsAction = createAsyncThunk<void, string | undefined
 }>(
   'data/fetchLoadComment',
   async (id, { dispatch, extra: api }) => {
-
     dispatch(setCommentsLoadedStatus(false));
     const { data } = await api.get<Reviews>(`${APIRoute.Comments}/${id}`);
     dispatch(loadComments(data));
@@ -96,7 +95,7 @@ export const fetchCommentSendAction = createAsyncThunk<void, Comment, {
 }>(
   'user/fetchSendComment',
   async ({ id, comment, rating }, { dispatch, extra: api }) => {
-    await api.post<Comment>(`${APIRoute.Comments}/${id}`, { comment, rating });
+    await api.post<Comment>(`${APIRoute.Comments}/ ${id}`, { comment, rating });
   },
 );
 
@@ -107,10 +106,14 @@ export const fetchLoadFilmAction = createAsyncThunk<void, string | undefined, {
 }>(
   'data/fetchLoadFilm',
   async (id, { dispatch, extra: api }) => {
-    dispatch(setFilmLoadedStatus(false));
-    const { data } = await api.get<Film>(`${APIRoute.Films}/${id}`);
-    dispatch(loadFilm(data));
-    dispatch(setFilmLoadedStatus(true));
+    try {
+      dispatch(setFilmLoadedStatus(false));
+      const { data } = await api.get<Film>(`${APIRoute.Films}/${id}`);
+      dispatch(loadFilm(data));
+      dispatch(setFilmLoadedStatus(true));
+    } catch {
+      dispatch(redirectToRoute(AppRoute.NotFound));
+    }
   },
 );
 

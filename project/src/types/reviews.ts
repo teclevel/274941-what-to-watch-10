@@ -10,3 +10,9 @@ export type Review = {
 };
 
 export type Reviews = Review[];
+
+export type Comment = {
+  id?: string;
+  comment: string;
+  rating: number;
+};
