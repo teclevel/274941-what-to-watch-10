@@ -1,10 +1,12 @@
-import { FormEvent, Fragment, useState, ChangeEvent } from 'react';
+import { FormEvent, Fragment, useState, ChangeEvent, useEffect } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import { APIRoute } from '../../const';
 import { useAppDispatch } from '../../hooks';
 import { fetchCommentSendAction } from '../../store/api-actions';
 
 const stars = [10, 9, 8, 7, 6, 5, 4, 3, 2, 1];
+const MIN_COMMENT_LENGTH = 50;
+const MAX_COMMENT_LENGTH = 400;
 
 function Form() {
   const { id } = useParams();
@@ -18,6 +20,18 @@ function Form() {
   };
 
   const [formData, setFormData] = useState(initialState);
+  const [isButtonSubmitDisabled, setIsButtonSubmitDisabled] = useState(true);
+  const [lengthComment, setLengthComment] = useState(0);
+
+  useEffect(() => {
+    if (lengthComment >= MIN_COMMENT_LENGTH
+      && lengthComment <= MAX_COMMENT_LENGTH
+      && formData.rating > 0) {
+      setIsButtonSubmitDisabled(false);
+    } else {
+      setIsButtonSubmitDisabled(true);
+    }
+  }, [formData.rating, lengthComment]);
 
   const submitFormHandle = (evt: FormEvent<HTMLFormElement>) => {
     evt.preventDefault();
@@ -34,6 +48,7 @@ function Form() {
   const changeReviewHandle = ({ target }: ChangeEvent<HTMLTextAreaElement>) => {
     const { name, value } = target;
     setFormData({ ...formData, [name]: value });
+    setLengthComment(value.length);
   };
 
   return (
@@ -59,7 +74,7 @@ function Form() {
         >
         </textarea>
         <div className="add-review__submit">
-          <button className="add-review__btn" type="submit">Post</button>
+          <button className="add-review__btn" type="submit" disabled={isButtonSubmitDisabled}>Post</button>
         </div>
       </div>
 
