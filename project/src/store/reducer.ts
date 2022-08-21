@@ -11,6 +11,7 @@ import {
   setFilmLoadedStatus,
   setSimilarFilmsLoadedStatus,
   setPromoLoadedStatus,
+  setFormDisabled,
 } from './action';
 import { Films } from '../types/films';
 import { createReducer } from '@reduxjs/toolkit';
@@ -43,6 +44,7 @@ export const initialState: InitialState = {
   isSimilarFilmsLoaded: false,
   isPromoLoaded: false,
   comments: [],
+  isFormDisabled: false,
 };
 
 
@@ -117,5 +119,9 @@ export const reducer = createReducer(initialState, (builder) => {
 
     .addCase(setSimilarFilmsLoadedStatus, (state, action) => {
       state.isSimilarFilmsLoaded = action.payload;
+    })
+
+    .addCase(setFormDisabled, (state, action) => {
+      state.isFormDisabled = action.payload;
     });
 });

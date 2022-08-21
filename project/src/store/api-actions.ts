@@ -12,7 +12,7 @@ import {
   redirectToRoute,
   requireAuthorization,
   setCommentsLoadedStatus, setDataLoadedStatus,
-  setFilmLoadedStatus, setPromoLoadedStatus, setSimilarFilmsLoadedStatus
+  setFilmLoadedStatus, setFormDisabled, setPromoLoadedStatus, setSimilarFilmsLoadedStatus
 } from './action';
 
 
@@ -95,7 +95,14 @@ export const fetchCommentSendAction = createAsyncThunk<void, Comment, {
 }>(
   'user/fetchSendComment',
   async ({ id, comment, rating }, { dispatch, extra: api }) => {
-    await api.post<Comment>(`${APIRoute.Comments}/ ${id}`, { comment, rating });
+    try {
+      dispatch(setFormDisabled(true));
+      await api.post<Comment>(`${APIRoute.Comments}/ ${id}`, { comment, rating });
+      dispatch(setFormDisabled(false));
+
+    } catch {
+      dispatch(setFormDisabled(false));
+    }
   },
 );
 

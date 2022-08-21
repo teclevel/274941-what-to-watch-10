@@ -7,6 +7,7 @@ import { isCheckedLogin } from '../../utils';
 function LoginUser(): JSX.Element {
   const dispatch = useAppDispatch();
   const { authorizationStatus } = useAppSelector((state) => state);
+
   return (isCheckedLogin(authorizationStatus)
     ?
     <ul className="user-block">
