@@ -1,6 +1,6 @@
 import {
   changeGenre, filterByGenre, loadFilms, loadPromo,
-  requireAuthorization, setDataLoadedStatus, setError,
+  requireAuthorization, setDataLoadedStatus,
   resetFilter,
   loadMoreFilms,
   loadComments,
@@ -11,6 +11,7 @@ import {
   setFilmLoadedStatus,
   setSimilarFilmsLoadedStatus,
   setPromoLoadedStatus,
+  setFormDisabled,
 } from './action';
 import { Films } from '../types/films';
 import { createReducer } from '@reduxjs/toolkit';
@@ -42,8 +43,8 @@ export const initialState: InitialState = {
   isFilmLoaded: false,
   isSimilarFilmsLoaded: false,
   isPromoLoaded: false,
-  error: null,
   comments: [],
+  isFormDisabled: false,
 };
 
 
@@ -55,7 +56,7 @@ export const reducer = createReducer(initialState, (builder) => {
       state.filteredFilms = getListFiltered(state.rawFilms, state.filter.genre);
     })
 
-    .addCase(resetFilms,(state)=>{
+    .addCase(resetFilms, (state) => {
       state.films = getListFiltered(state.rawFilms, state.filter.genre).slice(0, state.renderedFilmsCount);
       state.filteredFilms = getListFiltered(state.rawFilms, state.filter.genre);
     })
@@ -74,9 +75,7 @@ export const reducer = createReducer(initialState, (builder) => {
     })
 
     .addCase(resetFilter, (state) => {
-      state.filter = {
-        genre: ALL_GENRES,
-      };
+      state.filter.genre = ALL_GENRES;
       state.renderedFilmsCount = FILMS_PER_PAGE;
       state.films = getListFiltered(state.rawFilms, state.filter.genre).slice(0, state.renderedFilmsCount);
     })
@@ -122,7 +121,7 @@ export const reducer = createReducer(initialState, (builder) => {
       state.isSimilarFilmsLoaded = action.payload;
     })
 
-    .addCase(setError, (state, action) => {
-      state.error = action.payload;
+    .addCase(setFormDisabled, (state, action) => {
+      state.isFormDisabled = action.payload;
     });
 });

@@ -5,10 +5,12 @@ import ListFilms from '../../components/list-films/list-films';
 import LoginUser from '../../components/login-user/login-user';
 import Logo from '../../components/logo/logo';
 import ListTabs from '../../components/tabs/list-tabs/list-tabs';
+import { APIRoute } from '../../const';
 import { useAppDispatch, useAppSelector } from '../../hooks';
 import {
   fetchLoadCommentsAction, fetchLoadFilmAction, fetchLoadSimilarFilmsAction
 } from '../../store/api-actions';
+import { isCheckedLogin } from '../../utils';
 import LoadingScreen from '../loading-screen/loading-screen';
 
 const FILMS_MY_LIST_COUNT = 4;
@@ -18,8 +20,13 @@ function FilmPage(): JSX.Element | null {
   const { id } = useParams();
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
-
-  const { similarFilms, film, isFilmLoaded, isSimilarFilmsLoaded } = useAppSelector((state) => state);
+  const {
+    film,
+    similarFilms,
+    isFilmLoaded,
+    authorizationStatus,
+    isSimilarFilmsLoaded
+  } = useAppSelector((state) => state);
 
   useEffect(() => {
     dispatch(fetchLoadCommentsAction(id));
@@ -58,7 +65,6 @@ function FilmPage(): JSX.Element | null {
                 <span className="film-card__genre">{genre}</span>
                 <span className="film-card__year">{released}</span>
               </p>
-
               <div className="film-card__buttons">
                 <button onClick={onClickHandler} className="btn btn--play film-card__button" type="button">
                   <svg viewBox="0 0 19 19" width="19" height="19">
@@ -73,7 +79,11 @@ function FilmPage(): JSX.Element | null {
                   <span>My list</span>
                   <span className="film-card__count">{FILMS_MY_LIST_COUNT}</span>
                 </button>
-                <Link to={`/films/${id}/review`} className="btn film-card__button">Add review</Link>
+                {
+                  isCheckedLogin(authorizationStatus)
+                    ? <Link to={`${APIRoute.Films}/${id}/review`} className="btn film-card__button">Add review</Link>
+                    : ''
+                }
               </div>
             </div>
           </div>

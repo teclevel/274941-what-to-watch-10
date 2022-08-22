@@ -27,4 +27,4 @@ export const setSimilarFilmsLoadedStatus = createAction<boolean>('data/setSimila
 export const setPromoLoadedStatus = createAction<boolean>('data/setPromoLoadedStatus');
 
 export const requireAuthorization = createAction<AuthorizationStatus>('user/requireAuthorization');
-
+export const setFormDisabled = createAction<boolean>('user/setFormDisabled');

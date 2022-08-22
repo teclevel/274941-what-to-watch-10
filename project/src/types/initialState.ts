@@ -22,6 +22,6 @@ export type InitialState = {
   isFilmLoaded: boolean,
   isSimilarFilmsLoaded: boolean,
   isPromoLoaded: boolean,
-  error: string | null,
   comments: Reviews,
+  isFormDisabled: boolean,
 }

@@ -1,29 +1,20 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import { AxiosInstance } from 'axios';
-import { store } from '.';
-import { APIRoute, AppRoute, AuthorizationStatus, TIMEOUT_SHOW_ERROR } from '../const';
+import { APIRoute, AppRoute, AuthorizationStatus } from '../const';
 import { dropToken, saveToken } from '../services/token';
 import { AuthData } from '../types/auth-data';
 import { Film, Films } from '../types/films';
-import { Reviews } from '../types/reviews';
+import { Comment, Reviews } from '../types/reviews';
 import { AppDispatch, State } from '../types/state';
 import { UserData } from '../types/user-data';
 import {
-  loadComments, loadFilm, loadFilms, loadPromo, loadSimilarFilms, redirectToRoute,
-  requireAuthorization, setCommentsLoadedStatus, setDataLoadedStatus, setError,
-  setFilmLoadedStatus, setPromoLoadedStatus, setSimilarFilmsLoadedStatus
+  loadComments, loadFilm, loadFilms, loadPromo, loadSimilarFilms,
+  redirectToRoute,
+  requireAuthorization,
+  setCommentsLoadedStatus, setDataLoadedStatus,
+  setFilmLoadedStatus, setFormDisabled, setPromoLoadedStatus, setSimilarFilmsLoadedStatus
 } from './action';
 
-
-export const clearErrorAction = createAsyncThunk(
-  'main/clearError',
-  () => {
-    setTimeout(
-      () => store.dispatch(setError(null)),
-      TIMEOUT_SHOW_ERROR,
-    );
-  },
-);
 
 export const fetchLoadFilmsAction = createAsyncThunk<void, undefined, {
   dispatch: AppDispatch,
@@ -90,11 +81,28 @@ export const fetchLoadCommentsAction = createAsyncThunk<void, string | undefined
 }>(
   'data/fetchLoadComment',
   async (id, { dispatch, extra: api }) => {
-
     dispatch(setCommentsLoadedStatus(false));
-    const { data } = await api.get<Reviews>(`${APIRoute.Comments}${id}`);
+    const { data } = await api.get<Reviews>(`${APIRoute.Comments}/${id}`);
     dispatch(loadComments(data));
     dispatch(setCommentsLoadedStatus(true));
+  },
+);
+
+export const fetchCommentSendAction = createAsyncThunk<void, Comment, {
+  dispatch: AppDispatch,
+  state: State,
+  extra: AxiosInstance
+}>(
+  'user/fetchSendComment',
+  async ({ id, comment, rating }, { dispatch, extra: api }) => {
+    try {
+      dispatch(setFormDisabled(true));
+      await api.post<Comment>(`${APIRoute.Comments}/ ${id}`, { comment, rating });
+      dispatch(setFormDisabled(false));
+
+    } catch {
+      dispatch(setFormDisabled(false));
+    }
   },
 );
 
@@ -105,10 +113,14 @@ export const fetchLoadFilmAction = createAsyncThunk<void, string | undefined, {
 }>(
   'data/fetchLoadFilm',
   async (id, { dispatch, extra: api }) => {
-    dispatch(setFilmLoadedStatus(false));
-    const { data } = await api.get<Film>(`${APIRoute.Film}${id}`);
-    dispatch(loadFilm(data));
-    dispatch(setFilmLoadedStatus(true));
+    try {
+      dispatch(setFilmLoadedStatus(false));
+      const { data } = await api.get<Film>(`${APIRoute.Films}/${id}`);
+      dispatch(loadFilm(data));
+      dispatch(setFilmLoadedStatus(true));
+    } catch {
+      dispatch(redirectToRoute(AppRoute.NotFound));
+    }
   },
 );
 
