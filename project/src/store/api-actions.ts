@@ -9,10 +9,11 @@ import { AppDispatch, State } from '../types/state';
 import { UserData } from '../types/user-data';
 import {
   loadComments, loadFilm, loadFilms, loadPromo, loadSimilarFilms,
-  redirectToRoute,
-  requireAuthorization,
+  redirectToRoute, requireAuthorization,
+  resetFilms,
   setCommentsLoadedStatus, setDataLoadedStatus,
-  setFilmLoadedStatus, setFormDisabled, setPromoLoadedStatus, setSimilarFilmsLoadedStatus
+  setFilmLoadedStatus, setFormDisabled, setPromoLoadedStatus,
+  setSimilarFilmsLoadedStatus
 } from './action';
 
 
@@ -26,6 +27,7 @@ export const fetchLoadFilmsAction = createAsyncThunk<void, undefined, {
     dispatch(setDataLoadedStatus(false));
     const { data } = await api.get<Films>(APIRoute.Films);
     dispatch(loadFilms(data));
+    dispatch(resetFilms());
     dispatch(setDataLoadedStatus(true));
   },
 );
@@ -57,6 +59,17 @@ export const fetchLoadPromoAction = createAsyncThunk<void, undefined, {
     dispatch(setPromoLoadedStatus(true));
   },
 );
+
+/* export const checkAuthAction = createAsyncThunk<void, undefined, {
+  dispatch: AppDispatch,
+  state: State,
+  extra: AxiosInstance
+}>(
+  'user/checkAuth',
+  async (_arg, { dispatch, extra: api }) => {
+    await api.get(APIRoute.Login);
+  },
+); */
 
 export const checkAuthAction = createAsyncThunk<void, undefined, {
   dispatch: AppDispatch,
@@ -124,6 +137,18 @@ export const fetchLoadFilmAction = createAsyncThunk<void, string | undefined, {
   },
 );
 
+/* export const loginAction = createAsyncThunk<void, AuthData, {
+  dispatch: AppDispatch,
+  state: State,
+  extra: AxiosInstance
+}>(
+  'user/login',
+  async ({ login: email, password }, { dispatch, extra: api }) => {
+    const { data: { token } } = await api.post<UserData>(APIRoute.Login, { email, password });
+    saveToken(token);
+    dispatch(redirectToRoute(AppRoute.Main));
+  },
+); */
 export const loginAction = createAsyncThunk<void, AuthData, {
   dispatch: AppDispatch,
   state: State,
@@ -138,6 +163,17 @@ export const loginAction = createAsyncThunk<void, AuthData, {
   },
 );
 
+/* export const logoutAction = createAsyncThunk<void, undefined, {
+  dispatch: AppDispatch,
+  state: State,
+  extra: AxiosInstance
+}>(
+  'user/logout',
+  async (_arg, { dispatch, extra: api }) => {
+    await api.delete(APIRoute.Logout);
+    dropToken();
+  },
+); */
 export const logoutAction = createAsyncThunk<void, undefined, {
   dispatch: AppDispatch,
   state: State,

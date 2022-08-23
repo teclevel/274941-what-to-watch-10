@@ -6,11 +6,12 @@ import ListGenres from '../../components/list-genres/list-genres';
 import Logo from '../../components/logo/logo';
 import LoginUser from '../../components/login-user/login-user';
 import { useAppDispatch, useAppSelector } from '../../hooks';
-import { filterByGenre, loadMoreFilms, resetFilms, resetFilter } from '../../store/action';
+import { cutFilteredFilms, filterByGenre, loadMoreFilms, resetFilms, resetFilter } from '../../store/action';
 import { useEffect } from 'react';
 import LoadingScreen from '../loading-screen/loading-screen';
 
 function Main(): JSX.Element | null {
+console.log('main rendered');
 
   const { promo, films, filteredFilms, isPromoLoaded } = useAppSelector((state) => state);
   const { id, backgroundImage, posterImage, name, genre, released } = promo ?? {};
@@ -19,6 +20,7 @@ function Main(): JSX.Element | null {
 
   useEffect(() => () => {
     dispatch(resetFilter());
+    dispatch(cutFilteredFilms());
     dispatch(resetFilms());
   }, [dispatch]);
 
@@ -31,6 +33,7 @@ function Main(): JSX.Element | null {
   const showMoreButtonClickHandle = () => {
     dispatch(loadMoreFilms());
     dispatch(filterByGenre());
+    dispatch(cutFilteredFilms());
   };
 
   if (!promo) { return null; }

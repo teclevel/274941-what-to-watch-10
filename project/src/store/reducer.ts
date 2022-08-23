@@ -1,6 +1,6 @@
 import {
   changeGenre, filterByGenre, loadFilms, loadPromo,
-  requireAuthorization, setDataLoadedStatus,
+  setDataLoadedStatus, requireAuthorization,
   resetFilter,
   loadMoreFilms,
   loadComments,
@@ -12,6 +12,7 @@ import {
   setSimilarFilmsLoadedStatus,
   setPromoLoadedStatus,
   setFormDisabled,
+  cutFilteredFilms,
 } from './action';
 import { Films } from '../types/films';
 import { createReducer } from '@reduxjs/toolkit';
@@ -27,24 +28,31 @@ function getListFiltered(list: Films, genreName: string): Films {
 }
 
 export const initialState: InitialState = {
-  rawFilms: [],
-  films: [],
-  similarFilms: [],
-  film: undefined,
+  rawFilms: [],                              //filmsData
+  isDataLoaded: false,
+
+  films: [],                                 // filter
   filteredFilms: [],
   renderedFilmsCount: FILMS_PER_PAGE,
   filter: {
     genre: ALL_GENRES,
   },
-  promo: undefined,
-  authorizationStatus: AuthorizationStatus.Unknown,
-  isDataLoaded: false,
-  isCommentsLoaded: false,
-  isFilmLoaded: false,
+
+  similarFilms: [],                          //similarFilmsData
   isSimilarFilmsLoaded: false,
+
+  film: undefined,                            //filmData
+  isFilmLoaded: false,
+
+  promo: undefined,                           //PromoData
   isPromoLoaded: false,
-  comments: [],
-  isFormDisabled: false,
+
+  comments: [],                               //commentsData
+  isCommentsLoaded: false,
+
+  isFormDisabled: false,  //stateForm
+
+  authorizationStatus: AuthorizationStatus.Unknown,
 };
 
 
@@ -52,13 +60,14 @@ export const reducer = createReducer(initialState, (builder) => {
   builder
     .addCase(loadFilms, (state, action) => {
       state.rawFilms = action.payload;
-      state.films = getListFiltered(state.rawFilms, state.filter.genre).slice(0, state.renderedFilmsCount);
-      state.filteredFilms = getListFiltered(state.rawFilms, state.filter.genre);
     })
 
     .addCase(resetFilms, (state) => {
-      state.films = getListFiltered(state.rawFilms, state.filter.genre).slice(0, state.renderedFilmsCount);
       state.filteredFilms = getListFiltered(state.rawFilms, state.filter.genre);
+    })
+
+    .addCase(cutFilteredFilms, (state) => {
+      state.films = getListFiltered(state.rawFilms, state.filter.genre).slice(0, state.renderedFilmsCount);
     })
 
     .addCase(loadSimilarFilms, (state, action) => {
@@ -70,19 +79,17 @@ export const reducer = createReducer(initialState, (builder) => {
       state.renderedFilmsCount += FILMS_PER_PAGE;
     })
 
+    .addCase(resetFilter, (state) => {
+      state.filter.genre = ALL_GENRES;
+      state.renderedFilmsCount = FILMS_PER_PAGE;
+    })
+
     .addCase(changeGenre, (state, action) => {
       state.filter.genre = action.payload;
     })
 
-    .addCase(resetFilter, (state) => {
-      state.filter.genre = ALL_GENRES;
-      state.renderedFilmsCount = FILMS_PER_PAGE;
-      state.films = getListFiltered(state.rawFilms, state.filter.genre).slice(0, state.renderedFilmsCount);
-    })
-
     .addCase(filterByGenre, (state) => {
       state.filteredFilms = getListFiltered(state.rawFilms, state.filter.genre);
-      state.films = getListFiltered(state.rawFilms, state.filter.genre).slice(0, state.renderedFilmsCount);
     })
 
     .addCase(loadPromo, (state, action) => {
@@ -96,10 +103,11 @@ export const reducer = createReducer(initialState, (builder) => {
     .addCase(loadComments, (state, action) => {
       state.comments = action.payload;
     })
-
+    //
     .addCase(requireAuthorization, (state, action) => {
       state.authorizationStatus = action.payload;
     })
+    //
 
     .addCase(setDataLoadedStatus, (state, action) => {
       state.isDataLoaded = action.payload;

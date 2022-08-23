@@ -1,7 +1,7 @@
 import { Link } from 'react-router-dom';
 import { ALL_GENRES } from '../../const';
 import { useAppDispatch, useAppSelector } from '../../hooks';
-import { changeGenre, filterByGenre, resetFilter } from '../../store/action';
+import { changeGenre, cutFilteredFilms, filterByGenre, resetFilter } from '../../store/action';
 import { Films } from '../../types/films';
 
 
@@ -34,6 +34,7 @@ function ListGenres(): JSX.Element {
               dispatch(resetFilter());
               dispatch(changeGenre(el));
               dispatch(filterByGenre());
+              dispatch(cutFilteredFilms());
             }}
           >
             <Link to="#" className="catalog__genres-link">{el}</Link>

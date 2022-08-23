@@ -14,7 +14,7 @@ export const renderFilms = createAction('main/renderFilms');
 export const loadMoreFilms = createAction('main/loadMoreFilms');
 export const setError = createAction<string | null>('main/setError');
 export const redirectToRoute = createAction<AppRoute>('main/redirectToRoute');
-
+export const cutFilteredFilms = createAction('data/cutFilteredFilms');
 export const loadFilms = createAction<Films>('data/loadFilms');
 export const loadPromo = createAction<Film>('data/loadPromo');
 export const loadFilm = createAction<Film>('data/loadFilm');
