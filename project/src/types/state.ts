@@ -1,6 +1,46 @@
+import { AuthorizationStatus } from '../const.js';
 import { store } from '../store/index.js';
+import { Film, Films } from './films.js';
+import { Reviews } from './reviews.js';
 
 
 export type State = ReturnType<typeof store.getState>;
 
 export type AppDispatch = typeof store.dispatch;
+
+export type UserProcess = {
+  authorizationStatus: AuthorizationStatus
+};
+
+export type FilmsData = {
+  rawFilms: Films,
+  isDataLoaded: boolean,
+};
+
+export type Filter = {
+  genre: string;
+}
+
+export type FilmScreening = {
+  rawFilms: Films,
+  isDataLoaded: boolean,
+  films: Films,
+  filteredFilms: Films,
+  renderedFilmsCount: number;
+  filter: Filter;
+};
+
+export type DataLoading = {
+  similarFilms: Films,
+  isSimilarFilmsLoaded: boolean,
+  film: undefined | Film,
+  isFilmLoaded: boolean,
+  promo: undefined | Film,
+  isPromoLoaded: boolean,
+  comments: Reviews,
+  isCommentsLoaded: boolean,
+}
+
+export type Form = {
+  isFormDisabled: boolean,
+}

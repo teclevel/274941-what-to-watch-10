@@ -10,6 +10,8 @@ import { useAppDispatch, useAppSelector } from '../../hooks';
 import {
   fetchLoadCommentsAction, fetchLoadFilmAction, fetchLoadSimilarFilmsAction
 } from '../../store/api-actions';
+import { getFilm, getLoadedDataFilmStatus, getSimilarFilms } from '../../store/data-loading/selector';
+import { getAuthorizationStatus } from '../../store/user-process/selector';
 import { isCheckedLogin } from '../../utils';
 import LoadingScreen from '../loading-screen/loading-screen';
 
@@ -20,13 +22,12 @@ function FilmPage(): JSX.Element | null {
   const { id } = useParams();
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
-  const {
-    film,
-    similarFilms,
-    isFilmLoaded,
-    authorizationStatus,
-    isSimilarFilmsLoaded
-  } = useAppSelector((state) => state);
+
+  const film = useAppSelector(getFilm);
+  const isFilmLoaded = useAppSelector(getLoadedDataFilmStatus);
+  const similarFilms = useAppSelector(getSimilarFilms);
+  const isSimilarFilmsLoaded = useAppSelector(getSimilarFilms);
+  const authorizationStatus = useAppSelector(getAuthorizationStatus);
 
   useEffect(() => {
     dispatch(fetchLoadCommentsAction(id));
@@ -35,13 +36,17 @@ function FilmPage(): JSX.Element | null {
   }, [dispatch, id]);
 
   if (!film) { return null; }
+  if (!similarFilms) { return null; }
 
   const { name, genre, released, posterImage, backgroundImage } = film;
   const onClickHandler = () => navigate(`/player/${film.id}`);
 
+
   if (!isFilmLoaded) {
+    console.log('filmPage not loaded');
     return <LoadingScreen />;
   }
+  console.log('filmPage loaded');
 
   return (
     <>

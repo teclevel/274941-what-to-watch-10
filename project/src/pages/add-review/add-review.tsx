@@ -3,12 +3,13 @@ import Form from '../../components/form/form';
 import Logo from '../../components/logo/logo';
 import LoginUser from '../../components/login-user/login-user';
 import { useAppSelector } from '../../hooks';
+import { getFilms } from '../../store/film-screening/selector';
 
 
 function AddReview(): JSX.Element {
-  const films = useAppSelector((state)=>state.rawFilms);
+  const films = useAppSelector(getFilms);
   const { id } = useParams();
-  const [film] = films.filter((el) => el.id === Number(id));
+  const [film] = films.filter((el) => el.id === Number(id)); ///////////get Film?
   const { name, backgroundImage, posterImage } = film;
 
   return (

@@ -1,27 +1,21 @@
-import { AuthorizationStatus } from '../const';
-import { Film, Films } from './films';
-import { Reviews } from './reviews';
-
-
-type Filter = {
-  genre: string;
-}
 
 export type InitialState = {
-  rawFilms: Films,
-  films: Films,
-  similarFilms: Films,
-  film: undefined | Film,
-  renderedFilmsCount: number;
-  filter: Filter;
-  filteredFilms: Films,
-  promo: undefined | Film,
-  authorizationStatus: AuthorizationStatus,
-  isDataLoaded: boolean,
-  isCommentsLoaded: boolean,
-  isFilmLoaded: boolean,
-  isSimilarFilmsLoaded: boolean,
-  isPromoLoaded: boolean,
-  comments: Reviews,
-  isFormDisabled: boolean,
+  // rawFilms: Films,
+
+  // films: Films,
+  // filteredFilms: Films,
+  // renderedFilmsCount: number;
+  // filter: Filter;
+
+  // authorizationStatus: AuthorizationStatus,//
+  // isDataLoaded: boolean,
+  // similarFilms: Films,
+  // isSimilarFilmsLoaded: boolean,
+  // film: undefined | Film,
+  // isFilmLoaded: boolean,
+  // promo: undefined | Film,
+  // isPromoLoaded: boolean,
+  // comments: Reviews,
+  // isCommentsLoaded: boolean,
+  // isFormDisabled: boolean,
 }

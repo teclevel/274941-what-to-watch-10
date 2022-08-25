@@ -13,10 +13,13 @@ import LoadingScreen from '../../pages/loading-screen/loading-screen';
 import { isCheckedAuth } from '../../utils';
 import HistoryRouter from '../history-route/histori-route';
 import browserHistory from '../../browser-history';
+import { getAuthorizationStatus } from '../../store/user-process/selector';
+import { getLoadedDataStatus } from '../../store/film-screening/selector';
 
 function App(): JSX.Element {
 
-  const { authorizationStatus, isDataLoaded } = useAppSelector((state) => state);
+  const authorizationStatus = useAppSelector(getAuthorizationStatus);
+  const isDataLoaded = useAppSelector(getLoadedDataStatus);
 
   if (isCheckedAuth(authorizationStatus) || !isDataLoaded) {
     return (

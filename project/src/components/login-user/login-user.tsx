@@ -2,11 +2,12 @@ import { Link } from 'react-router-dom';
 import { AppRoute } from '../../const';
 import { useAppDispatch, useAppSelector } from '../../hooks';
 import { logoutAction } from '../../store/api-actions';
+import { getAuthorizationStatus } from '../../store/user-process/selector';
 import { isCheckedLogin } from '../../utils';
 
 function LoginUser(): JSX.Element {
   const dispatch = useAppDispatch();
-  const { authorizationStatus } = useAppSelector((state) => state);
+  const authorizationStatus = useAppSelector(getAuthorizationStatus);
 
   return (isCheckedLogin(authorizationStatus)
     ?

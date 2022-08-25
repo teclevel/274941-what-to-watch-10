@@ -5,10 +5,10 @@ import VideoPlayer from '../video-player/video-player';
 
 type FilmsCardProps = {
   film: Film,
-  getId: (id: number) => void,
+  // getId: (id: number) => void,
 }
 
-function FilmsCard({ film, getId }: FilmsCardProps,): JSX.Element {
+function FilmsCard({ film/* , getId */ }: FilmsCardProps,): JSX.Element {
   const { previewImage, name, previewVideoLink } = film;
 
   const [isPlayerOn, setIsPlayerOn] = useState(false);
@@ -16,7 +16,7 @@ function FilmsCard({ film, getId }: FilmsCardProps,): JSX.Element {
 
 
   const mouseOverHandle = () => {
-    getId(film.id);
+    // getId(film.id);
     setTimerId(window.setTimeout(() => setIsPlayerOn(true), 1000));
   };
 

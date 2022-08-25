@@ -1,7 +1,8 @@
 import { Link } from 'react-router-dom';
 import { ALL_GENRES } from '../../const';
 import { useAppDispatch, useAppSelector } from '../../hooks';
-import { changeGenre, cutFilteredFilms, filterByGenre, resetFilter } from '../../store/action';
+import { changeGenre, cutFilteredFilms, filterByGenre, resetFilter } from '../../store/film-screening/film-screening';
+import { getFilms, getGenreCurrent } from '../../store/film-screening/selector';
 import { Films } from '../../types/films';
 
 
@@ -14,8 +15,8 @@ function getListGenres(list: Films) {
 
 
 function ListGenres(): JSX.Element {
-  const genreCurrent = useAppSelector((state) => state.filter.genre);
-  const films = useAppSelector((state) => state.rawFilms);
+  const genreCurrent = useAppSelector(getGenreCurrent);
+  const films = useAppSelector(getFilms);
   const genres = getListGenres(films);
   const dispatch = useAppDispatch();
 

@@ -6,14 +6,18 @@ import ListGenres from '../../components/list-genres/list-genres';
 import Logo from '../../components/logo/logo';
 import LoginUser from '../../components/login-user/login-user';
 import { useAppDispatch, useAppSelector } from '../../hooks';
-import { cutFilteredFilms, filterByGenre, loadMoreFilms, resetFilms, resetFilter } from '../../store/action';
 import { useEffect } from 'react';
 import LoadingScreen from '../loading-screen/loading-screen';
+import { getLoadedDataPromoStatus, getPromo } from '../../store/data-loading/selector';
+import { getFilms, getFilteredFilms } from '../../store/film-screening/selector';
+import { cutFilteredFilms, filterByGenre, loadMoreFilms, resetFilms, resetFilter } from '../../store/film-screening/film-screening';
 
 function Main(): JSX.Element | null {
-console.log('main rendered');
 
-  const { promo, films, filteredFilms, isPromoLoaded } = useAppSelector((state) => state);
+  const films = useAppSelector(getFilms);
+  const filteredFilms = useAppSelector(getFilteredFilms);
+  const promo = useAppSelector(getPromo);
+  const isPromoLoaded = useAppSelector(getLoadedDataPromoStatus);
   const { id, backgroundImage, posterImage, name, genre, released } = promo ?? {};
 
   const dispatch = useAppDispatch();

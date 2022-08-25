@@ -8,18 +8,18 @@ type ListFilmsProps = {
 }
 
 function ListFilms({ films }: ListFilmsProps): JSX.Element {
-  const [filmId, setFilmId] = useState('');
+  // const [filmId, setFilmId] = useState('');
 
-  const getId = (id: number): void => setFilmId(id.toString());
+  // const getId = (id: number): void => setFilmId(id.toString());
   // eslint-disable-next-line no-console
-  console.log(`film ${filmId}`);
+  // console.log(`film ${filmId}`);
 
   return (
     <div className="catalog__films-list">
       {
         films.map((film) => (
           <FilmsCard key={film.id}
-            getId={getId}
+            // getId={getId}
             film={film}
           />))
       }
