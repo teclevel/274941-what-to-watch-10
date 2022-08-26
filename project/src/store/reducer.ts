@@ -28,10 +28,9 @@ function getListFiltered(list: Films, genreName: string): Films {
 }
 
 export const initialState: InitialState = {
-  rawFilms: [],                              //filmsData
+  rawFilms: [],                              //fimScreening
   isDataLoaded: false,
-
-  films: [],                                 // filter
+  films: [],
   filteredFilms: [],
   renderedFilmsCount: FILMS_PER_PAGE,
   filter: {
@@ -62,35 +61,35 @@ export const reducer = createReducer(initialState, (builder) => {
       state.rawFilms = action.payload;
     })
 
-    .addCase(resetFilms, (state) => {
-      state.filteredFilms = getListFiltered(state.rawFilms, state.filter.genre);
-    })
+    // .addCase(resetFilms, (state) => {
+    //   state.filteredFilms = getListFiltered(state.rawFilms, state.filter.genre);
+    // })
 
-    .addCase(cutFilteredFilms, (state) => {
-      state.films = getListFiltered(state.rawFilms, state.filter.genre).slice(0, state.renderedFilmsCount);
-    })
+    // .addCase(cutFilteredFilms, (state) => {
+    //   state.films = getListFiltered(state.rawFilms, state.filter.genre).slice(0, state.renderedFilmsCount);
+    // })
 
     .addCase(loadSimilarFilms, (state, action) => {
       state.similarFilms = action.payload;
     })
 
-    .addCase(loadMoreFilms, (state) => {
-      state.films = state.films.slice(0, state.renderedFilmsCount + FILMS_PER_PAGE);
-      state.renderedFilmsCount += FILMS_PER_PAGE;
-    })
+    // .addCase(loadMoreFilms, (state) => {
+    //   state.films = state.films.slice(0, state.renderedFilmsCount + FILMS_PER_PAGE);
+    //   state.renderedFilmsCount += FILMS_PER_PAGE;
+    // })
 
-    .addCase(resetFilter, (state) => {
-      state.filter.genre = ALL_GENRES;
-      state.renderedFilmsCount = FILMS_PER_PAGE;
-    })
+    // .addCase(resetFilter, (state) => {
+    //   state.filter.genre = ALL_GENRES;
+    //   state.renderedFilmsCount = FILMS_PER_PAGE;
+    // })
 
-    .addCase(changeGenre, (state, action) => {
-      state.filter.genre = action.payload;
-    })
+    // .addCase(changeGenre, (state, action) => {
+    //   state.filter.genre = action.payload;
+    // })
 
-    .addCase(filterByGenre, (state) => {
-      state.filteredFilms = getListFiltered(state.rawFilms, state.filter.genre);
-    })
+    // .addCase(filterByGenre, (state) => {
+    //   state.filteredFilms = getListFiltered(state.rawFilms, state.filter.genre);
+    // })
 
     .addCase(loadPromo, (state, action) => {
       state.promo = action.payload;
