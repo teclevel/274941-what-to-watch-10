@@ -2,19 +2,19 @@ import { createSlice } from '@reduxjs/toolkit';
 import { ALL_GENRES, FILMS_PER_PAGE, NameSpace } from '../../const';
 import { FilmScreening } from '../../types/state';
 import { getListFiltered } from '../../utils';
-import { fetchLoadFilmsAction } from '../api-actions';
+import { fetchLoadFilmAction, fetchLoadFilmsAction } from '../api-actions';
 
 const initialState: FilmScreening = {
   rawFilms: [],
   isDataLoaded: false,
   films: [],
+  isFilmNotFound: false,
   filteredFilms: [],
   renderedFilmsCount: FILMS_PER_PAGE,
   filter: {
     genre: ALL_GENRES,
   },
 };
-
 
 export const filmScreening = createSlice({
   name: NameSpace.FilmScreening,
@@ -40,9 +40,15 @@ export const filmScreening = createSlice({
     filterByGenre: (state) => {
       state.filteredFilms = getListFiltered(state.rawFilms, state.filter.genre);
     },
+    resetFilmFoundState: (state) => {
+      state.isFilmNotFound = false;
+    },
   },
   extraReducers(builder) {
     builder
+      .addCase(fetchLoadFilmAction.rejected, (state) => {
+        state.isFilmNotFound = true;
+      })
       .addCase(fetchLoadFilmsAction.pending, (state) => {
         state.isDataLoaded = false;
       })
@@ -53,4 +59,4 @@ export const filmScreening = createSlice({
   }
 });
 
-export const { changeGenre, cutFilteredFilms, filterByGenre, loadMoreFilms, resetFilms, resetFilter } = filmScreening.actions;
+export const { resetFilmFoundState, changeGenre, cutFilteredFilms, filterByGenre, loadMoreFilms, resetFilms, resetFilter } = filmScreening.actions;

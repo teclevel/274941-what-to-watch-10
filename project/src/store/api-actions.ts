@@ -96,7 +96,6 @@ export const fetchLoadFilmAction = createAsyncThunk<Film, string | undefined, {
   'data/fetchLoadFilm',
   async (id, { dispatch, extra: api }) => {
     const { data } = await api.get<Film>(`${APIRoute.Films}/${id}`);
-    // dispatch(redirectToRoute(AppRoute.NotFound));????????????????????
     return data;
   },
 );

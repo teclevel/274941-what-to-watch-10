@@ -5,12 +5,14 @@ import ListFilms from '../../components/list-films/list-films';
 import LoginUser from '../../components/login-user/login-user';
 import Logo from '../../components/logo/logo';
 import ListTabs from '../../components/tabs/list-tabs/list-tabs';
-import { APIRoute } from '../../const';
+import { APIRoute, AppRoute } from '../../const';
 import { useAppDispatch, useAppSelector } from '../../hooks';
+import { redirectToRoute } from '../../store/action';
 import {
   fetchLoadCommentsAction, fetchLoadFilmAction, fetchLoadSimilarFilmsAction
 } from '../../store/api-actions';
-import { getFilm, getLoadedDataFilmStatus, getSimilarFilms } from '../../store/data-loading/selector';
+import { getFilm, getSimilarFilms } from '../../store/data-loading/selector';
+import { getFilmFoundStatus } from '../../store/film-screening/selector';
 import { getAuthorizationStatus } from '../../store/user-process/selector';
 import { isCheckedLogin } from '../../utils';
 import LoadingScreen from '../loading-screen/loading-screen';
@@ -24,10 +26,10 @@ function FilmPage(): JSX.Element | null {
   const dispatch = useAppDispatch();
 
   const film = useAppSelector(getFilm);
-  const isFilmLoaded = useAppSelector(getLoadedDataFilmStatus);
   const similarFilms = useAppSelector(getSimilarFilms);
   const isSimilarFilmsLoaded = useAppSelector(getSimilarFilms);
   const authorizationStatus = useAppSelector(getAuthorizationStatus);
+  const isFilmNotFound = useAppSelector(getFilmFoundStatus);
 
   useEffect(() => {
     dispatch(fetchLoadCommentsAction(id));
@@ -35,18 +37,16 @@ function FilmPage(): JSX.Element | null {
     dispatch(fetchLoadSimilarFilmsAction(id));
   }, [dispatch, id]);
 
-  if (!film) { return null; }
-  if (!similarFilms) { return null; }
+  if (isFilmNotFound) {
+    dispatch(redirectToRoute(AppRoute.NotFound));
+  }
+
+  if (!film || !similarFilms) {
+    return <LoadingScreen />;
+  }
 
   const { name, genre, released, posterImage, backgroundImage } = film;
   const onClickHandler = () => navigate(`/player/${film.id}`);
-
-
-  if (!isFilmLoaded) {
-    console.log('filmPage not loaded');
-    return <LoadingScreen />;
-  }
-  console.log('filmPage loaded');
 
   return (
     <>
@@ -55,14 +55,11 @@ function FilmPage(): JSX.Element | null {
           <div className="film-card__bg">
             <img src={backgroundImage} alt={name} />
           </div>
-
           <h1 className="visually-hidden">WTW</h1>
-
           <header className="page-header film-card__head">
             <Logo />
             <LoginUser />
           </header>
-
           <div className="film-card__wrap">
             <div className="film-card__desc">
               <h2 className="film-card__title">{name}</h2>
@@ -93,19 +90,15 @@ function FilmPage(): JSX.Element | null {
             </div>
           </div>
         </div>
-
         <div className="film-card__wrap film-card__translate-top">
           <div className="film-card__info">
             <div className="film-card__poster film-card__poster--big">
               <img src={posterImage} alt={`${name} poster`} width="218" height="327" />
             </div>
-
             <ListTabs film={film} />
-
           </div>
         </div>
       </section>
-
       <div className="page-content">
         <section className="catalog catalog--like-this">
           <h2 className="catalog__title">More like this</h2>
@@ -115,7 +108,6 @@ function FilmPage(): JSX.Element | null {
               : <LoadingScreen />
           }
         </section>
-
         <Footer />
       </div>
     </>

@@ -7,7 +7,6 @@ export const getSimilarFilms = (state: State): Films | undefined => state[NameSp
 export const getLoadedDataSimilarStatus = (state: State): boolean => state[NameSpace.DataLoading].isSimilarFilmsLoaded;
 
 export const getFilm = (state: State): Film | undefined => state[NameSpace.DataLoading].film;
-export const getLoadedDataFilmStatus = (state: State): boolean => state[NameSpace.DataLoading].isFilmLoaded;
 
 export const getPromo = (state: State): Film | undefined => state[NameSpace.DataLoading].promo;
 export const getLoadedDataPromoStatus = (state: State): boolean => state[NameSpace.DataLoading].isPromoLoaded;

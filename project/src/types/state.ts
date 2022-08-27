@@ -25,6 +25,7 @@ export type FilmScreening = {
   rawFilms: Films,
   isDataLoaded: boolean,
   films: Films,
+  isFilmNotFound: boolean,
   filteredFilms: Films,
   renderedFilmsCount: number;
   filter: Filter;
@@ -34,7 +35,6 @@ export type DataLoading = {
   similarFilms: Films,
   isSimilarFilmsLoaded: boolean,
   film: undefined | Film,
-  isFilmLoaded: boolean,
   promo: undefined | Film,
   isPromoLoaded: boolean,
   comments: Reviews,
