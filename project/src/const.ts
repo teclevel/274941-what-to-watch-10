@@ -8,6 +8,28 @@ export const AUTH_TOKEN_KEY_NAME = 'What-to-watch-token';
 
 export const TABS = ['Overview', 'Details', 'Reviews'];
 
+export const LevelFilmRange = {
+  BAD: {
+    Max: 0,
+    MAX: 3
+  },
+  NORMAL: {
+    MIN: 3,
+    MAX: 5
+  },
+  GOOD: {
+    MIN: 5,
+    MAX: 8
+  },
+  VERY_GOOD: {
+    MIN: 8,
+    MAX: 10
+  },
+  AWESOME: {
+    MIN: 10
+  },
+};
+
 export enum Tab {
   OVERVIEW = 'Overview',
   DETAILS = 'Details',
@@ -47,24 +69,9 @@ export enum LevelFilm {
   AWESOME = 'Awesome',
 }
 
-export const LevelFilmRange = {
-  BAD: {
-    Max: 0,
-    MAX: 3
-  },
-  NORMAL: {
-    MIN: 3,
-    MAX: 5
-  },
-  GOOD: {
-    MIN: 5,
-    MAX: 8
-  },
-  VERY_GOOD: {
-    MIN: 8,
-    MAX: 10
-  },
-  AWESOME: {
-    MIN: 10
-  },
-};
+export enum NameSpace {
+  DataLoading = 'DATA_LOADING',
+  FilmScreening = 'FILM_SCREENING',
+  User = 'USER',
+  Form = 'FORM'
+}

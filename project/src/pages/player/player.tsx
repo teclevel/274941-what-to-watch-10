@@ -1,10 +1,13 @@
 import { useParams } from 'react-router-dom';
 import { useAppSelector } from '../../hooks';
+// import { getFilm } from '../../store/data-loading/selector';
+import { getFilms } from '../../store/film-screening/selector';
 
 const POSTER_DEFAULT = 'img/player-poster.jpg';
 
 function Player(): JSX.Element {
-  const films = useAppSelector((state)=>state.rawFilms);
+  // const film = useAppSelector(getFilm);
+  const films = useAppSelector(getFilms);
   const { id } = useParams();
   const [film] = films.filter((el) => el.id === Number(id));
   const { videoLink, runTime, } = film;

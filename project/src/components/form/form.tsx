@@ -3,6 +3,7 @@ import { useNavigate, useParams } from 'react-router-dom';
 import { APIRoute } from '../../const';
 import { useAppDispatch, useAppSelector } from '../../hooks';
 import { fetchCommentSendAction } from '../../store/api-actions';
+import { getDisabledFormStatus } from '../../store/form-state/selector';
 
 const stars = [10, 9, 8, 7, 6, 5, 4, 3, 2, 1];
 const MIN_COMMENT_LENGTH = 50;
@@ -12,7 +13,7 @@ function Form() {
   const { id } = useParams();
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
-  const { isFormDisabled } = useAppSelector((state) => state);
+  const isFormDisabled = useAppSelector(getDisabledFormStatus);
 
   const initialState = {
     id: id,

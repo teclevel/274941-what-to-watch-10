@@ -3,10 +3,11 @@ import ListFilms from '../../components/list-films/list-films';
 import Logo from '../../components/logo/logo';
 import LoginUser from '../../components/login-user/login-user';
 import { useAppSelector } from '../../hooks';
+import { getFilms } from '../../store/film-screening/selector';
 
 
 function MyList(): JSX.Element {
-  const films = useAppSelector((state) => state.rawFilms);
+  const films = useAppSelector(getFilms);
   const myListCount = (films.length);
 
   return (

@@ -1,22 +1,20 @@
-import { useState } from 'react';
+import { memo, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { Film } from '../../types/films';
 import VideoPlayer from '../video-player/video-player';
 
 type FilmsCardProps = {
   film: Film,
-  getId: (id: number) => void,
 }
 
-function FilmsCard({ film, getId }: FilmsCardProps,): JSX.Element {
-  const { previewImage, name, previewVideoLink } = film;
+function FilmsCard({ film }: FilmsCardProps,): JSX.Element {
+  const { previewImage, name, previewVideoLink, id } = film;
 
   const [isPlayerOn, setIsPlayerOn] = useState(false);
   const [timerId, setTimerId] = useState<number>();
 
 
   const mouseOverHandle = () => {
-    getId(film.id);
     setTimerId(window.setTimeout(() => setIsPlayerOn(true), 1000));
   };
 
@@ -46,7 +44,7 @@ function FilmsCard({ film, getId }: FilmsCardProps,): JSX.Element {
         }
       </div>
       <h3 className="small-film-card__title">
-        <Link className="small-film-card__link" to={`/films/${film.id}`}>
+        <Link className="small-film-card__link" to={`/films/${id}`}>
           {name}
         </Link>
       </h3>
@@ -54,4 +52,4 @@ function FilmsCard({ film, getId }: FilmsCardProps,): JSX.Element {
   );
 }
 
-export default FilmsCard;
+export default memo(FilmsCard);

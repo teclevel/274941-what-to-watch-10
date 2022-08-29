@@ -3,12 +3,14 @@ import Form from '../../components/form/form';
 import Logo from '../../components/logo/logo';
 import LoginUser from '../../components/login-user/login-user';
 import { useAppSelector } from '../../hooks';
+import { getFilm } from '../../store/data-loading/selector';
 
 
-function AddReview(): JSX.Element {
-  const films = useAppSelector((state)=>state.rawFilms);
+function AddReview(): JSX.Element | null {
   const { id } = useParams();
-  const [film] = films.filter((el) => el.id === Number(id));
+  const film = useAppSelector(getFilm);
+
+  if (!film) { return null; }
   const { name, backgroundImage, posterImage } = film;
 
   return (
@@ -17,9 +19,7 @@ function AddReview(): JSX.Element {
         <div className="film-card__bg">
           <img src={backgroundImage} alt={name} />
         </div>
-
         <h1 className="visually-hidden">WTW</h1>
-
         <header className="page-header">
           <Logo />
           <nav className="breadcrumbs">
@@ -34,16 +34,13 @@ function AddReview(): JSX.Element {
           </nav>
           <LoginUser />
         </header>
-
         <div className="film-card__poster film-card__poster--small">
           <img src={posterImage} alt={name} width="218" height="327" />
         </div>
       </div>
-
       <div className="add-review">
         <Form />
       </div>
-
     </section>
   );
 }

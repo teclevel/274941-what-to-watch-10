@@ -1,4 +1,6 @@
-import { AuthorizationStatus, LevelFilm, LevelFilmRange } from './const';
+import { ALL_GENRES, AuthorizationStatus, LevelFilm, LevelFilmRange } from './const';
+import { Films } from './types/films';
+
 
 export const isCheckedAuth = (authorizationStatus: AuthorizationStatus): boolean =>
   authorizationStatus === AuthorizationStatus.Unknown;
@@ -57,3 +59,11 @@ export const formatDate = (dateJson: string) => {
   });
   return formatter.format(dateStr);
 };
+
+
+export function getListFiltered(list: Films, genreName: string): Films {
+  if (genreName === ALL_GENRES) {
+    return list;
+  }
+  return list.filter((film) => film.genre === genreName);
+}
