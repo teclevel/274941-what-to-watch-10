@@ -1,5 +1,6 @@
 import { AuthorizationStatus } from '../const.js';
 import { store } from '../store/index.js';
+import { StatusFavorite } from './favorite.js';
 import { Film, Films } from './films.js';
 import { Reviews } from './reviews.js';
 
@@ -43,4 +44,8 @@ export type DataLoading = {
 
 export type Form = {
   isFormDisabled: boolean,
+}
+
+export type FavoriteState = {
+  favoriteFilms: Films,
 }

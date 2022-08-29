@@ -3,7 +3,7 @@ import { AxiosInstance } from 'axios';
 import { APIRoute, AppRoute } from '../const';
 import { dropToken, saveToken } from '../services/token';
 import { AuthData } from '../types/auth-data';
-import { Favorite } from '../types/favorite';
+import { StatusFavorite } from '../types/favorite';
 import { Film, Films } from '../types/films';
 import { Comment, Reviews } from '../types/reviews';
 import { AppDispatch, State } from '../types/state';
@@ -126,21 +126,25 @@ export const logoutAction = createAsyncThunk<void, undefined, {
   },
 );
 
-export const fetchChangeViewStatusAction = createAsyncThunk<void, Favorite, {
+export const fetchChangeViewStatusAction = createAsyncThunk<void, StatusFavorite, {
   dispatch: AppDispatch,
   state: State,
   extra: AxiosInstance
 }>(
   'user/fetchChangeViewStatusAction',
   async ({ idFilm, status }, { dispatch, extra: api }) => {
-    // try {
-    //   dispatch(setFormDisabled(true));
-    await api.post<Favorite>(`${APIRoute.Favorite}/ ${idFilm} ${status}`, { idFilm, status });
-    //   dispatch(setFormDisabled(false));
+    await api.post<StatusFavorite>(`${APIRoute.Favorite}/ ${idFilm} /${status}`, { idFilm, status });
+  },
+);
 
-    // } catch {
-    //   dispatch(setFormDisabled(false));  Favorite = '/favorite/FilmId/status',
-
-    // }
+export const fetchLoadFavoriteFilmsAction = createAsyncThunk<Films, string | undefined, {
+  dispatch: AppDispatch,
+  state: State,
+  extra: AxiosInstance
+}>(
+  'favorite/fetchFavoriteFilms',
+  async (_arg, { dispatch, extra: api }) => {
+    const { data } = await api.get<Films>(APIRoute.Favorite);
+    return data;
   },
 );

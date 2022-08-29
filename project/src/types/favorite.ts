@@ -1,4 +1,4 @@
-export type Favorite = {
+export type StatusFavorite = {
   idFilm: number;
-  status: 0 | 1;
+  status: 0 | 1 | number;
 }
