@@ -57,7 +57,7 @@ export enum APIRoute {
   Login = '/login',
   Logout = '/logout',
   Promo = '/promo',
-  Favorite = '/favorite/FilmId/status',
+  Favorite = '/favorite',
   Comments = '/comments',
 }
 

@@ -11,6 +11,7 @@ import LoadingScreen from '../loading-screen/loading-screen';
 import { getLoadedDataPromoStatus, getPromo } from '../../store/data-loading/selector';
 import { getFilms, getFilteredFilms } from '../../store/film-screening/selector';
 import { cutFilteredFilms, filterByGenre, loadMoreFilms, resetFilms, resetFilter } from '../../store/film-screening/film-screening';
+import ButtonAddMyList from '../../components/button-add-my-list/button-add-my-list';
 
 function Main(): JSX.Element | null {
 
@@ -83,13 +84,7 @@ function Main(): JSX.Element | null {
                   </svg>
                   <span>Play</span>
                 </button>
-                <button className="btn btn--list film-card__button" type="button">
-                  <svg viewBox="0 0 19 20" width="19" height="20">
-                    <use xlinkHref="#add"></use>
-                  </svg>
-                  <span>My list</span>
-                  <span className="film-card__count">9</span>
-                </button>
+                <ButtonAddMyList />
               </div>
             </div>
           </div>
