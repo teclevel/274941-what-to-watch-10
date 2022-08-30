@@ -6,7 +6,7 @@ import ListGenres from '../../components/list-genres/list-genres';
 import Logo from '../../components/logo/logo';
 import LoginUser from '../../components/login-user/login-user';
 import { useAppDispatch, useAppSelector } from '../../hooks';
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 import LoadingScreen from '../loading-screen/loading-screen';
 import { getLoadedDataPromoStatus, getPromo } from '../../store/data-loading/selector';
 import { getFilms, getFilteredFilms } from '../../store/film-screening/selector';
@@ -32,7 +32,7 @@ function Main(): JSX.Element | null {
     dispatch(resetFilter());
     dispatch(cutFilteredFilms());
     dispatch(resetFilms());
-  }, [dispatch]);
+  }, [dispatch, filmStatus.statusFilm]);
 
   const navigate = useNavigate();
   const onClickPlayHandler = () => {
@@ -84,7 +84,7 @@ function Main(): JSX.Element | null {
                   </svg>
                   <span>Play</span>
                 </button>
-                <ButtonAddMyList filmStatus={filmStatus}/>
+                <ButtonAddMyList filmStatus={filmStatus} />
               </div>
             </div>
           </div>

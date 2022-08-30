@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 import { Link, useNavigate, useParams } from 'react-router-dom';
 import ButtonAddMyList from '../../components/button-add-my-list/button-add-my-list';
 import Footer from '../../components/footer/footer';
@@ -10,7 +10,6 @@ import { APIRoute, AppRoute } from '../../const';
 import { useAppDispatch, useAppSelector } from '../../hooks';
 import { redirectToRoute } from '../../store/action';
 import {
-  fetchChangeViewStatusAction,
   fetchLoadCommentsAction, fetchLoadFilmAction, fetchLoadSimilarFilmsAction
 } from '../../store/api-actions';
 import { getFilm, getSimilarFilms } from '../../store/data-loading/selector';
@@ -88,7 +87,7 @@ function FilmPage(): JSX.Element | null {
                   <span>Play</span>
                 </button>
                 {/* <ButtonAddMyList idFilm={id} /> */}
-                <ButtonAddMyList filmStatus={filmStatus}/>
+                <ButtonAddMyList filmStatus={filmStatus} />
                 {/* onClickViewStatus={onClickViewStatus} />*/}
                 {
                   isCheckedLogin(authorizationStatus)
