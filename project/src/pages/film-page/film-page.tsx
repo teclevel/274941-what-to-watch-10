@@ -26,27 +26,17 @@ function FilmPage(): JSX.Element | null {
   const dispatch = useAppDispatch();
 
   const film = useAppSelector(getFilm);
-  const { isFavorite } = film ?? {};
   const similarFilms = useAppSelector(getSimilarFilms);
   const isSimilarFilmsLoaded = useAppSelector(getSimilarFilms);
   const authorizationStatus = useAppSelector(getAuthorizationStatus);
   const isFilmNotFound = useAppSelector(getFilmFoundStatus);
 
-  // const [status, setStatus] = useState(0);
-  const filmStatus = {
-    idFilm: Number(id),
-    statusFilm: isFavorite,
-  };
 
   useEffect(() => {
     dispatch(fetchLoadCommentsAction(id));
     dispatch(fetchLoadFilmAction(id));
     dispatch(fetchLoadSimilarFilmsAction(id));
   }, [dispatch, id]);
-
-  // const onClickViewStatus = () => {
-  //   dispatch(fetchChangeViewStatusAction({ idFilm, status }));
-  // };
 
 
   if (isFilmNotFound) {
@@ -86,9 +76,7 @@ function FilmPage(): JSX.Element | null {
                   </svg>
                   <span>Play</span>
                 </button>
-                {/* <ButtonAddMyList idFilm={id} /> */}
-                <ButtonAddMyList filmStatus={filmStatus} />
-                {/* onClickViewStatus={onClickViewStatus} />*/}
+                <ButtonAddMyList idFilm={Number(id)} />
                 {
                   isCheckedLogin(authorizationStatus)
                     ? <Link to={`${APIRoute.Films}/${id}/review`} className="btn film-card__button">Add review</Link>

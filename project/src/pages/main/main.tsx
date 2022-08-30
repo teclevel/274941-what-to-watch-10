@@ -22,17 +22,11 @@ function Main(): JSX.Element | null {
 
   const dispatch = useAppDispatch();
 
-  const filmStatus = {
-    idFilm: Number(id),
-    statusFilm: isFavorite
-  };
-
-
   useEffect(() => () => {
     dispatch(resetFilter());
     dispatch(cutFilteredFilms());
     dispatch(resetFilms());
-  }, [dispatch, filmStatus.statusFilm]);
+  }, [dispatch]);
 
   const navigate = useNavigate();
   const onClickPlayHandler = () => {
@@ -84,7 +78,7 @@ function Main(): JSX.Element | null {
                   </svg>
                   <span>Play</span>
                 </button>
-                <ButtonAddMyList filmStatus={filmStatus} />
+                <ButtonAddMyList idFilm={Number(id)} />
               </div>
             </div>
           </div>
