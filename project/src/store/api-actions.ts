@@ -3,6 +3,7 @@ import { AxiosInstance } from 'axios';
 import { APIRoute, AppRoute } from '../const';
 import { dropToken, saveToken } from '../services/token';
 import { AuthData } from '../types/auth-data';
+import { StatusFavorite } from '../types/favorite';
 import { Film, Films } from '../types/films';
 import { Comment, Reviews } from '../types/reviews';
 import { AppDispatch, State } from '../types/state';
@@ -122,5 +123,28 @@ export const logoutAction = createAsyncThunk<void, undefined, {
   async (_arg, { dispatch, extra: api }) => {
     await api.delete(APIRoute.Logout);
     dropToken();
+  },
+);
+
+export const fetchChangeViewStatusAction = createAsyncThunk<void, StatusFavorite, {
+  dispatch: AppDispatch,
+  state: State,
+  extra: AxiosInstance
+}>(
+  'user/fetchChangeViewStatusAction',
+  async ({ idFilm, status }, { dispatch, extra: api }) => {
+    await api.post<StatusFavorite>(`${APIRoute.Favorite}/ ${idFilm} /${status}`, { idFilm, status });
+  },
+);
+
+export const fetchLoadFavoriteFilmsAction = createAsyncThunk<Films, string | undefined, {
+  dispatch: AppDispatch,
+  state: State,
+  extra: AxiosInstance
+}>(
+  'favorite/fetchFavoriteFilms',
+  async (_arg, { dispatch, extra: api }) => {
+    const { data } = await api.get<Films>(APIRoute.Favorite);
+    return data;
   },
 );

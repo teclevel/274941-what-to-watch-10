@@ -57,7 +57,7 @@ export enum APIRoute {
   Login = '/login',
   Logout = '/logout',
   Promo = '/promo',
-  Favorite = '/favorite/FilmId/status',
+  Favorite = '/favorite',
   Comments = '/comments',
 }
 
@@ -73,5 +73,6 @@ export enum NameSpace {
   DataLoading = 'DATA_LOADING',
   FilmScreening = 'FILM_SCREENING',
   User = 'USER',
-  Form = 'FORM'
+  Form = 'FORM',
+  Favorite = 'FAVORITE',
 }

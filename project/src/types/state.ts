@@ -44,3 +44,7 @@ export type DataLoading = {
 export type Form = {
   isFormDisabled: boolean,
 }
+
+export type FavoriteState = {
+  favoriteFilms: Films,
+}
