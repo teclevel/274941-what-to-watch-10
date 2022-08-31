@@ -13,9 +13,9 @@ function ButtonAddMyList({ idFilm }: ButtonAddMyListProps): JSX.Element | null {
   const favoriteFilms = useAppSelector(getFavoriteFilms);
   const dispatch = useAppDispatch();
 
-  useEffect(() => {
-    dispatch(fetchLoadFavoriteFilmsAction());
-  }, [ dispatch, idFilm, favoriteFilms]);
+  // useEffect(() => {
+  //   dispatch(fetchLoadFavoriteFilmsAction());
+  // }, [ dispatch, idFilm, favoriteFilms]);
 
   const onClickViewStatus = () => {
     dispatch(fetchChangeViewStatusAction({ idFilm, status: isFavorite ? 0 : 1 }));

@@ -67,3 +67,7 @@ export function getListFiltered(list: Films, genreName: string): Films {
   }
   return list.filter((film) => film.genre === genreName);
 }
+
+export function getFilmTime(){
+
+}
