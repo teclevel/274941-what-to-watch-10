@@ -13,22 +13,22 @@ function Player(): JSX.Element {
   const [film] = films.filter((el) => el.id === Number(id));
   const { videoLink, posterImage } = film;
   const videoRef = useRef<HTMLVideoElement>(null);
-
+  const video = videoRef.current;
   const [isLoading, setIsLoading] = useState(false);
   const [isPlaying, setIsPlaying] = useState(true);
   const [togglerPos, setTogglerPos] = useState(0);
 
 
   useEffect(() => {
-    if (videoRef.current === null) {
+    if (video === null) {
       return;
     }
 
     const updateTogglerPos = () => {
-      if (videoRef.current !== null) {
-        setTogglerPos(videoRef.current.currentTime / videoRef.current.duration * 100);
+      if (video !== null) {
+        setTogglerPos(video.currentTime / video.duration * 100);
       }
-      if (videoRef.current?.ended) {
+      if (video?.ended) {
         setIsPlaying(false);
       }
     };
@@ -36,26 +36,26 @@ function Player(): JSX.Element {
     const addIsLoading = () => setIsLoading(true);
     const removeIsLoading = () => setIsLoading(false);
 
-    videoRef.current.addEventListener('timeupdate', updateTogglerPos);
-    videoRef.current.addEventListener('loadstart', addIsLoading);
-    videoRef.current.addEventListener('canplay', removeIsLoading);
+    video.addEventListener('timeupdate', updateTogglerPos);
+    video.addEventListener('loadstart', addIsLoading);
+    video.addEventListener('canplay', removeIsLoading);
 
     if (isPlaying) {
-      videoRef.current.play();
-      videoRef.current.muted = false;
+      video.play();
+      video.muted = false;
       return;
     }
 
-    videoRef.current.pause();
+    video.pause();
 
     return () => {
-      if (videoRef.current === null) { return; }
-      videoRef.current.addEventListener('timeupdate', updateTogglerPos);
-      videoRef.current.addEventListener('loadstart', addIsLoading);
-      videoRef.current.addEventListener('canplay', removeIsLoading);
+      if (video === null) { return; }
+      video.addEventListener('timeupdate', updateTogglerPos);
+      video.addEventListener('loadstart', addIsLoading);
+      video.addEventListener('canplay', removeIsLoading);
     };
 
-  }, [isPlaying, film]);
+  }, [video, isPlaying, film]);
 
   if (!film) { return <LoadingScreen />; }
 
@@ -88,8 +88,8 @@ function Player(): JSX.Element {
           </div>
           <div className="player__time-value">-
             {
-              videoRef.current
-                ? getFilmTime(videoRef.current.duration - videoRef.current.currentTime)
+              video
+                ? getFilmTime(video.duration - video.currentTime)
                 : '00:00:00'
             }
           </div>
@@ -114,7 +114,7 @@ function Player(): JSX.Element {
           </button>
           <div className="player__name">Transpotting</div>
           <button type="button" className="player__full-screen"
-            onClick={() => videoRef.current?.requestFullscreen()}
+            onClick={() => video?.requestFullscreen()}
           >
             <svg viewBox="0 0 27 27" width="27" height="27">
               <use xlinkHref="#full-screen"></use>
