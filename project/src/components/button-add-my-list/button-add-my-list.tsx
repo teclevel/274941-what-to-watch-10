@@ -1,6 +1,7 @@
 import { useEffect } from 'react';
 import { useAppDispatch, useAppSelector } from '../../hooks';
-import { fetchChangeViewStatusAction, fetchLoadFavoriteFilmsAction
+import {
+  fetchChangeViewStatusAction, fetchLoadFavoriteFilmsAction
 } from '../../store/api-actions';
 import { getFavoriteFilms } from '../../store/favorite-state/selector';
 
@@ -13,9 +14,9 @@ function ButtonAddMyList({ idFilm }: ButtonAddMyListProps): JSX.Element | null {
   const favoriteFilms = useAppSelector(getFavoriteFilms);
   const dispatch = useAppDispatch();
 
-  // useEffect(() => {
-  //   dispatch(fetchLoadFavoriteFilmsAction());
-  // }, [ dispatch, idFilm, favoriteFilms]);
+  useEffect(() => {
+    dispatch(fetchLoadFavoriteFilmsAction());
+  }, [dispatch, favoriteFilms]);
 
   const onClickViewStatus = () => {
     dispatch(fetchChangeViewStatusAction({ idFilm, status: isFavorite ? 0 : 1 }));
@@ -30,7 +31,8 @@ function ButtonAddMyList({ idFilm }: ButtonAddMyListProps): JSX.Element | null {
       onClick={onClickViewStatus}
     >
       {
-        isFavorite ?
+        isFavorite
+          ?
           <svg viewBox="0 0 18 14" width="18" height="14">
             <use xlinkHref="#in-list"></use>
           </svg>

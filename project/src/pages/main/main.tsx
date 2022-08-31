@@ -18,7 +18,7 @@ function Main(): JSX.Element | null {
   const filteredFilms = useAppSelector(getFilteredFilms);
   const promo = useAppSelector(getPromo);
   const isPromoLoaded = useAppSelector(getLoadedDataPromoStatus);
-  const { id, backgroundImage, posterImage, name, genre, released, isFavorite } = promo ?? {};
+  const { id, backgroundImage, posterImage, name, genre, released } = promo ?? {};
 
   const dispatch = useAppDispatch();
 

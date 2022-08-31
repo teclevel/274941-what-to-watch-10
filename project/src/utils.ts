@@ -61,13 +61,19 @@ export const formatDate = (dateJson: string) => {
 };
 
 
-export function getListFiltered(list: Films, genreName: string): Films {
+export const getListFiltered = (list: Films, genreName: string): Films => {
   if (genreName === ALL_GENRES) {
     return list;
   }
   return list.filter((film) => film.genre === genreName);
-}
+};
 
-export function getFilmTime(){
 
-}
+export const getFilmTime = (seconds: number | undefined): string => {
+  if (seconds) {
+    return seconds >= 3600
+      ? new Date(Math.trunc(seconds) * 1000).toISOString().substring(11, 19)
+      : new Date(Math.trunc(seconds) * 1000).toISOString().substring(14, 19);
+  }
+  return '00:00';
+};

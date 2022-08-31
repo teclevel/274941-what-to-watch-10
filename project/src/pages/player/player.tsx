@@ -1,7 +1,8 @@
 import { useEffect, useRef, useState } from 'react';
-import { Navigate, useNavigate, useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import { useAppSelector } from '../../hooks';
 import { getFilms } from '../../store/film-screening/selector';
+import { getFilmTime } from '../../utils';
 import LoadingScreen from '../loading-screen/loading-screen';
 
 
@@ -48,6 +49,7 @@ function Player(): JSX.Element {
     videoRef.current.pause();
 
     return () => {
+      if (videoRef.current === null) { return; }
       videoRef.current.addEventListener('timeupdate', updateTogglerPos);
       videoRef.current.addEventListener('loadstart', addIsLoading);
       videoRef.current.addEventListener('canplay', removeIsLoading);

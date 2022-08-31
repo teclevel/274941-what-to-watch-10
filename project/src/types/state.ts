@@ -48,5 +48,4 @@ export type Form = {
 
 export type FavoriteState = {
   favoriteFilms: Films,
-  favoriteFilmsCount: number,
 }

@@ -5,17 +5,12 @@ import { fetchLoadFavoriteFilmsAction } from '../api-actions';
 
 const initialState: FavoriteState = {
   favoriteFilms: [],
-  favoriteFilmsCount: 0,
 };
 
 export const favoriteState = createSlice({
   name: NameSpace.Favorite,
   initialState,
-  reducers: {
-    changeCountFavoriteFilms: (state) => {
-      state.favoriteFilmsCount = state.favoriteFilms.length;
-    },
-  },
+  reducers: {},
   extraReducers(builder) {
     builder
       .addCase(fetchLoadFavoriteFilmsAction.fulfilled, (state, action) => {
@@ -23,4 +18,3 @@ export const favoriteState = createSlice({
       });
   }
 });
-export const { changeCountFavoriteFilms } = favoriteState.actions;

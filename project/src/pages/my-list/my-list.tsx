@@ -21,7 +21,6 @@ function MyList(): JSX.Element | null {
   if (!favoriteFilms) { return <LoadingScreen />; }
   const favoriteFilmsCount = favoriteFilms.length;
 
-
   return (
     <div className="user-page">
       <header className="page-header user-page__head">
