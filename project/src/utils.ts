@@ -77,3 +77,5 @@ export const getFilmTime = (seconds: number | undefined): string => {
   }
   return '00:00';
 };
+
+export const isValidPassword = (regExp: string, str: string): boolean => new RegExp(regExp).test(str);

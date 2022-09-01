@@ -2,14 +2,17 @@ import { FormEvent, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Footer from '../../components/footer/footer';
 import Logo from '../../components/logo/logo';
-import { AppRoute } from '../../const';
+import { AppRoute, REG_EXP_PASSWORD } from '../../const';
 import { useAppDispatch } from '../../hooks';
 import { loginAction } from '../../store/api-actions';
 import { AuthData } from '../../types/auth-data';
+import { isValidPassword } from '../../utils';
+
 
 function SignIn(): JSX.Element {
   const loginRef = useRef<HTMLInputElement | null>(null);
   const passwordRef = useRef<HTMLInputElement | null>(null);
+
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
 
@@ -19,8 +22,9 @@ function SignIn(): JSX.Element {
 
   const handleSubmit = (evt: FormEvent<HTMLFormElement>) => {
     evt.preventDefault();
-
-    if (loginRef.current !== null && passwordRef.current !== null) {
+    if (loginRef.current !== null
+      && passwordRef.current !== null
+      && isValidPassword(REG_EXP_PASSWORD, passwordRef.current.value)) {
       onSubmit({
         login: loginRef.current.value,
         password: passwordRef.current.value,
@@ -45,6 +49,7 @@ function SignIn(): JSX.Element {
               <input className="sign-in__input" type="email" placeholder="Email address" name="user-email"
                 id="user-email"
                 ref={loginRef}
+                required
               />
               <label className="sign-in__label visually-hidden" htmlFor="user-email">Email address</label>
             </div>
@@ -52,6 +57,8 @@ function SignIn(): JSX.Element {
               <input className="sign-in__input" type="password" placeholder="Password" name="user-password"
                 id="user-password"
                 ref={passwordRef}
+                required
+                title='Password must contain at least one letter and number'
               />
               <label className="sign-in__label visually-hidden" htmlFor="user-password">Password</label>
             </div>
