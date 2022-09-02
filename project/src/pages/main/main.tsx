@@ -7,9 +7,8 @@ import Logo from '../../components/logo/logo';
 import LoginUser from '../../components/login-user/login-user';
 import { useAppDispatch, useAppSelector } from '../../hooks';
 import { useEffect } from 'react';
-import LoadingScreen from '../loading-screen/loading-screen';
-import { getLoadedDataPromoStatus, getPromo } from '../../store/data-loading/selector';
-import { getFilms, getFilteredFilms } from '../../store/film-screening/selector';
+import { getPromo } from '../../store/data-loading/selector';
+import { getFilms, getFilteredFilms} from '../../store/film-screening/selector';
 import { cutFilteredFilms, filterByGenre, loadMoreFilms, resetFilms, resetFilter } from '../../store/film-screening/film-screening';
 import ButtonAddMyList from '../../components/button-add-my-list/button-add-my-list';
 
@@ -17,7 +16,6 @@ function Main(): JSX.Element | null {
   const films = useAppSelector(getFilms);
   const filteredFilms = useAppSelector(getFilteredFilms);
   const promo = useAppSelector(getPromo);
-  const isPromoLoaded = useAppSelector(getLoadedDataPromoStatus);
   const { id, backgroundImage, posterImage, name, genre, released } = promo ?? {};
 
   const dispatch = useAppDispatch();
@@ -41,10 +39,6 @@ function Main(): JSX.Element | null {
   };
 
   if (!promo) { return null; }
-
-  if (!isPromoLoaded) {
-    return <LoadingScreen />;
-  }
 
   return (
     <>

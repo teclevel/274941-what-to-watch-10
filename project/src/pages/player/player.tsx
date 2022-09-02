@@ -1,34 +1,45 @@
 import { useEffect, useRef, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
-import { useAppSelector } from '../../hooks';
-import { getFilms } from '../../store/film-screening/selector';
+import { AppRoute } from '../../const';
+import { useAppDispatch, useAppSelector } from '../../hooks';
+import { redirectToRoute } from '../../store/action';
+import { fetchLoadFilmAction } from '../../store/api-actions';
+import { getFilm } from '../../store/data-loading/selector';
+import { getFilmFoundStatus } from '../../store/film-screening/selector';
 import { getFilmTime } from '../../utils';
 import LoadingScreen from '../loading-screen/loading-screen';
 
 
-function Player(): JSX.Element {
+function Player(): JSX.Element | null {
   const { id } = useParams();
+
   const navigate = useNavigate();
-  const films = useAppSelector(getFilms);
-  const [film] = films.filter((el) => el.id === Number(id));
-  const { videoLink, posterImage } = film;
+  const dispatch = useAppDispatch();
+
+  const film = useAppSelector(getFilm);
+  const isFilmNotFound = useAppSelector(getFilmFoundStatus);
+
   const videoRef = useRef<HTMLVideoElement>(null);
   const video = videoRef.current;
+
   const [isLoading, setIsLoading] = useState(false);
   const [isPlaying, setIsPlaying] = useState(true);
   const [togglerPos, setTogglerPos] = useState(0);
 
+  useEffect(() => {
+    dispatch(fetchLoadFilmAction(id));
+  }, [dispatch, id]);
 
   useEffect(() => {
-    if (video === null) {
+    if (videoRef.current === null) {
       return;
     }
 
     const updateTogglerPos = () => {
-      if (video !== null) {
-        setTogglerPos(video.currentTime / video.duration * 100);
+      if (videoRef.current !== null && !isNaN(videoRef.current.duration) ) {
+        setTogglerPos(videoRef.current.currentTime / videoRef.current.duration * 100);
       }
-      if (video?.ended) {
+      if (videoRef.current?.ended) {
         setIsPlaying(false);
       }
     };
@@ -36,17 +47,17 @@ function Player(): JSX.Element {
     const addIsLoading = () => setIsLoading(true);
     const removeIsLoading = () => setIsLoading(false);
 
-    video.addEventListener('timeupdate', updateTogglerPos);
-    video.addEventListener('loadstart', addIsLoading);
-    video.addEventListener('canplay', removeIsLoading);
+    videoRef.current.addEventListener('timeupdate', updateTogglerPos);
+    videoRef.current.addEventListener('loadstart', addIsLoading);
+    videoRef.current.addEventListener('canplay', removeIsLoading);
 
     if (isPlaying) {
-      video.play();
-      video.muted = false;
+      videoRef.current.play();
+      videoRef.current.muted = false;
       return;
     }
 
-    video.pause();
+    videoRef.current.pause();
 
     return () => {
       if (video === null) { return; }
@@ -57,19 +68,23 @@ function Player(): JSX.Element {
 
   }, [video, isPlaying, film]);
 
+  if (isFilmNotFound) {
+    dispatch(redirectToRoute(AppRoute.NotFound));
+  }
+
   if (!film) { return <LoadingScreen />; }
 
   return (
     <div className="player">
       {isLoading && <LoadingScreen />}
-      <video src={videoLink} className="player__video"
-        poster={posterImage}
+      <video src={film.videoLink} className="player__video"
+        poster={film.posterImage}
         ref={videoRef}
         muted
       >
       </video>
       <button type="button" className="player__exit"
-        onClick={() => navigate(-1)}
+        onClick={() => navigate(`/films/${id}`)}
       >Exit
       </button>
       <div className="player__controls">
@@ -94,7 +109,6 @@ function Player(): JSX.Element {
             }
           </div>
         </div>
-
         <div className="player__controls-row">
           <button type="button" className="player__play"
             onClick={() => setIsPlaying(!isPlaying)}

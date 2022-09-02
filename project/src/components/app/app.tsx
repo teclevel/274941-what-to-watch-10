@@ -13,23 +13,27 @@ import { isCheckedAuth } from '../../utils';
 import HistoryRouter from '../history-router/history-router';
 import browserHistory from '../../browser-history';
 import { getAuthorizationStatus } from '../../store/user-process/selector';
-import { getLoadedDataStatus } from '../../store/film-screening/selector';
+import { getLoadedFilmsStatus, getLoadingFilmsErrorStatus } from '../../store/film-screening/selector';
 import GoToMainPage from '../../pages/go-to-main-page/go-to-main-page';
 import NotFoundPage from '../../pages/not-found-page/not-found-page';
 
 function App(): JSX.Element {
 
   const authorizationStatus = useAppSelector(getAuthorizationStatus);
-  const isDataLoaded = useAppSelector(getLoadedDataStatus);
+  const isDataLoaded = useAppSelector(getLoadedFilmsStatus);
+  const isFilmsLoadingError = useAppSelector(getLoadingFilmsErrorStatus);
+
+  if (isFilmsLoadingError) {
+    return <NotFoundPage />;
+  }
 
   if (isCheckedAuth(authorizationStatus) || !isDataLoaded) {
     return (
-      <>
-        <LoadingScreen />
-        <NotFoundPage />
-      </>
+      <LoadingScreen />
     );
   }
+
+
   return (
     <HistoryRouter history={browserHistory}>
       <Routes>

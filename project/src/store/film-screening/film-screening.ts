@@ -7,6 +7,7 @@ import { fetchLoadFilmAction, fetchLoadFilmsAction } from '../api-actions';
 const initialState: FilmScreening = {
   rawFilms: [],
   isFilmsLoaded: true,
+  isFilmsLoadingError: false,
   films: [],
   isFilmNotFound: false,
   filteredFilms: [],
@@ -55,10 +56,10 @@ export const filmScreening = createSlice({
       .addCase(fetchLoadFilmsAction.fulfilled, (state, action) => {
         state.rawFilms = action.payload;
         state.isFilmsLoaded = true;
+      })
+      .addCase(fetchLoadFilmsAction.rejected, (state) => {
+        state.isFilmsLoadingError = true;
       });
-    // .addCase(fetchLoadFilmsAction.rejected, (state, action) => {
-    //   state.isFilmsLoaded = false;
-    // });
   }
 });
 

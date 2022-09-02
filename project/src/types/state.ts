@@ -12,17 +12,13 @@ export type UserProcess = {
   authorizationStatus: AuthorizationStatus
 };
 
-export type FilmsData = {
-  rawFilms: Films,
-  isDataLoaded: boolean,
-};
-
 export type Filter = {
   genre: string;
 }
 export type FilmScreening = {
   rawFilms: Films,
   isFilmsLoaded: boolean,
+  isFilmsLoadingError: boolean,
   films: Films,
   isFilmNotFound: boolean,
   filteredFilms: Films,
