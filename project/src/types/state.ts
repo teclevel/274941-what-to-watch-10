@@ -20,10 +20,9 @@ export type FilmsData = {
 export type Filter = {
   genre: string;
 }
-
 export type FilmScreening = {
   rawFilms: Films,
-  isDataLoaded: boolean,
+  isFilmsLoaded: boolean,
   films: Films,
   isFilmNotFound: boolean,
   filteredFilms: Films,

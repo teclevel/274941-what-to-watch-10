@@ -6,7 +6,6 @@ import AddReview from '../../pages/add-review/add-review';
 import Player from '../../pages/player/player';
 import { Route, Routes } from 'react-router-dom';
 import { AppRoute } from '../../const';
-import NotFoundPage from '../../pages/not-found-page/not-found-page';
 import PrivateRoute from '../private-route/private-route';
 import { useAppSelector } from '../../hooks';
 import LoadingScreen from '../../pages/loading-screen/loading-screen';
@@ -15,6 +14,8 @@ import HistoryRouter from '../history-router/history-router';
 import browserHistory from '../../browser-history';
 import { getAuthorizationStatus } from '../../store/user-process/selector';
 import { getLoadedDataStatus } from '../../store/film-screening/selector';
+import GoToMainPage from '../../pages/go-to-main-page/go-to-main-page';
+import NotFoundPage from '../../pages/not-found-page/not-found-page';
 
 function App(): JSX.Element {
 
@@ -23,7 +24,10 @@ function App(): JSX.Element {
 
   if (isCheckedAuth(authorizationStatus) || !isDataLoaded) {
     return (
-      <LoadingScreen />
+      <>
+        <LoadingScreen />
+        <NotFoundPage />
+      </>
     );
   }
   return (
@@ -51,7 +55,7 @@ function App(): JSX.Element {
 
         <Route path={AppRoute.Player} element={<Player />} />
 
-        <Route path={AppRoute.NotFound} element={<NotFoundPage />} />
+        <Route path={AppRoute.NotFound} element={<GoToMainPage />} />
 
       </Routes >
     </HistoryRouter >
