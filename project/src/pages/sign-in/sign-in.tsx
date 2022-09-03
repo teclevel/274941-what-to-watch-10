@@ -2,7 +2,7 @@ import { FormEvent, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Footer from '../../components/footer/footer';
 import Logo from '../../components/logo/logo';
-import { AppRoute, REG_EXP_PASSWORD } from '../../const';
+import { AppRoute } from '../../const';
 import { useAppDispatch } from '../../hooks';
 import { loginAction } from '../../store/api-actions';
 import { AuthData } from '../../types/auth-data';
@@ -24,7 +24,7 @@ function SignIn(): JSX.Element {
     evt.preventDefault();
     if (loginRef.current !== null
       && passwordRef.current !== null
-      && isValidPassword(REG_EXP_PASSWORD, passwordRef.current.value)) {
+      && isValidPassword(passwordRef.current.value)) {
       onSubmit({
         login: loginRef.current.value,
         password: passwordRef.current.value,
@@ -39,7 +39,6 @@ function SignIn(): JSX.Element {
         <Logo />
         <h1 className="page-title user-page__title">Sign in</h1>
       </header>
-
       <div className="sign-in user-page__content">
         <form action="" className="sign-in__form"
           onSubmit={handleSubmit}
@@ -70,7 +69,6 @@ function SignIn(): JSX.Element {
           </div>
         </form>
       </div >
-
       <Footer />
     </div >
   );

@@ -16,10 +16,11 @@ function ButtonAddMyList({ idFilm }: ButtonAddMyListProps): JSX.Element | null {
 
   useEffect(() => {
     dispatch(fetchLoadFavoriteFilmsAction());
-  }, [dispatch, favoriteFilms]);
+  }, [dispatch]);
 
   const onClickViewStatus = () => {
     dispatch(fetchChangeViewStatusAction({ idFilm, status: isFavorite ? 0 : 1 }));
+    dispatch(fetchLoadFavoriteFilmsAction());
   };
 
   if (!favoriteFilms) { return null; }

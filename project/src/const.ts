@@ -1,9 +1,10 @@
-export const ALL_GENRES = 'All genres';
 export const FILMS_PER_PAGE = 8;
-export const REG_EXP_PASSWORD = '[0-9][a-z]';
+
+export const REQUEST_TIMEOUT = 5000;
+
+export const ALL_GENRES = 'All genres';
 
 export const BACKEND_URL = 'https://10.react.pages.academy/wtw';
-export const REQUEST_TIMEOUT = 5000;
 
 export const AUTH_TOKEN_KEY_NAME = 'What-to-watch-token';
 

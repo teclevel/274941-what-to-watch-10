@@ -78,4 +78,8 @@ export const getFilmTime = (seconds: number | undefined): string => {
   return '00:00';
 };
 
-export const isValidPassword = (regExp: string, str: string): boolean => new RegExp(regExp).test(str);
+export const isValidPassword = (pass: string): boolean => {
+  const re1 = new RegExp('[0-9]').test(pass);
+  const re2 = new RegExp('[a-z]').test(pass);
+  return (re1 && re2);
+};

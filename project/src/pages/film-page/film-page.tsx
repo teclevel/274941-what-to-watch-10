@@ -76,7 +76,11 @@ function FilmPage(): JSX.Element | null {
                   </svg>
                   <span>Play</span>
                 </button>
-                <ButtonAddMyList idFilm={Number(id)} />
+                {
+                  isCheckedLogin(authorizationStatus)
+                    ? <ButtonAddMyList idFilm={Number(id)} />
+                    : ''
+                }
                 {
                   isCheckedLogin(authorizationStatus)
                     ? <Link to={`${APIRoute.Films}/${id}/review`} className="btn film-card__button">Add review</Link>

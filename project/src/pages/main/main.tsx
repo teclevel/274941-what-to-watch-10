@@ -8,14 +8,18 @@ import LoginUser from '../../components/login-user/login-user';
 import { useAppDispatch, useAppSelector } from '../../hooks';
 import { useEffect } from 'react';
 import { getPromo } from '../../store/data-loading/selector';
-import { getFilms, getFilteredFilms} from '../../store/film-screening/selector';
+import { getFilms, getFilteredFilms } from '../../store/film-screening/selector';
 import { cutFilteredFilms, filterByGenre, loadMoreFilms, resetFilms, resetFilter } from '../../store/film-screening/film-screening';
 import ButtonAddMyList from '../../components/button-add-my-list/button-add-my-list';
+import { getAuthorizationStatus } from '../../store/user-process/selector';
+import { isCheckedLogin } from '../../utils';
 
 function Main(): JSX.Element | null {
   const films = useAppSelector(getFilms);
   const filteredFilms = useAppSelector(getFilteredFilms);
   const promo = useAppSelector(getPromo);
+  const authorizationStatus = useAppSelector(getAuthorizationStatus);
+
   const { id, backgroundImage, posterImage, name, genre, released } = promo ?? {};
 
   const dispatch = useAppDispatch();
@@ -72,7 +76,11 @@ function Main(): JSX.Element | null {
                   </svg>
                   <span>Play</span>
                 </button>
-                <ButtonAddMyList idFilm={Number(id)} />
+                {
+                  isCheckedLogin(authorizationStatus)
+                    ? <ButtonAddMyList idFilm={Number(id)} />
+                    : ''
+                }
               </div>
             </div>
           </div>

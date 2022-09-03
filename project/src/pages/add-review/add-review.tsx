@@ -2,16 +2,33 @@ import { Link, useParams } from 'react-router-dom';
 import Form from '../../components/form/form';
 import Logo from '../../components/logo/logo';
 import LoginUser from '../../components/login-user/login-user';
-import { useAppSelector } from '../../hooks';
+import { useAppDispatch, useAppSelector } from '../../hooks';
 import { getFilm } from '../../store/data-loading/selector';
+import { getFilmFoundStatus } from '../../store/film-screening/selector';
+import { redirectToRoute } from '../../store/action';
+import { AppRoute } from '../../const';
+import { useEffect } from 'react';
+import { fetchLoadFilmAction } from '../../store/api-actions';
 
 
 function AddReview(): JSX.Element | null {
   const { id } = useParams();
   const film = useAppSelector(getFilm);
+  const dispatch = useAppDispatch();
+  const isFilmNotFound = useAppSelector(getFilmFoundStatus);
+
+  useEffect(() => {
+    dispatch(fetchLoadFilmAction(id));
+  }, [dispatch, id]);
+
+
+  if (isFilmNotFound) {
+    dispatch(redirectToRoute(AppRoute.NotFound));
+  }
 
   if (!film) { return null; }
   const { name, backgroundImage, posterImage } = film;
+
 
   return (
     <section className="film-card film-card--full">

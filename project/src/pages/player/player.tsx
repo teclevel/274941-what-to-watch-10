@@ -23,7 +23,7 @@ function Player(): JSX.Element | null {
   const video = videoRef.current;
 
   const [isLoading, setIsLoading] = useState(false);
-  const [isPlaying, setIsPlaying] = useState(true);
+  const [isPlaying, setIsPlaying] = useState(false);
   const [togglerPos, setTogglerPos] = useState(0);
 
   useEffect(() => {
@@ -52,12 +52,12 @@ function Player(): JSX.Element | null {
     videoRef.current.addEventListener('canplay', removeIsLoading);
 
     if (isPlaying) {
-      videoRef.current.play();
+      videoRef.current.pause();
       videoRef.current.muted = false;
       return;
     }
 
-    videoRef.current.pause();
+    videoRef.current.play();
 
     return () => {
       if (video === null) { return; }
@@ -78,7 +78,7 @@ function Player(): JSX.Element | null {
     <div className="player">
       {isLoading && <LoadingScreen />}
       <video src={film.videoLink} className="player__video"
-        poster={film.posterImage}
+        poster={film.previewImage}
         ref={videoRef}
         muted
       >
