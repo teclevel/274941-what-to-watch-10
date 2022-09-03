@@ -18,9 +18,9 @@ function ButtonAddMyList({ idFilm }: ButtonAddMyListProps): JSX.Element | null {
     dispatch(fetchLoadFavoriteFilmsAction());
   }, [dispatch]);
 
-  const onClickViewStatus = () => {
-    dispatch(fetchChangeViewStatusAction({ idFilm, status: isFavorite ? 0 : 1 }));
-    dispatch(fetchLoadFavoriteFilmsAction());
+  const onClickViewStatus = async () => {
+    await dispatch(fetchChangeViewStatusAction({ idFilm, status: isFavorite ? 0 : 1 }));
+    await dispatch(fetchLoadFavoriteFilmsAction());
   };
 
   if (!favoriteFilms) { return null; }
