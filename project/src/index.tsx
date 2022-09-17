@@ -6,6 +6,7 @@ import { store } from './store';
 import { checkAuthAction, fetchLoadFilmsAction, fetchLoadPromoAction } from './store/api-actions';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import { HashRouter } from 'react-router-dom';
 
 store.dispatch(fetchLoadFilmsAction());
 store.dispatch(fetchLoadPromoAction());
@@ -17,9 +18,12 @@ const root = ReactDOM.createRoot(
 
 root.render(
   <React.StrictMode>
-    <Provider store={store}>
-      <ToastContainer />
-      <App />
-    </Provider>
+    <HashRouter basename={process.env.PUBLIC_URL}>
+
+      <Provider store={store}>
+        <ToastContainer />
+        <App />
+      </Provider>
+    </HashRouter>
   </React.StrictMode>
 );
